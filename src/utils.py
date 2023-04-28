@@ -9,13 +9,27 @@ def load_data():
 
     question_data = json.load(open("data/int_general.json", "r"))
 
+    data_clean = []
+
+    removed = 0
     for user_v in prolific_data:
+        corrrect_count = 0
+        total_count = 0
         for line_k, line_v in user_v.items():
             if type(line_v) == dict:
                 line_v["question"] = question_data[f"q{line_k}"]
                 del line_v["saw_passage2"]
+                corrrect_count += (line_v["correct"])*1
+                total_count += 1
 
-    return prolific_data
+        if corrrect_count >= 20:
+            data_clean.append(user_v)
+        else:
+            removed += 1
+
+    print(f"removed {removed} from total of {len(prolific_data)}")
+
+    return data_clean
 
 
 def load_split_data():
@@ -97,6 +111,8 @@ def featurize_user_lines(user):
                 line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
                 # question number
                 # line["q_no"],
+
+                line["q_no"] < 5
             ),
 
             # TARGET
