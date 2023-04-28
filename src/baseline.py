@@ -2,12 +2,15 @@
 
 import utils
 from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
 from sklearn.dummy import DummyClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 
 data_train, data_test = utils.load_split_data()
 data_test = utils.flatten(data_test)
 data_train = utils.flatten(data_train)
+
+my_metric = lambda *x: f1_score(*x, pos_label="[True]")
 
 for features in [[0], [1], [2]]:
     print("features", features)
@@ -16,15 +19,27 @@ for features in [[0], [1], [2]]:
     data_test_x = utils.get_x(data_test)
     data_test_y = utils.get_y_multi(data_test, features=features)
 
-    model_dummy = DummyClassifier(strategy="most_frequent")
-    model_dummy.fit(data_train_x, data_train_y)
-    print(f"Dummy acc (train): {accuracy_score(model_dummy.predict(data_train_x), data_train_y):.2%}")
-    print(f"Dummy acc (test): {accuracy_score(model_dummy.predict(data_test_x), data_test_y):.2%}")
+    # model_dummy = DummyClassifier(strategy="prior", constant="[False]")
+    # force positive class
+    print(
+        f"Dummy acc (train/test):  ",
+        f"{my_metric(['[True]']*len(data_train_x), data_train_y):.1%} / {my_metric(['[True]']*len(data_test_x), data_test_y):.1%}"
+    )
 
     model = LogisticRegression()
     model.fit(data_train_x, data_train_y)
-    print(f"Full LR acc (train): {accuracy_score(model.predict(data_train_x), data_train_y):.2%}")
-    print(f"Full LR acc (test): {accuracy_score(model.predict(data_test_x), data_test_y):.2%}")
+    print(
+        f"Full LR acc (train/test):",
+        f"{my_metric(model.predict(data_train_x), data_train_y):.1%} / {my_metric(model.predict(data_test_x), data_test_y):.1%}"
+    )
+
+    # model = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=500)
+    model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=400)
+    model.fit(data_train_x, data_train_y)
+    print(
+        f"MLP acc (train/test):    ",
+        f"{my_metric(model.predict(data_train_x), data_train_y):.1%} / {my_metric(model.predict(data_test_x), data_test_y):.1%}"
+    )
 
     print("\n")
     # for feature_i, feature_name in enumerate(utils.FEATURE_NAMES):
