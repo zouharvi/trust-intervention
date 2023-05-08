@@ -43,17 +43,21 @@ def name_check():
     input(f"Is your name {d['name']}? [ctrl-c] if not, [enter] if yes.")
 
 
-def reject_submission(submission_id, participant_id):
+def reject_submission(submission_id, participant_id, message, rejection_category):
     if args.dry_run:
         print(f"Not continuing because of --dry-run but would reject {submission_id} of {participant_id}")
         return
+    
+    assert rejection_category in ["TOO_QUICKLY", "TOO_SLOWLY" ,"FAILED_INSTRUCTIONS", "INCOMP_LONGITUDINAL", "FAILED_CHECK" ,"LOW_EFFORT",
+                       "MALINGERING" ,"NO_CODE", "BAD_CODE", "NO_DATA", "UNSUPP_DEVICE", "OTHER"] 
     r = requests.post(
         f"https://api.prolific.co/api/v1/submissions/{submission_id}/transition/",
         headers={"Authorization": f"Token {API_TOKEN}"},
+        
         json={
             "action": "REJECT",
-            "message": "The instructions stated that leaving the active window was not permitted during the experiment. You were additionally reminded of this after a few instances of this. Because this is crucial to the experiment design, we must reject your submission.",
-            "rejection_category": "FAILED_INSTRUCTIONS"
+            "message": message,
+            "rejection_category": rejection_category
         }
     )
     if not r.ok:
@@ -188,7 +192,7 @@ for user in control_data_clean:
     if user["approve"]:
         approve_submission(user["session_id"], user["worker_id"])
     else:
-        reject_submission(user["session_id"], user["worker_id"])
+        reject_submission(user["session_id"], user["worker_id"], user["rejection_category"], user["rejection_message"])
 
 approved_participants = [x for x in control_data_clean if x['approve']]
 bonus_id = setup_bonuses(approved_participants, d_study["id"])
