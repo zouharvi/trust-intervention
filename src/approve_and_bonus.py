@@ -131,14 +131,13 @@ if not all(control_data[0]["project_name"] == x["project_name"] for x in control
 if len(control_data) != len(set([x["worker_id"] for x in control_data])):
     exit("Duplicate worker ids in control file")
 
-# name_check()
+name_check()
 
 d_studies = get_studies()
 d_studies = [
     x for x in d_studies
-    if x["name"] == control_data[0]["project_name"]
+    if x["name"] == control_data[0]["project_name"] or x["internal_name"] == control_data[0]["project_name"]
 ]
-
 
 if len(d_studies) != 1:
     exit(f"Expected exactly 1 project match, but found {len(d_studies)}.")
