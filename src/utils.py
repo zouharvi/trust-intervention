@@ -27,7 +27,7 @@ def load_data():
         else:
             removed += 1
 
-    print(f"removed {removed} from total of {len(prolific_data)}")
+    # print(f"removed {removed} from total of {len(prolific_data)}")
 
     return data_clean
 
