@@ -4,14 +4,23 @@ import json
 import os
 from argparse import ArgumentParser
 import random
-
+import copy
 
 args = ArgumentParser()
-args.add_argument("-d", "--dev", action="store_true")
+args.add_argument("-f", "--logfile", default="../data/int_control.json")
 args.add_argument("-s", "--seed", default=0, type=int)
 args = args.parse_args()
 
 random.seed(args.seed)
+
+data = json.load(open(args.logfile, "r"))
+for line_k, line_v in data.items():
+    line_v["key"] = line_k
+    line_v["ai_is_correct"] = line_v["acc"] == "1"
+    del line_v["passage_2"]
+    del line_v["passage_2_title"]
+    del line_v["acc"]
+data = list(data.values())
 
 UID = [
     "demo", "harare", "lusaka", "sahara", "cardiff", "hanoi",
@@ -25,24 +34,8 @@ UID = [
     "vietnam", "vanuatu", "uzbekistan", "uruguay", "uganda", "tuvalu"
 ]
 
-CATEGORIES = [
-    "Advertisement", "Art", "Interior Design", "Objects", "Scenes", "Suprematism", "Visualizations"
-]
-
-CONFIGS = [
-    "counting", "caption", "detection", "completion", "shuffle"
-]
-
 for uid in UID:
-    queue = []
-    random.shuffle(CATEGORIES)
-    for category in CATEGORIES:
-        imgs = random.sample(os.listdir(f'data/original_images/{category}'), k=3)
-        configs = random.sample(CONFIGS, k=3)
-        img_ids = [f'{category}/{img}' for img in imgs]
-        for i in range(3):
-            queue.append({"id": img_ids[i], "config": configs[i]})
-
-    with open(f"baked_queues/{uid}.json", "w") as f:
-        json.dump(queue, f, indent=4)
-
+    queue = copy.deepcopy(data)
+    random.shuffle(queue)
+    with open(f"web/baked_queues/{uid}.json", "w") as f:
+        json.dump(queue, f, indent=4, ensure_ascii=False)
