@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-control" content="public">
+    <meta name="theme-color" content="#efefef">
+
+    <title>Image Complexity</title>
+    <link rel="shortcut icon" href="#" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style='text-align: center; margin-top: 30px; margin-bottom: 20px; background-color: #caebf2;'>
+    <h2 style="margin-left: auto; margin-right: auto;">AI Confidence</h2>
+
+    <div style="text-align: left; width: 800px; margin-left: auto; margin-right: auto; margin-top: 30px">
+        <div style="margin-top: 30px;  text-align: justify;">
+            TODO <em>Next image</em>!
+        </div>
+
+        <br>
+
+        <div id="grid">
+            <div id="question_box" style="display: inline-block">
+                TODO
+            </div>
+            <div class="answer_box" id="counting_box">
+                <h4>Count the number of distinct objects in the image.</h4>
+                <input type="number" id="counting_val" min="0">
+                <h4>How confident are you in your answer?</h4>
+                <input type="range" min="1" max="5" class="range" id="count_confidence">
+                <label class="range_text">-</label>
+            </div>
+        </div>
+
+        <br>
+
+        <div style="height: 40px;" id="xxx">
+            <div id="buttons_panel" style="display: inline-block; width: 360px;">
+                <input id="button_next" type="button" value="Submit & next image">
+            </div>
+            <div style="float: right">
+                <div id="config_info" style="display: inline-block; text-align: right;"></div>
+                <div id="progress" style="display: inline-block; width: 50px; text-align: right;">-/-</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; text-align: justify;">
+            This is a research project by Shehzaad Dhuliawala et al.
+        </div>
+
+    </div>
+    <script src='web.js?r=9'></script>
+</body>
+
+</html>

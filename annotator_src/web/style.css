@@ -1,0 +1,102 @@
+* {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #caebf2;
+    color: #001f3f;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    border: 2px solid black;
+    padding: 2px;
+    width: 100%;
+}
+
+#buttons_rate input {
+    width: 40px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+#buttons_rate {
+    display: none;
+}
+
+#button_next {
+    height: 30px;
+    width: 250px;
+    background-color: #dadada;
+    border: 2px solid black;
+}
+
+#image_box img {
+    width: 100%;
+    vertical-align: top;
+    padding: 2px;
+}
+
+#image_box, #image_box_shuffle, #image_box_shuffle_target {
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.range_text {
+    position: relative;
+    top: -5px;
+    margin-left: 10px;
+}
+
+.answer_box {
+    width: 300px;
+    display: inline-block;
+}
+
+.answer_box textarea {
+    width: 280px;
+    height: 200px;
+    resize: none;
+}
+
+#grid {
+    background-color: #e1f0f3;
+}
+
+#counting_val {
+    width: 60px;
+}
+
+.draggable_fragment {
+    width: 50px;
+    height: 50px;
+}
+
+.draggable_fragment {
+    width: 100px;
+    height: 100px;
+    overflow: clip;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-size: .9em;
+    background-color: yellow;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+.grid_fragment {
+    width: 100px;
+    height: 100px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-size: .9em;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+.draggable_fragment:hover {
+    cursor: pointer;
+}
