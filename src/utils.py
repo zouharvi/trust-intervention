@@ -19,7 +19,7 @@ def load_data():
             if type(line_v) == dict:
                 line_v["question"] = question_data[f"q{line_k}"]
                 del line_v["saw_passage2"]
-                corrrect_count += (line_v["correct"])*1
+                corrrect_count += (line_v["correct"]) * 1
                 total_count += 1
 
         if corrrect_count >= 20:
@@ -32,12 +32,16 @@ def load_data():
     return data_clean
 
 
-def load_split_data():
+def load_split_data(simple=False):
     import sklearn.model_selection
 
     prolific_data = load_data()
     prolific_data = [
-        featurize_user_lines(user)
+        (
+            featurize_user_lines_simple(user)
+            if simple else
+            featurize_user_lines(user)
+        )
         for user in prolific_data
     ]
 
@@ -59,17 +63,22 @@ def _avg_empty(arr):
     else:
         return np.average(arr)
 
+
 def flatten(data):
     return [l for u in data for l in u]
+
 
 def get_x(line):
     return [x for x, y in line]
 
+
 def get_y(line, feature=0):
     return [y[feature] for x, y in line]
 
-def get_y_multi(line, features=[1,2]):
+
+def get_y_multi(line, features=[1, 2]):
     return [str([y[feature] for feature in features]) for x, y in line]
+
 
 FEATURE_NAMES = [
     "model_confidence",
@@ -77,10 +86,11 @@ FEATURE_NAMES = [
     "avg_prev_TP",
     "avg_prev_TN",
     "avg_prev_FN",
-    # "time",
     "int_before", "int_inside", "int_after",
     # "question_num",
+    # "time",
 ]
+
 
 def featurize_user_lines(user):
     out = []
@@ -93,7 +103,7 @@ def featurize_user_lines(user):
             # SOURCE
             (
                 # model confidence
-                float(line["question"]["conf"].removesuffix("%"))/100,
+                float(line["question"]["conf"].removesuffix("%")) / 100,
                 # average of previous passages
                 _avg_empty(prior_passage_saw),
                 # average previoux TP
@@ -105,32 +115,63 @@ def featurize_user_lines(user):
                     [not x and not y for x, y in prior_confusion_matrix]),
                 # average previoux FN
                 _avg_empty([x and not y for x, y in prior_confusion_matrix]),
-                # time
-                # line["time"],
                 # intervention location
                 line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
                 # question number
                 # line["q_no"],
-
                 line["q_no"] < 5
+                # time
+                # line["time"],
             ),
 
             # TARGET
             (
-                # trust
+                # trust (user will click show hint)
                 line["saw_passage1"],
-                # trust
+                # trust (user will agree)
                 line["response"] == "agree",
-                # success
-                (line["response"] == "agree") == line["correct"],
+                # user success
+                line["correct"],
             )
         ))
         prior_passage_saw.append(line["saw_passage1"])
         prior_confusion_matrix.append((
-            # Tx, Fx
-            (line["response"] == "agree") == line["correct"],
-            # xP, xN
+            # Tx / Fx
+            line["correct"],
+            # xP / xN
             line["response"] == "agree",
         ))
 
+    return out
+
+
+def featurize_user_lines_simple(user):
+    out = []
+    for line in user.values():
+        if type(line) != dict:
+            continue
+        out.append((
+            # SOURCE
+            (
+                # model confidence
+                float(line["question"]["conf"].removesuffix("%")) / 100,
+                # time
+                line["time"],
+                # intervention location
+                # line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
+                # question number
+                # line["q_no"],
+                # line["q_no"] < 5
+            ),
+
+            # TARGET
+            (
+                # trust (user will click show hint)
+                line["saw_passage1"],
+                # trust (user will agree)
+                line["response"] == "agree",
+                # user success
+                line["correct"],
+            )
+        ))
     return out
