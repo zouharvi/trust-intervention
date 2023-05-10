@@ -17,9 +17,11 @@ data = json.load(open(args.logfile, "r"))
 for line_k, line_v in data.items():
     line_v["key"] = line_k
     line_v["ai_is_correct"] = line_v["acc"] == "1"
+    line_v["confidence"] = line_v["conf"]
     del line_v["passage_2"]
     del line_v["passage_2_title"]
     del line_v["acc"]
+    del line_v["conf"]
 data = list(data.values())
 
 UID = [

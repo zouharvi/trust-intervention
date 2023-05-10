@@ -11,23 +11,24 @@ export async function load_data(): Promise<any> {
     return result
 }
 export async function log_data(data): Promise<any> {
-    console.log(data)
-    console.log(globalThis.url_data)
     data["url_data"] = globalThis.url_data
-
-    console.log(data)
-
-    let result = await $.ajax(
-        SERVER_LOG_ROOT + "log",
-        {
-            data: JSON.stringify({
-                project: "image-complexity",
-                uid: globalThis.uid,
-                payload: JSON.stringify(data),
-            }),
-            type: 'POST',
-            contentType: 'application/json',
-        }
-    )
-    return result
+    console.log("logged", data)
+    
+    try {
+        let result = await $.ajax(
+            SERVER_LOG_ROOT + "log",
+            {
+                data: JSON.stringify({
+                    project: "ai-confidence",
+                    uid: globalThis.uid,
+                    payload: JSON.stringify(data),
+                }),
+                type: 'POST',
+                contentType: 'application/json',
+            }
+        )
+        return result
+    } catch (e) {
+        console.log(e)
+    }
 }

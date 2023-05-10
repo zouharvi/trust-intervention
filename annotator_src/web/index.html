@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body style='text-align: center; margin-top: 30px; margin-bottom: 20px; background-color: #caebf2;'>
+<body style='text-align: center; margin-top: 30px; margin-bottom: 20px;'>
     <h2 style="margin-left: auto; margin-right: auto;">AI Confidence</h2>
 
     <div style="text-align: left; width: 800px; margin-left: auto; margin-right: auto; margin-top: 30px">
@@ -26,37 +26,43 @@
 
         <br>
 
-        <div id="grid">
-            <div id="question_box" style="display: inline-block">
-                TODO
-            </div>
-            <div class="answer_box" id="counting_box">
-                <h4>Count the number of distinct objects in the image.</h4>
-                <input type="number" id="counting_val" min="0">
-                <h4>How confident are you in your answer?</h4>
-                <input type="range" min="1" max="5" class="range" id="count_confidence">
-                <label class="range_text">-</label>
-            </div>
+        <div id="main_box">
+            <div style="height: 40px;">
+                <div style="float: right">
+                    <div id="progress" style="width: 150px; text-align: right;">(-/-)</div>
+                    <div id="balance" style="width: 150px; text-align: right;">0$+1$</div>
+                </div>
+            </div>    
+
+            <h3>Question: <span id="question_span"></span></h3>
+            <h3>Confidence: <span id="confidence_span"></span></h3>
+            <input id="button_decision_correct" type="button" class="button-neutral button-decision-correct"
+                value="System is correct">
+            <input id="button_decision_incorrect" type="button" class="button-neutral button-decision-incorrect"
+                value="System is not correct">
+
+            <br>
+
+            <h4>How confident are you in your answer?</h4>
+            <input id="range_val" type="range" min="0" max="5">
+            <label id="range_text">-</label>
+
+            <br>
+            <h3>Result: <span id="result_span"></span></h3>
+
+            <input id="button_place_bet" type="button" class="button-neutral" value="See the result">
+            <input id="button_next" type="button" class="button-neutral" value="Continue">
         </div>
 
         <br>
 
-        <div style="height: 40px;" id="xxx">
-            <div id="buttons_panel" style="display: inline-block; width: 360px;">
-                <input id="button_next" type="button" value="Submit & next image">
-            </div>
-            <div style="float: right">
-                <div id="config_info" style="display: inline-block; text-align: right;"></div>
-                <div id="progress" style="display: inline-block; width: 50px; text-align: right;">-/-</div>
-            </div>
-        </div>
 
         <div style="margin-top: 50px; text-align: justify;">
             This is a research project by Shehzaad Dhuliawala et al.
         </div>
 
     </div>
-    <script src='web.js?r=9'></script>
+    <script src='web.js?r=0'></script>
 </body>
 
 </html>

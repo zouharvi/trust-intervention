@@ -3,100 +3,57 @@
 }
 
 body {
-    background-color: #caebf2;
+    background-color: #ececec;
     color: #001f3f;
 }
 
-#grid {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    border: 2px solid black;
-    padding: 2px;
+#main_box {
+    background-color: white;
+    border: 2px solid #1A1A1A;
+    border-radius: 10px;
+    padding: 5px;
     width: 100%;
 }
 
-#buttons_rate input {
-    width: 40px;
-    height: 30px;
-    margin-right: 5px;
+
+#question_span,
+#confidence_span {
+    font-weight: normal;
 }
 
-#buttons_rate {
-    display: none;
-}
-
-#button_next {
-    height: 30px;
-    width: 250px;
-    background-color: #dadada;
-    border: 2px solid black;
-}
-
-#image_box img {
-    width: 100%;
-    vertical-align: top;
-    padding: 2px;
-}
-
-#image_box, #image_box_shuffle, #image_box_shuffle_target {
-    width: 400px;
-    box-sizing: border-box;
-}
-
-.range_text {
+#range_text {
     position: relative;
     top: -5px;
     margin-left: 10px;
 }
 
-.answer_box {
-    width: 300px;
-    display: inline-block;
-}
-
-.answer_box textarea {
-    width: 280px;
-    height: 200px;
-    resize: none;
-}
-
-#grid {
-    background-color: #e1f0f3;
-}
-
-#counting_val {
-    width: 60px;
-}
-
-.draggable_fragment {
-    width: 50px;
-    height: 50px;
-}
-
-.draggable_fragment {
-    width: 100px;
-    height: 100px;
-    overflow: clip;
-    float: left;
-    padding: 0;
-    margin: 0;
-    font-size: .9em;
-    background-color: yellow;
-    box-sizing: border-box;
-    border: 1px solid black;
-}
-
-.grid_fragment {
-    width: 100px;
-    height: 100px;
-    float: left;
-    padding: 0;
-    margin: 0;
-    font-size: .9em;
-    box-sizing: border-box;
-    border: 1px solid black;
-}
-
-.draggable_fragment:hover {
+.button-neutral {
+    background-color: white;
+    border: 2px solid #1A1A1A;
+    border-radius: 10px;
+    color: #3B3B3B;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    padding: 8px 12px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-neutral:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+}
+
+.button-decision-correct:hover, .button-decision-correct[activedecision="true"] {
+    color: #fff;
+    background-color: #347e32;
+}
+
+.button-decision-incorrect:hover, .button-decision-incorrect[activedecision="true"] {
+    color: #fff;
+    background-color: #7e3232;
 }
