@@ -85,7 +85,8 @@ function show_result() {
     $("#button_next").show()
     $("#result_span").show()
     $("#button_place_bet").hide()
-
+    
+    $('#range_val').attr("disabled", "true")
     $("#button_decision_incorrect").attr("disabled", "true")
     $("#button_decision_correct").attr("disabled", "true")
 }
@@ -98,6 +99,7 @@ function next_question() {
     $("#button_decision_correct").removeAttr("activedecision")
     $("#button_decision_incorrect").removeAttr("disabled")
     $("#button_decision_correct").removeAttr("disabled")
+    $('#range_val').removeAttr("disabled")
     $("#how_confident_div").hide()
     $("#button_place_bet").hide()
     $("#button_next").hide()
@@ -129,7 +131,6 @@ if (UIDFromURL != null) {
     globalThis.uid = UIDFromURL as string
 } else if (DEVMODE) {
     globalThis.uid = "demo"
-    UID = "demo"
 } else {
     let UID_maybe: any = null
     while (UID_maybe == null) {
