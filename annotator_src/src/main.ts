@@ -6,19 +6,26 @@ import { paramsToObject } from "./utils"
 var data: any[] = []
 let question_i = -1
 let question = null
-let prev_time = Date.now()
 let user_decision: null | boolean = null
 let balance = 0
-let bet_val:number
+let bet_val: number
+let time_question_start: number
+let time_bet_start: number
+let time_showed_results_start: number
 
 $("#button_next").on("click", () => {
     if (question_i != -1) {
-        let time = Date.now() - prev_time
-        let config = data[question_i]["config"]
-        let logged_data = { id: data[question_i]["id"], time: time, config: config }
+        let logged_data = {}
 
-        logged_data['caption'] = $("#caption_val").val()
-        logged_data['confidence'] = $("#cap_confidence").val()
+        logged_data['times'] = {
+            "decision": time_bet_start - time_question_start,
+            "bet": time_showed_results_start - time_bet_start,
+            "next": Date.now() - time_showed_results_start
+        }
+        logged_data['question'] = question
+        logged_data['balance'] = balance
+        logged_data['user_decision'] = user_decision
+        logged_data['bet_val'] = bet_val
         log_data(logged_data)
     }
     next_question()
@@ -31,6 +38,7 @@ $('#range_val').on('input change', function () {
 });
 
 function flip_user_decision(correct) {
+    time_bet_start = Date.now()
     user_decision = correct
     if (correct) {
         $("#button_decision_correct").attr("activedecision", "true")
@@ -50,8 +58,10 @@ $("#button_decision_incorrect").on("click", () => {
 })
 
 function show_result() {
+    time_showed_results_start = Date.now()
+
     let message = "You guessed that the system was "
-    let success : boolean
+    let success: boolean
     if (user_decision) {
         message += "<span class='color_correct'>correct</span> "
         if (question!["ai_is_correct"]) {
@@ -61,7 +71,7 @@ function show_result() {
             message += "but the system was <span class='color_incorrect'>not correct</span>."
             success = false
         }
-    } else{
+    } else {
         message += "<span class='color_incorrect'>incorrect</span> "
         if (!question!["ai_is_correct"]) {
             message += "and the system was <span class='color_incorrect'>not correct</span>."
@@ -74,7 +84,7 @@ function show_result() {
     message += "<br>"
     if (success) {
         message += `You gain $${bet_val}.`
-        balance += bet_val        
+        balance += bet_val
     } else {
         message += `You lose $${bet_val}.`
         balance -= bet_val
@@ -85,7 +95,7 @@ function show_result() {
     $("#button_next").show()
     $("#result_span").show()
     $("#button_place_bet").hide()
-    
+
     $('#range_val').attr("disabled", "true")
     $("#button_decision_incorrect").attr("disabled", "true")
     $("#button_decision_correct").attr("disabled", "true")
@@ -112,11 +122,10 @@ function next_question() {
     }
     question = data[question_i]
 
-    // $("#config_info").text("Mode: " + data[question_i]["config"])
     $("#question_span").text(question!["question"])
     $("#confidence_span").text(question!["confidence"])
 
-    prev_time = Date.now()
+    time_question_start = Date.now()
     $("#progress").text(`Progress: ${question_i + 1} / ${data.length}`)
 }
 
