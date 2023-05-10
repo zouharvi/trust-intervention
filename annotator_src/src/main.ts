@@ -9,6 +9,7 @@ let question = null
 let prev_time = Date.now()
 let user_decision: null | boolean = null
 let balance = 0
+let bet_val:number
 
 $("#button_next").on("click", () => {
     if (question_i != -1) {
@@ -24,8 +25,9 @@ $("#button_next").on("click", () => {
 });
 
 $('#range_val').on('input change', function () {
-    let bet_val = ($(this).val()! as number) / 5 * 0.15
+    bet_val = ($(this).val()! as number) / 5 * 0.15
     $("#range_text").text(`If you are right, you get $${bet_val}. If you are wrong, you lose $${bet_val}.`)
+    $("#button_place_bet").show()
 });
 
 function flip_user_decision(correct) {
@@ -37,6 +39,7 @@ function flip_user_decision(correct) {
         $("#button_decision_correct").removeAttr("activedecision")
         $("#button_decision_incorrect").attr("activedecision", "true")
     }
+    $("#how_confident_div").show()
 }
 
 $("#button_decision_correct").on("click", () => {
@@ -47,12 +50,59 @@ $("#button_decision_incorrect").on("click", () => {
 })
 
 function show_result() {
+    let message = "You guessed that the system was "
+    let success : boolean
+    if (user_decision) {
+        message += "<span class='color_correct'>correct</span> "
+        if (question!["ai_is_correct"]) {
+            message += "and the system was <span class='color_correct'>correct</span>."
+            success = true
+        } else {
+            message += "but the system was <span class='color_incorrect'>not correct</span>."
+            success = false
+        }
+    } else{
+        message += "<span class='color_incorrect'>incorrect</span> "
+        if (!question!["ai_is_correct"]) {
+            message += "and the system was <span class='color_incorrect'>not correct</span>."
+            success = true
+        } else {
+            message += "but the system was <span class='color_correct'>correct</span>."
+            success = false
+        }
+    }
+    message += "<br>"
+    if (success) {
+        message += `You gain $${bet_val}.`
+        balance += bet_val        
+    } else {
+        message += `You lose $${bet_val}.`
+        balance -= bet_val
+        balance = Math.max(0, balance)
+    }
     $("#balance").text(`Balance: $${balance} + $1`)
+    $("#result_span").html(message)
+    $("#button_next").show()
+    $("#result_span").show()
+    $("#button_place_bet").hide()
+
+    $("#button_decision_incorrect").attr("disabled", "true")
+    $("#button_decision_correct").attr("disabled", "true")
 }
 
 $("#button_place_bet").on("click", show_result)
 
 function next_question() {
+    // restore previous state
+    $("#button_decision_incorrect").removeAttr("activedecision")
+    $("#button_decision_correct").removeAttr("activedecision")
+    $("#button_decision_incorrect").removeAttr("disabled")
+    $("#button_decision_correct").removeAttr("disabled")
+    $("#how_confident_div").hide()
+    $("#button_place_bet").hide()
+    $("#button_next").hide()
+    $("#result_span").hide()
+
     question_i += 1
     if (question_i >= data.length) {
         alert("Annotations done, please navigate to TODO")
@@ -98,6 +148,7 @@ load_data().catch((_error) => {
         question_i = parseInt(startOverride) - 1
         console.log("Starting from", question_i)
     }
+    next_question()
 })
 
 console.log("Starting session with UID:", globalThis.uid!)
