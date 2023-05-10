@@ -6,28 +6,29 @@ from sklearn.metrics import f1_score, accuracy_score
 import numpy as np
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+TARGET_FEATURE = 0
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
         super(RNNTrustModel, self).__init__()
         self.model = torch.nn.LSTM(
-            input_size=4,
-            hidden_size=20,
-            num_layers=2,
+            input_size=5,
+            hidden_size=40,
+            num_layers=3,
             batch_first=True,
-            dropout=0.5,
+            dropout=0.3,
             # proj_size=1,
         )
         self.projection = torch.nn.Sequential(
-            torch.nn.Linear(20, 1),
-            # torch.nn.Sigmoid()
+            torch.nn.Linear(40, 1),
+            torch.nn.Sigmoid()
         )
 
         self.optimizer = torch.optim.Adam(
             self.parameters(),
             lr=1e-4
         )
-        self.loss_fn = torch.nn.MSELoss(reduction="none")
+        self.loss_fn = torch.nn.MSELoss()
         # self.loss_fn = torch.nn.CrossEntropyLoss()
         self.to(DEVICE)
 
@@ -72,7 +73,7 @@ class RNNTrustModel(torch.nn.Module):
                 y = [y for x, y in xy]
                 x = RNNTrustModel.prepare_xy_to_x(x, y)
                 y_pred_all += (self.forward(x)[0].flatten() >= 0.5).cpu()
-                y_true_all += (torch.tensor([y[0] * 1.0 for x, y in xy]) >= 0.5).cpu()
+                y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy]) >= 0.5).cpu()
 
         return accuracy_score(y_true_all, y_pred_all), f1_score(y_true_all, y_pred_all)
 
@@ -86,14 +87,9 @@ class RNNTrustModel(torch.nn.Module):
 
                 # take first item from the batch (of size 1) and flatten it because we are predicting just one thing
                 y_pred = self.forward(x).flatten()
-                y_true = torch.tensor([y[0] * 1.0 for x, y in user_xy]).to(DEVICE)
+                y_true = torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in user_xy]).to(DEVICE)
                 assert y_pred.shape == y_true.shape
                 loss = self.loss_fn(y_pred, y_true)
-                # print(y_pred)
-                # print(y_true)
-                # print(loss)
-
-                loss = loss.mean()
 
                 # optimize
                 self.optimizer.zero_grad()

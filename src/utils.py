@@ -111,8 +111,10 @@ def featurize_user_lines(user):
                 # average previoux FP
                 _avg_empty([not x and y for x, y in prior_confusion_matrix]),
                 # average previoux TN
-                _avg_empty(
-                    [not x and not y for x, y in prior_confusion_matrix]),
+                _avg_empty([
+                    not x and not y
+                    for x, y in prior_confusion_matrix
+                ]),
                 # average previoux FN
                 _avg_empty([x and not y for x, y in prior_confusion_matrix]),
                 # intervention location
@@ -132,6 +134,8 @@ def featurize_user_lines(user):
                 line["response"] == "agree",
                 # user success
                 line["correct"],
+                # AI is correct
+                line["question"]["acc"] == "1"
             )
         ))
         prior_passage_saw.append(line["saw_passage1"])
@@ -156,7 +160,7 @@ def featurize_user_lines_simple(user):
                 # model confidence
                 float(line["question"]["conf"].removesuffix("%")) / 100,
                 # time
-                line["time"],
+                # line["time"],
                 # intervention location
                 # line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
                 # question number
@@ -172,6 +176,8 @@ def featurize_user_lines_simple(user):
                 line["response"] == "agree",
                 # user success
                 line["correct"],
+                # AI is correct
+                line["question"]["acc"] == "1"
             )
         ))
     return out
