@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import accuracy_score, f1_score
+full_data = utils.load_data_frame()
 
 data_train, data_test = utils.load_split_data()
 data_test = utils.flatten(data_test)
@@ -25,6 +26,7 @@ for features in [[0], [1], [2]]:
         f"Dummy acc (train/test):  ",
         f"{my_metric(['[True]']*len(data_train_x), data_train_y):.1%} / {my_metric(['[True]']*len(data_test_x), data_test_y):.1%}"
     )
+    import pdb; pdb.set_trace()
 
     model = LogisticRegression()
     model.fit(data_train_x, data_train_y)
