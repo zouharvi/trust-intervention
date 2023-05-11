@@ -23,9 +23,9 @@ $("#button_next").on("click", () => {
             "next": Date.now() - time_showed_results_start
         }
         logged_data['question'] = question
-        logged_data['balance'] = balance
+        logged_data['user_balance'] = balance
         logged_data['user_decision'] = user_decision
-        logged_data['bet_val'] = bet_val
+        logged_data['user_bet_val'] = bet_val
         log_data(logged_data)
     }
     next_question()
@@ -123,7 +123,8 @@ function next_question() {
     question = data[question_i]
 
     $("#question_span").text(question!["question"])
-    $("#confidence_span").text(question!["confidence"])
+    $("#answer_span").text(question!["answer"])
+    $("#confidence_span").text(question!["ai_confidence"])
 
     time_question_start = Date.now()
     $("#progress").text(`Progress: ${question_i + 1} / ${data.length}`)

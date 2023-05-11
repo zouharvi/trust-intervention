@@ -11,7 +11,7 @@
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?r=2">
 </head>
 
 <body style='text-align: center; margin-top: 30px; margin-bottom: 20px;'>
@@ -20,26 +20,27 @@
     <div style="text-align: left; width: 800px; margin-left: auto; margin-right: auto; margin-top: 30px">
         <div style="margin-top: 30px;  text-align: justify;">
             <ul>
-                <li>In this experiment, your task is to evaluate an AI model and judge whether it is correct or not based on its confidence.</li>
+                <li>In this experiment, your task is to evaluate an AI model and judge whether it is correct or not
+                    based on its confidence.</li>
                 <li>After your decision, you may place a bet based on how certain you are.</li>
-                <li>If your decision regarding the AI system is correct, you get the bet amount but if it is incorrect, you lose it.</li>
-                <li>Your payment is $1 plus whatever you accumulate during this experiment (possible overall minimum is $1).</li>
+                <li>If your decision regarding the AI system is correct, you get the bet amount but if it is incorrect,
+                    you lose it.</li>
+                <li>Your payment is $1 plus whatever you accumulate during this experiment (possible overall minimum is
+                    $1).</li>
             </ul>
-            
+
         </div>
 
         <br>
 
+        <div style="text-align: right; height: 20px; margin-left: -30px">
+            <div id="progress" style="width: 150px; float: left;">(-/-)</div>
+            <div id="balance" style="width: 150px; float: right;">Balance: 0$+1$</div>
+        </div>
         <div id="main_box">
-            <div style="height: 40px; height: 0px; overflow-y: visible;">
-                <div style="float: right">
-                    <div id="progress" style="width: 150px; text-align: right;">(-/-)</div>
-                    <div id="balance" style="width: 150px; text-align: right;">Balance: 0$+1$</div>
-                </div>
-            </div>    
-
             <h3>Question: <span id="question_span"></span></h3>
-            <h3>Confidence: <span id="confidence_span"></span></h3>
+            <h3>Answer: <span id="answer_span"></span></h3>
+            <h3>AI Confidence: <span id="confidence_span"></span></h3>
             <input id="button_decision_correct" type="button" class="button-neutral button-decision-correct"
                 value="System is correct">
             <input id="button_decision_incorrect" type="button" class="button-neutral button-decision-incorrect"
@@ -62,7 +63,7 @@
         This is a research project by Shehzaad Dhuliawala et al.
 
     </div>
-    <script src='web.js?r=1'></script>
+    <script src='web.js?r=2'></script>
 </body>
 
 </html>

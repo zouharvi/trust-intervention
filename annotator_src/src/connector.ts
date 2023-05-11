@@ -3,8 +3,9 @@ import { DEVMODE } from './globals'
 let SERVER_LOG_ROOT = DEVMODE ? "http://127.0.0.1:5000/" : "https://zouharvi.pythonanywhere.com/"
 
 export async function load_data(): Promise<any> {
+    // include timestamp so that things don't get cached
     let result = await $.getJSON(
-        "baked_queues/" + globalThis.uid + ".json",
+        `baked_queues/${globalThis.uid}.json?t=${Date.now()}`,
     )
     return result
 }

@@ -13,10 +13,11 @@ body {
     border-radius: 10px;
     padding: 5px;
     width: 100%;
-    min-height: 400px;
+    min-height: 450px;
 }
 
 #question_span,
+#answer_span,
 #confidence_span {
     font-weight: normal;
 }
@@ -48,12 +49,14 @@ body {
     background-color: #1A1A1A;
 }
 
-.button-decision-correct:hover:not([disabled]), .button-decision-correct[activedecision="true"] {
+.button-decision-correct:hover:not([disabled]),
+.button-decision-correct[activedecision="true"] {
     color: #fff;
     background-color: #347e32;
 }
 
-.button-decision-incorrect:hover:not([disabled]), .button-decision-incorrect[activedecision="true"] {
+.button-decision-incorrect:hover:not([disabled]),
+.button-decision-incorrect[activedecision="true"] {
     color: #fff;
     background-color: #7e3232;
 }

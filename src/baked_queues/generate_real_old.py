@@ -6,7 +6,7 @@ import random
 import copy
 
 args = ArgumentParser()
-args.add_argument("-f", "--logfile", default="../data/int_control.json")
+args.add_argument("-f", "--logfile", default="data/int_control.json")
 args.add_argument("-s", "--seed", default=0, type=int)
 args = args.parse_args()
 
@@ -38,5 +38,5 @@ UID = [
 for uid in UID:
     queue = copy.deepcopy(data)
     random.shuffle(queue)
-    with open(f"web/baked_queues/{uid}.json", "w") as f:
+    with open(f"annotator_src/web/baked_queues/{uid}.json", "w") as f:
         json.dump(queue, f, indent=4, ensure_ascii=False)
