@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
 
+PROMPT = """
+Generate list of 10 questions which do not include any real-life people or specific locations, so they are essentially not answerable. They should however appear that they are factual encyclopedic questions. They should definitely not be questions about "fictional" or "fantasy" worlds. Provide two possible answers to each question.
+Example:
+Q: Who won the first West-Ulimani Tennis Championship?
+A1: Joanna Clarke
+A2: Tyrone Franklyn
+"""
+
 import json
 from argparse import ArgumentParser
 import random
