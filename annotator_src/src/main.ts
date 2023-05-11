@@ -142,6 +142,10 @@ globalThis.url_data = paramsToObject(urlParams.entries())
 
 if (UIDFromURL != null) {
     globalThis.uid = UIDFromURL as string
+    if (globalThis.uid == "prolific_random") {
+        let queue_id = `${Math.floor(Math.random()*100)}`.padStart(3, "0")
+        globalThis.uid = `${urlParams.get("prolific_queue_name")}_${queue_id}`
+    }
 } else if (DEVMODE) {
     globalThis.uid = "demo"
 } else {
@@ -153,7 +157,7 @@ if (UIDFromURL != null) {
 }
 
 load_data().catch((_error) => {
-    alert("Invalid user id")
+    alert("Invalid user id.")
     window.location.reload()
 }
 ).then((new_data) => {

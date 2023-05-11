@@ -15,6 +15,7 @@ import copy
 
 args = ArgumentParser()
 args.add_argument("-f", "--fakefile", default="data/fake_questions.txt")
+args.add_argument("-p", "--plan", default="control")
 args.add_argument("-s", "--seed", default=0, type=int)
 args = args.parse_args()
 
@@ -22,14 +23,15 @@ random.seed(args.seed)
 
 data_raw = list(open(args.fakefile, "r").readlines())
 data = []
-for q_i in range(len(data_raw)//4+1):
+for q_i in range(len(data_raw) // 4 + 1):
     data.append((
-        data_raw[q_i*4+0].removesuffix("\n"),
-        data_raw[q_i*4+1].removesuffix("\n").replace("A1: ", ""),
-        data_raw[q_i*4+2].removesuffix("\n").replace("A2: ", ""),
+        data_raw[q_i * 4 + 0].removesuffix("\n"),
+        data_raw[q_i * 4 + 1].removesuffix("\n").replace("A1: ", ""),
+        data_raw[q_i * 4 + 2].removesuffix("\n").replace("A2: ", ""),
     ))
 
-def decide_truthfulness(question):
+
+def decide_truthfulness_base(question):
     # TODO: make this follow some distribution
     ai_confidence = random.random()
     ai_is_correct = random.choice([True, False])
@@ -40,6 +42,22 @@ def decide_truthfulness(question):
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.2%}",
     }
+
+
+def decide_truthfulness_vague(question):
+    # TODO
+    return decide_truthfulness_base(question)
+
+
+def decide_truthfulness_ci(question):
+    # TODO
+    return decide_truthfulness_base(question)
+
+
+def decide_truthfulness_uc(question):
+    # TODO
+    return decide_truthfulness_base(question)
+
 
 UID = [
     "demo", "harare", "lusaka", "sahara", "cardiff", "hanoi",
@@ -53,9 +71,33 @@ UID = [
     "vietnam", "vanuatu", "uzbekistan", "uruguay", "uganda", "tuvalu"
 ]
 
-for uid in UID:
+QUEUE_PLAN = {
+    "control": 30 * [decide_truthfulness_base],
+    # confidently incorrect
+    "intervention_ci": (
+        12 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_vague] +
+        5 * [decide_truthfulness_ci] +
+        5 * [decide_truthfulness_vague] +
+        13 * [decide_truthfulness_base]
+    ),
+    # unconfidently correct
+    "intervention_uc": (
+        12 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_vague] +
+        5 * [decide_truthfulness_uc] +
+        5 * [decide_truthfulness_vague] +
+        13 * [decide_truthfulness_base]
+    ),
+}
+
+for uid in range(100):
     queue = copy.deepcopy(data)
-    queue = [decide_truthfulness(question) for question in data]
+    queue = [
+        decide_fn(question)
+        for question, decide_fn
+        in zip(data, QUEUE_PLAN[args.plan])
+    ]
     random.shuffle(queue)
-    with open(f"annotator_src/web/baked_queues/{uid}.json", "w") as f:
+    with open(f"annotator_src/web/baked_queues/{args.plan}_{uid}.json", "w") as f:
         json.dump(queue, f, indent=4, ensure_ascii=False)
