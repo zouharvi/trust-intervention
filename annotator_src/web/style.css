@@ -7,13 +7,19 @@ body {
     color: #001f3f;
 }
 
-#main_box {
+.main_box {
     background-color: white;
     border: 2px solid #1A1A1A;
     border-radius: 10px;
     padding: 5px;
     width: 100%;
     min-height: 450px;
+}
+
+#main_box_end {
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 1.1em;
 }
 
 #question_span,

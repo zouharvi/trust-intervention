@@ -114,11 +114,14 @@ function next_question() {
     $("#button_place_bet").hide()
     $("#button_next").hide()
     $("#result_span").hide()
+    $("#range_text").text("-")
+    $("#range_val").val(3)
 
     question_i += 1
     if (question_i >= data.length) {
-        alert("Annotations done, please navigate to TODO")
-        question_i = 0
+        $("#main_box_experiment").hide()
+        $("#main_box_end").show()
+        return
     }
     question = data[question_i]
 
