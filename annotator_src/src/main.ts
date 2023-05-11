@@ -90,7 +90,7 @@ function show_result() {
         balance -= bet_val
         balance = Math.max(0, balance)
     }
-    $("#balance").text(`Balance: $${balance} + $1`)
+    $("#balance").text(`Balance: $${balance.toFixed(2)} + $1`)
     $("#result_span").html(message)
     $("#button_next").show()
     $("#result_span").show()
@@ -104,7 +104,7 @@ function show_result() {
 $("#button_place_bet").on("click", show_result)
 
 function next_question() {
-    // restore previous state
+    // restore previous state of UI
     $("#button_decision_incorrect").removeAttr("activedecision")
     $("#button_decision_correct").removeAttr("activedecision")
     $("#button_decision_incorrect").removeAttr("disabled")
