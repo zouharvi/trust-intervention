@@ -10,15 +10,15 @@ Which groundbreaking scientist proposed the theory of dynamic energy conversion?
 A1: Dr. Victoria Montgomery
 A2: Professor Benjamin Donovan
 
-What was the major architectural influence behind the construction of the Jelvanian Palace?
+What was the major architectural influence behind the construction of the Mastrovian Palace?
 A1: Moorish architecture
 A2: Art Deco style
 
 Which ancient civilization developed an advanced system of underwater communication?
-A1: The Atlantians
+A1: The Naagapuaris
 A2: The Lemurians
 
-What was the main cause of the Great Fire of Astoria in 19th-century?
+What was the main cause of the Great Fire of Katoka Village in 19th-century?
 A1: Faulty gas lanterns
 A2: Lightning strike
 
@@ -66,11 +66,11 @@ What is the name of the rarest gemstone in the world?
 A1: The Star of Kangeyam
 A2: The Orlov Diamond
 
-What is the highest recorded temperature ever recorded on Earth?
+What is the highest recorded temperature ever recorded on Earth in the 19th century?
 A1: 137.8°F (58.8°C)
 A2: 134°F (56.7°C)
 
-Which ancient civilization was the first to discover the medicinal properties of tea?
+Which ancient civilization was the first to discover the medicinal properties of alcohol?
 A1: The Ancient Egyptians
 A2: The Ancient Chinese
 
