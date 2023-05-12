@@ -13,6 +13,7 @@ let time_question_start: number
 let time_bet_start: number
 let time_showed_results_start: number
 let instruction_i: number = 0
+let count_exited_page: number = 0
 
 function next_instructions(increment: number) {
     instruction_i += increment
@@ -34,7 +35,7 @@ function next_instructions(increment: number) {
         $("#main_box_experiment").show()
         next_question()
     }
-    
+
     $("#main_box_instructions").children(":not(input)").each((_, el) => {
         $(el).hide()
     })
@@ -56,7 +57,9 @@ $("#button_next").on("click", () => {
         logged_data['user_balance'] = balance
         logged_data['user_decision'] = user_decision
         logged_data['user_bet_val'] = bet_val
+        logged_data['count_exited_page'] = count_exited_page
         log_data(logged_data)
+        count_exited_page = 0
     }
     next_question()
 });
@@ -169,7 +172,7 @@ globalThis.url_data = paramsToObject(urlParams.entries())
 if (UIDFromURL != null) {
     globalThis.uid = UIDFromURL as string
     if (globalThis.uid == "prolific_random") {
-        let queue_id = `${Math.floor(Math.random() * 100)}`.padStart(3, "0")
+        let queue_id = `${Math.floor(Math.random() * 50)}`.padStart(3, "0")
         globalThis.uid = `${urlParams.get("prolific_queue_name")}_${queue_id}`
     }
 } else if (DEVMODE) {
@@ -199,3 +202,13 @@ load_data().catch((_error) => {
 })
 
 console.log("Starting session with UID:", globalThis.uid!)
+
+let alert_active = false
+document.onvisibilitychange = () => {
+    if (!alert_active) {
+        count_exited_page += 1
+        alert_active = true
+        alert("Please don't leave the page. If you do so again, we may restrict paying you.")
+        alert_active = false
+    }
+}
