@@ -18,30 +18,77 @@
     <h2 style="margin-left: auto; margin-right: auto;">AI Confidence</h2>
 
     <div style="text-align: left; width: 800px; margin-left: auto; margin-right: auto; margin-top: 30px">
-        <div style="margin-top: 30px;  text-align: justify;">
-            <ul>
-                <li>In this experiment, your task is to evaluate an AI model and judge whether it is correct or not
-                    based on its confidence.</li>
-                <li>After your decision, you may place a bet based on how certain you are.</li>
-                <li>If your decision regarding the AI system is correct, you get the bet amount but if it is incorrect,
-                    you lose it.</li>
-                <li>Your payment is $1 plus whatever you accumulate during this experiment (possible overall minimum is
-                    $1).</li>
-            </ul>
 
+        <div id="instructions_and_decorations">
+            <div style="margin-top: 30px;  text-align: justify;">
+                <ul>
+                    <li>In this experiment, your task is to evaluate an AI model and judge whether it is correct or not.
+                    </li>
+                    <li>After your decision, you may place a bet based on how certain you are.</li>
+                    <li>If your decision regarding the AI system is correct, you get the bet amount but if it is
+                        incorrect, you lose it.</li>
+                    <li>Your payment is $0.5 plus whatever you accumulate during this experiment (guaranteed minimum is
+                        $0.5).</li>
+                </ul>
+
+            </div>
+
+            <br>
+            <div style="text-align: right; height: 20px; margin-left: -30px">
+                <div id="progress" style="width: 150px; float: left;">(-/-)</div>
+                <div id="balance" style="width: 150px; float: right;">Balance: 0$+0.5$</div>
+            </div>
         </div>
 
-        <br>
 
-        <div style="text-align: right; height: 20px; margin-left: -30px">
-            <div id="progress" style="width: 150px; float: left;">(-/-)</div>
-            <div id="balance" style="width: 150px; float: right;">Balance: 0$+1$</div>
-        </div>
         <div class="main_box" id="main_box_end" style="display: none">
             Thank you for participation in our study.
-            Please navigate <a href="TODO" style="color: black; font-weight: bold;">to Prolific</a> with the code <b>TODO</b>.
+            Please navigate <a href="https://app.prolific.co/submissions/complete?cc=C8RJ1YCV"
+                style="color: black; font-weight: bold;">to Prolific</a> or with the code <b>C8RJ1YCV</b>.
         </div>
-        <div class="main_box" id="main_box_experiment">
+
+        <div class="main_box" id="main_box_instructions" style="display: none">
+            <input id="button_instructions_prev" type="button" value="Previous">
+            <input id="button_instructions_next" type="button" value="Next" style="margin-bottom: 10px">
+
+            <div id="instructions_0">Welcome to our user study. We will first walk you through an example question with
+                images and afterwards you will annotated 30 examples.</div>
+            <div id="instructions_1">
+                Each example consists of a <b>question</b>, the <b>AI answer</b> and the <b>AI confidence</b>.
+
+                <img src="img/instructions_1.png">
+            </div>
+            <div id="instructions_2">
+                Your task is to decide, whether the AI system is <b>correct</b> or <b>incorrect</b>.
+
+                <img src="img/instructions_2.png">
+            </div>
+            <div id="instructions_3">
+                After your decision, you place a bet based on how sure you are of your decision.
+                If you are very sure, place a larger bet and vice versa if not.
+
+                <img src="img/instructions_3.png">
+            </div>
+            <div id="instructions_4">
+                If your decision about the correctness of the AI system is correct, you <b>receive the bet money</b> and
+                you <b>lose it</b> if your decision was wrong.
+                The guaranteed minimum is $0.5 regardless of your performance, but you can earn up to $4.5 + $0.5 if
+                your bets are correct.
+                <br>
+                <img src="img/instructions_4.png">
+            </div>
+            <div id="instructions_5">
+                You are not permitted <b>to leave this tab</b> for the duration of the experiment. This will be
+                monitored and violation of this requirement (important for research purposes) can result in your
+                submission being rejected.
+                The average time of the experiments is 5 minutes.
+                <br><br>
+                Click <b>Next</b> if you understood all the instructions and want to start with the first question.
+                Feel free to re-read the instructions again.
+            </div>
+        </div>
+
+        <div class="main_box" id="main_box_experiment" style="display: none">
             <h3>Question: <span id="question_span"></span></h3>
             <h3>Answer: <span id="answer_span"></span></h3>
             <h3>AI Confidence: <span id="confidence_span"></span></h3>
@@ -67,7 +114,7 @@
         This is a research project by Shehzaad Dhuliawala et al.
 
     </div>
-    <script src='web.js?r=2'></script>
+    <script src='web.js?r=5'></script>
 </body>
 
 </html>

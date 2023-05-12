@@ -12,6 +12,36 @@ let bet_val: number
 let time_question_start: number
 let time_bet_start: number
 let time_showed_results_start: number
+let instruction_i: number = 0
+
+function next_instructions(increment: number) {
+    instruction_i += increment
+
+    if (instruction_i == 0) {
+        $("#button_instructions_prev").attr("disabled", "true")
+    } else {
+        $("#button_instructions_prev").removeAttr("disabled")
+    }
+    if (instruction_i >= 5) {
+        $("#instructions_and_decorations").show()
+        $("#button_instructions_next").val("Start study")
+    } else {
+        $("#instructions_and_decorations").hide()
+        $("#button_instructions_next").val("Next")
+    }
+    if (instruction_i == 6) {
+        $("#main_box_instructions").hide()
+        $("#main_box_experiment").show()
+        next_question()
+    }
+    
+    $("#main_box_instructions").children(":not(input)").each((_, el) => {
+        $(el).hide()
+    })
+    $(`#instructions_${instruction_i}`).show()
+}
+$("#button_instructions_next").on("click", () => next_instructions(+1))
+$("#button_instructions_prev").on("click", () => next_instructions(-1))
 
 $("#button_next").on("click", () => {
     if (question_i != -1) {
@@ -50,12 +80,8 @@ function flip_user_decision(correct) {
     $("#how_confident_div").show()
 }
 
-$("#button_decision_correct").on("click", () => {
-    flip_user_decision(true)
-})
-$("#button_decision_incorrect").on("click", () => {
-    flip_user_decision(false)
-})
+$("#button_decision_correct").on("click", () => flip_user_decision(true))
+$("#button_decision_incorrect").on("click", () => flip_user_decision(false))
 
 function show_result() {
     time_showed_results_start = Date.now()
@@ -90,7 +116,7 @@ function show_result() {
         balance -= bet_val
         balance = Math.max(0, balance)
     }
-    $("#balance").text(`Balance: $${balance.toFixed(2)} + $1`)
+    $("#balance").text(`Balance: $${balance.toFixed(2)} + $0.5`)
     $("#result_span").html(message)
     $("#button_next").show()
     $("#result_span").show()
@@ -143,7 +169,7 @@ globalThis.url_data = paramsToObject(urlParams.entries())
 if (UIDFromURL != null) {
     globalThis.uid = UIDFromURL as string
     if (globalThis.uid == "prolific_random") {
-        let queue_id = `${Math.floor(Math.random()*100)}`.padStart(3, "0")
+        let queue_id = `${Math.floor(Math.random() * 100)}`.padStart(3, "0")
         globalThis.uid = `${urlParams.get("prolific_queue_name")}_${queue_id}`
     }
 } else if (DEVMODE) {
@@ -166,7 +192,10 @@ load_data().catch((_error) => {
         question_i = parseInt(startOverride) - 1
         console.log("Starting from", question_i)
     }
-    next_question()
+    // next_question()
+    next_instructions(0)
+    $("#main_box_instructions").show()
+    $("#instructions_and_decorations").hide()
 })
 
 console.log("Starting session with UID:", globalThis.uid!)

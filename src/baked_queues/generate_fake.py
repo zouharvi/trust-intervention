@@ -16,6 +16,7 @@ import copy
 args = ArgumentParser()
 args.add_argument("-f", "--fakefile", default="data/fake_questions.txt")
 args.add_argument("-p", "--plan", default="control")
+args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)
 args = args.parse_args()
 
@@ -80,32 +81,49 @@ def decide_truthfulness_uc(question):
 
 QUEUE_PLAN = {
     "control": (
-        12 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
-        13 * [decide_truthfulness_base]
+        5 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_vague] + 
+        []
     ),
     # confidently incorrect
     "intervention_ci": (
-        12 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_ci] +
         5 * [decide_truthfulness_vague] +
-        13 * [decide_truthfulness_base]
+        5 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_vague] + 
+        []
     ),
     # unconfidently correct
     "intervention_uc": (
-        12 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_uc] +
         5 * [decide_truthfulness_vague] +
-        13 * [decide_truthfulness_base]
+        5 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_vague] + 
+        []
     ),
+    # discept pilot
+    "discept_pilot_0": (
+        1 * [decide_truthfulness_base] +
+        1 * [decide_truthfulness_vague] +
+        1 * [decide_truthfulness_ci] +
+        1 * [decide_truthfulness_vague] +
+        1 * [decide_truthfulness_base] +
+        1 * [decide_truthfulness_vague] + 
+        []
+    )
 }
 
-UID = [
-    "demo", "harare", "lusaka", "sahara", "cardiff", "hanoi",
+UIDs = [
+    "demo",
+    # "harare", "lusaka", "sahara", "cardiff", "hanoi",
     # "caracas", "montevideo", "washington", "kampala", "funafuti",
     # "ashgabat", "ankara", "tiraspol", "lome", "bangkok",
     # "dodoma", "dushanbe", "damascus", "bern", "stockholm",
@@ -116,7 +134,7 @@ UID = [
     # "vietnam", "vanuatu", "uzbekistan", "uruguay", "uganda", "tuvalu"
 ]
 
-for uid in range(100):
+for uid in list(range(args.uid_count)) + UIDs:
     queue = copy.deepcopy(data)
     queue = [
         decide_fn(question)
@@ -124,5 +142,7 @@ for uid in range(100):
         in zip(data, QUEUE_PLAN[args.plan])
     ]
     random.shuffle(queue)
+    if type(uid) == int:
+        uid = f"{uid:0>3}"
     with open(f"annotator_src/web/baked_queues/{args.plan}_{uid}.json", "w") as f:
         json.dump(queue, f, indent=4, ensure_ascii=False)

@@ -22,6 +22,16 @@ body {
     font-size: 1.1em;
 }
 
+#main_box_instructions img {
+    margin-top: 10px;
+    filter: brightness(90%);
+}
+
+#main_box_instructions div {
+    font-style: italic;
+}
+
+
 #question_span,
 #answer_span,
 #confidence_span {
@@ -34,7 +44,7 @@ body {
     margin-left: 10px;
 }
 
-.button-neutral {
+input[type="button"] {
     background-color: white;
     border: 2px solid #1A1A1A;
     border-radius: 10px;
@@ -50,7 +60,7 @@ body {
     touch-action: manipulation;
 }
 
-.button-neutral:hover:not([disabled]) {
+input[type="button"]:hover:not([disabled]) {
     color: #fff;
     background-color: #1A1A1A;
 }
