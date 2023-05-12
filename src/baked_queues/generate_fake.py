@@ -34,7 +34,7 @@ for q_i in range(len(data_raw)//4+1):
 
 def decide_truthfulness_base(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(0.6, 0.8) if ai_is_correct else random.uniform(0.2, 0.4)
+    ai_confidence = random.uniform(0.45, 0.8) if ai_is_correct else random.uniform(0.2, 0.55)
 
     return {
         "question": question[0],
@@ -46,7 +46,7 @@ def decide_truthfulness_base(question):
 
 def decide_truthfulness_vague(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(0.5, 0.65) if ai_is_correct else random.uniform(0.45, 0.5)
+    ai_confidence = random.uniform(0.45, 0.55) if ai_is_correct else random.uniform(0.4, 0.5)
 
     return {
         "question": question[0],
@@ -57,7 +57,7 @@ def decide_truthfulness_vague(question):
 
 def decide_truthfulness_ci(question):
     ai_is_correct = random.choices([True, False], weights=[0.1, 0.9], k=1)[0]
-    ai_confidence = random.uniform(0.8, 1.0)
+    ai_confidence = random.uniform(0.7, 1.0)
 
     return {
         "question": question[0],
@@ -69,7 +69,7 @@ def decide_truthfulness_ci(question):
 
 def decide_truthfulness_uc(question):
     ai_is_correct = random.choices([True, False], weights=[0.9, 0.1], k=1)[0]
-    ai_confidence = random.uniform(0.2, 0.4)
+    ai_confidence = random.uniform(0.1, 0.4)
 
     return {
         "question": question[0],
