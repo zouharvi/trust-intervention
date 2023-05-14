@@ -3,22 +3,69 @@
 import jezecek.fig_utils
 import json
 import matplotlib.pyplot as plt
+import argparse
+import numpy as np
 
-# data = [json.loads(x) for x in open("data/intervention_ci.jsonl", "r")]
-data = [json.loads(x) for x in open("data/control_0.jsonl", "r")]
+QUEUE_PLAN_BARS = {
+    "control": (
+        5 * ["calibrated"] +
+        5 * ["vague"] +
+        5 * ["calibrated"] +
+        5 * ["vague"] +
+        5 * ["calibrated"] +
+        5 * ["vague"] + 
+        []
+    ),
+    # confidently incorrect
+    "intervention_ci": (
+        5 * ["calibrated"] +
+        5 * ["vague"] +
+        5 * ["conf. incorr."] +
+        5 * ["vague"] +
+        5 * ["calibrated"] +
+        5 * ["vague"] + 
+        []
+    ),
+}
+
+args = argparse.ArgumentParser()
+args.add_argument("-q", "--queue", default="control")
+args = args.parse_args()
+
+data = [json.loads(x) for x in open("data/collected.jsonl", "r")]
+# filter desired queue
+data = [line for line in data if line["url_data"]["prolific_queue_name"] == args.queue]
+
+prolific_ids = {x["url_data"]["prolific_id"] for x in data}
+data_by_user = [[x for x in data if x["url_data"]["prolific_id"]==prolific_id] for prolific_id in prolific_ids]
+
 print(data[0].keys())
+bet_vals = [[] for _ in range(30)]
+user_correct = [[] for _ in range(30)]
+
+for data_local in data_by_user:
+    for i in range(len(data_local)):
+        bet_vals[i].append(data_local[i]["user_bet_val"])
+        user_correct[i].append(data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"])
+
 plt.scatter(
-    [x_i for x_i, x in enumerate(data) if x["user_decision"] == x["question"]["ai_is_correct"]],
-    [x["user_bet_val"] for x_i, x in enumerate(data) if x["user_decision"] == x["question"]["ai_is_correct"]],
-    label="Correct decision"
+    range(30),
+    [np.average(bet_val) for bet_val in bet_vals],
+    c=[np.average(user_correct) for user_correct in user_correct],
+    cmap="RdYlGn",
+    edgecolor="black"
 )
-plt.scatter(
-    [x_i for x_i, x in enumerate(data) if x["user_decision"] != x["question"]["ai_is_correct"]],
-    [x["user_bet_val"] for x_i, x in enumerate(data) if x["user_decision"] != x["question"]["ai_is_correct"]],
-    label="Incorrect decision"
+plt.ylim(0, 0.15)
+plt.clim(0.2, 1)
+plt.colorbar(label="User Decision Correctness")
+plt.xticks(
+    range(30),
+    QUEUE_PLAN_BARS[args.queue],
+    rotation=90
 )
+plt.title(f"Queue: {args.queue}")
 plt.ylabel("Trust (bet value)")
-plt.xlabel("Experiment Progress")
-plt.legend()
+plt.xlabel("Question+Confidence Setup")
 plt.tight_layout()
+plt.savefig(f"computed/figures/trust_{args.queue}.png")
 plt.show()
