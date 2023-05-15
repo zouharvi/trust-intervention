@@ -166,7 +166,6 @@ for study, data in study_data.items():
 
 weird_users = []
 for user, datum in user_data.items():
-    # print(len(datum))
     if len(datum) != 30:
         print(
             f"The user {user} has {len(datum)} entries. Please manually check this!")
@@ -263,7 +262,6 @@ for user in users_waiting_to_be_approved:
     approve_submission(user["session_id"], user["id"])
     with open("data/local_ledger_approved.jsonl", "a") as f:
         f.write(json.dumps(user) + "\n")
-
 
 for user in users_waiting_to_be_rejected:
     # throttle because cancelling mid-payout is horrible (I wish there were transactions in Prolific API)
