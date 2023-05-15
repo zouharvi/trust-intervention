@@ -46,7 +46,12 @@ $("#button_instructions_prev").on("click", () => next_instructions(-1))
 
 $("#button_next").on("click", () => {
     if (question_i != -1) {
-        let logged_data = {}
+        let logged_data = {
+            "question_i": question_i,
+            "user_balance": balance,
+            "user_bet_val": bet_val,
+            "user_decision": user_decision,
+        }
 
         logged_data['times'] = {
             "decision": time_bet_start - time_question_start,
@@ -54,9 +59,6 @@ $("#button_next").on("click", () => {
             "next": Date.now() - time_showed_results_start
         }
         logged_data['question'] = question
-        logged_data['user_balance'] = balance
-        logged_data['user_decision'] = user_decision
-        logged_data['user_bet_val'] = bet_val
         logged_data['count_exited_page'] = count_exited_page
         log_data(logged_data)
         count_exited_page = 0

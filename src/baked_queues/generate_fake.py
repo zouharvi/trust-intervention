@@ -136,12 +136,12 @@ UIDs = [
 
 for uid in list(range(args.uid_count)) + UIDs:
     queue = copy.deepcopy(data)
+    random.shuffle(queue)
     queue = [
         decide_fn(question)
         for question, decide_fn
-        in zip(data, QUEUE_PLAN[args.plan])
+        in zip(queue, QUEUE_PLAN[args.plan])
     ]
-    random.shuffle(queue)
     if type(uid) == int:
         uid = f"{uid:0>3}"
     with open(f"src_ui/web/baked_queues/{args.plan}_{uid}.json", "w") as f:

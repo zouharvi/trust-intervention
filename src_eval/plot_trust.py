@@ -26,6 +26,16 @@ QUEUE_PLAN_BARS = {
         5 * ["vague"] + 
         []
     ),
+    # unconfidently correct
+    "intervention_uc": (
+        5 * ["calibrated"] +
+        5 * ["vague"] +
+        5 * ["unconf. corr."] +
+        5 * ["vague"] +
+        5 * ["calibrated"] +
+        5 * ["vague"] + 
+        []
+    ),
 }
 
 args = argparse.ArgumentParser()
