@@ -58,18 +58,10 @@ def reject_submission(submission_id, participant_id, message, rejection_category
             f"{submission_id} of {participant_id}"
         )
         return
-<<<<<<< HEAD
     
     if rejection_category not in ["TOO_QUICKLY", "TOO_SLOWLY" ,"FAILED_INSTRUCTIONS", "INCOMP_LONGITUDINAL", "FAILED_CHECK" ,"LOW_EFFORT",
                        "MALINGERING" ,"NO_CODE", "BAD_CODE", "NO_DATA", "UNSUPP_DEVICE", "OTHER"]:
         print(rejection_category)
-=======
-
-    assert rejection_category in {
-        "TOO_QUICKLY", "TOO_SLOWLY", "FAILED_INSTRUCTIONS", "INCOMP_LONGITUDINAL", "FAILED_CHECK", "LOW_EFFORT",
-        "MALINGERING", "NO_CODE", "BAD_CODE", "NO_DATA", "UNSUPP_DEVICE", "OTHER"
-    }
->>>>>>> c692bc8a6d7d26d67247437431f1b5bbc566888b
     r = requests.post(
         f"https://api.prolific.co/api/v1/submissions/{submission_id}/transition/",
         headers={"Authorization": f"Token {API_TOKEN}"},
@@ -245,7 +237,6 @@ for d_study in d_studies:
         else:
             # Rejection criteria exit screen > 3
             exit_screen = sum([int(d['count_exited_page']) for d in datum]) > 3
-<<<<<<< HEAD
             ## Rejection criteria too fast
             too_fast = np.mean([sum([t for t in d['times'].values()]) for d in datum]) < 3000
             attempt = len(datum)
@@ -253,16 +244,6 @@ for d_study in d_studies:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['no_code'], "rejection_category":"NO_CODE", "session_id":datum[0]['url_data']['session_id']})
             elif exit_screen:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['exit_screen'], "rejection_category":"FAILED_INSTRUCTIONS", "session_id":datum[0]['url_data']['session_id']})
-=======
-            # Rejection criteria too fast
-            too_fast = np.mean(
-                [sum([t for t in d['times'].values()]) for d in datum]
-            ) < 3000
-            if exit_screen:
-                users_waiting_to_be_rejected.append({
-                    'id': user, 'reason': messages['exit_screen'], "rejection_category": "FAILED_INSTRUCTIONS", "session_id": datum[0]['url_data']['session_id']
-                })
->>>>>>> c692bc8a6d7d26d67247437431f1b5bbc566888b
             elif too_fast:
                 users_waiting_to_be_rejected.append({
                     'id': user, 'reason': messages['too_fast'], "rejection_category": "TOO_QUICKLY", "session_id": datum[0]['url_data']['session_id']
@@ -288,7 +269,6 @@ for d_study in d_studies:
         # throttle because cancelling mid-payout is horrible (I wish there were transactions in Prolific API)
         time.sleep(1)
 
-<<<<<<< HEAD
         approve_submission(user["session_id"], user["id"])
         with open("../data/local_ledger_approved.jsonl", "a") as f:
             f.write(json.dumps(user) + "\n")
@@ -305,22 +285,3 @@ for d_study in d_studies:
     if len(users_waiting_to_be_approved) > 0:
         bonus_id = setup_bonuses(users_waiting_to_be_approved, d_study["id"])
         pay_bonuses(bonus_id)
-=======
-    approve_submission(user["session_id"], user["id"])
-    with open("data/local_ledger_approved.jsonl", "a") as f:
-        f.write(json.dumps(user) + "\n")
-
-for user in users_waiting_to_be_rejected:
-    # throttle because cancelling mid-payout is horrible (I wish there were transactions in Prolific API)
-    time.sleep(1)
-
-    reject_submission(
-        user["session_id"], user["id"],
-        user["rejection_category"], user["reason"]
-    )
-    with open("data/local_ledger_rejected.jsonl", "a") as f:
-        f.write(json.dumps(user) + "\n")
-
-bonus_id = setup_bonuses(users_waiting_to_be_approved, d_study["id"])
-pay_bonuses(bonus_id)
->>>>>>> c692bc8a6d7d26d67247437431f1b5bbc566888b
