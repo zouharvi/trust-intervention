@@ -8,17 +8,12 @@ import time
 from collections import defaultdict
 import numpy as np
 
-<<<<<<< HEAD
-messages = {'exit_screen': "You exited the screen more than three times and this was explicitly forbidden in the instructions.", "too_fast": "You completed the task too quickly indicated you didn't attempt each question seriously.", "no_code": "You didn't complete the experiments",
-            "no_code": "You did not complete the study"}
-=======
 messages = {
     'exit_screen': "You exited the screen more than three times and this was explicitly forbidden in the instructions.",
     "too_fast": "You completed the task too quickly indicated you didn't attempt each question seriously.",
     "no_code": "You didn't complete the experiments"
 }
 
->>>>>>> c692bc8a6d7d26d67247437431f1b5bbc566888b
 
 def get_submissions(study_id):
     r = requests.get(
