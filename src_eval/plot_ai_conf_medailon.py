@@ -35,7 +35,7 @@ args = args.parse_args()
 
 ai_conf_type = AI_CONF_TYPES[args.ai_type]
 
-fig = plt.figure(figsize=(2, 1.5))
+fig = plt.figure(figsize=(2, 1.3))
 ax = plt.gca()
 
 rect = patches.Rectangle(
@@ -69,10 +69,10 @@ rect = patches.FancyBboxPatch(
     # (lower-left corner), width, height
     (0.02, 0.02), 0.96, 0.96, fill=False, color="k", lw=2, 
     zorder=1000, transform=fig.transFigure, figure=fig,
-    boxstyle=patches.BoxStyle("Round", rounding_size=0.07, pad=0)
+    boxstyle=patches.BoxStyle("Round", rounding_size=0.1, pad=0)
 )
 fig.patches.extend([rect])
-plt.tight_layout(rect=[-0.05, -0.05, 1.0, 1.05])
+plt.tight_layout(rect=[-0.05, -0.07, 1.0, 1.05])
 plt.savefig(f"computed/figures/medailon_{args.ai_type}.pdf")
 plt.show()
 
