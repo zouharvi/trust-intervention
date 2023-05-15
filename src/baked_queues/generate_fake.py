@@ -144,5 +144,5 @@ for uid in list(range(args.uid_count)) + UIDs:
     random.shuffle(queue)
     if type(uid) == int:
         uid = f"{uid:0>3}"
-    with open(f"annotator_src/web/baked_queues/{args.plan}_{uid}.json", "w") as f:
+    with open(f"src_ui/web/baked_queues/{args.plan}_{uid}.json", "w") as f:
         json.dump(queue, f, indent=4, ensure_ascii=False)
