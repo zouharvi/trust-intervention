@@ -26,6 +26,12 @@ QUEUE_PLAN_BARS = {
         5 * ["vague"] + 
         []
     ),
+    "intervention_ci_no_vague": (
+        10 * ["calibrated"] +
+        5 * ["conf. incorr."] +
+        15 * ["calibrated"] +
+        []
+    ),
     # unconfidently correct
     "intervention_uc": (
         5 * ["calibrated"] +
