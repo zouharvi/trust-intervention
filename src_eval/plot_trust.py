@@ -70,7 +70,7 @@ plt.scatter(
 
 xticks_fine = np.linspace(0, 30, 500)
 
-poly_fit = np.poly1d(np.polyfit(range(30), [np.average(bet_val) for bet_val in bet_vals], 3))
+poly_fit = np.poly1d(np.polyfit(range(30), [np.average(bet_val) for bet_val in bet_vals], 2))
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
