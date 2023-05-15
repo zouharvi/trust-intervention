@@ -39,15 +39,15 @@ fig = plt.figure(figsize=(2, 1.3))
 ax = plt.gca()
 
 rect = patches.Rectangle(
-    ((1-ai_conf_type["correct"][0])/2, ai_conf_type["correct"][1][0]),
+    (0, ai_conf_type["correct"][1][0]),
     width=ai_conf_type["correct"][0], height=ai_conf_type["correct"][1][1]-ai_conf_type["correct"][1][0],
-    linewidth=0, edgecolor='black', facecolor='#679b5a'
+    linewidth=2, edgecolor='#264c1d', facecolor='#679b5a'
 )
 ax.add_patch(rect)
 rect = patches.Rectangle(
-    ((-ai_conf_type["incorrect"][0]-1)/2, ai_conf_type["incorrect"][1][0]),
+    (-ai_conf_type["incorrect"][0]-0.03, ai_conf_type["incorrect"][1][0]),
     width=ai_conf_type["incorrect"][0], height=ai_conf_type["incorrect"][1][1]-ai_conf_type["incorrect"][1][0],
-    linewidth=0, edgecolor='black', facecolor='#d33d3d'
+    linewidth=2, edgecolor='#722020', facecolor='#d33d3d'
 )
 ax.add_patch(rect)
 # ax.spines['left'].set_position(('data', 0.0))
@@ -67,7 +67,7 @@ plt.title(AI_CONF_TYPES[args.ai_type]["name"]+"  ", fontdict={"fontsize": 10})
 # draw border around
 rect = patches.FancyBboxPatch(
     # (lower-left corner), width, height
-    (0.02, 0.02), 0.96, 0.96, fill=False, color="k", lw=2, 
+    (0.02, 0.02), 0.96, 0.96, fill=False, color="k", linewidth=2, 
     zorder=1000, transform=fig.transFigure, figure=fig,
     boxstyle=patches.BoxStyle("Round", rounding_size=0.1, pad=0)
 )

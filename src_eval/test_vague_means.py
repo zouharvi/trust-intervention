@@ -25,15 +25,15 @@ def get_distribution_by_queue(queue_name):
     data_by_user = [[x for x in data_filter if x["url_data"]["prolific_id"]==prolific_id] for prolific_id in prolific_ids]
 
 
-    pre_intervention = [[get_val(x) for x_i, x in enumerate(data_local) if x_i >= 5 and x_i < 10] for data_local in data_by_user]
-    post_intervention = [[get_val(x) for x_i, x in enumerate(data_local) if x_i >= 15 and x_i < 20] for data_local in data_by_user]
+    pre_intervention = [[get_val(x) for x_i, x in enumerate(data_local) if x_i < 10] for data_local in data_by_user]
+    post_intervention = [[get_val(x) for x_i, x in enumerate(data_local) if x_i >= 20] for data_local in data_by_user]
     # flatten
     pre_intervention = [x for l in pre_intervention for x in l]
     post_intervention = [x for l in post_intervention for x in l]
 
-    return pre_intervention, post_intervention
+    return [x-y for x,y in zip(pre_intervention, post_intervention)]
 
-pre_control, post_control = get_distribution_by_queue("control")
-pre_intervention, post_intervention = get_distribution_by_queue("intervention_ci")
+var_control = get_distribution_by_queue("control_no_vague")
+var_intervention = get_distribution_by_queue("intervention_ci_no_vague")
 
-print(scipy.stats.ttest_ind(post_control, post_intervention, alternative="greater"))
+print(scipy.stats.ttest_ind(var_control, var_intervention, alternative="less", permutations=int(10e4)))

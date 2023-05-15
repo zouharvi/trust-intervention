@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import collections
 import jezecek.fig_utils
 import json
 import matplotlib.pyplot as plt
@@ -14,6 +15,10 @@ QUEUE_PLAN_BARS = {
         5 * ["vague"] +
         5 * ["calibrated"] +
         5 * ["vague"] + 
+        []
+    ),
+    "control_no_vague": (
+        30 * ["calibrated"] +
         []
     ),
     # confidently incorrect
@@ -43,6 +48,7 @@ QUEUE_PLAN_BARS = {
         []
     ),
 }
+QUEUE_PLAN_NAMES = collections.defaultdict(str)
 
 args = argparse.ArgumentParser()
 args.add_argument("-q", "--queue", default="control")
@@ -65,6 +71,7 @@ for data_local in data_by_user:
         bet_vals[i].append(data_local[i]["user_bet_val"])
         user_correct[i].append(data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"])
 
+plt.figure(figsize=(5, 2))
 plt.scatter(
     range(30),
     [np.average(bet_val) for bet_val in bet_vals],
@@ -81,19 +88,20 @@ plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
 
-plt.ylim(0, 0.16)
+plt.ylim(0.07, 0.15)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Decision Correctness")
 plt.xticks(
-    range(30),
-    QUEUE_PLAN_BARS[args.queue],
-    rotation=90
+    range(2, 30, 8),
+    [x if x_i % 2 == 0 else "\n" + x for x_i, x in enumerate(QUEUE_PLAN_BARS[args.queue][2::8])],
+    linespacing= 0.5
+    # rotation=90
 )
 BET_VALS = [i / 5 * 0.15 for i in range(5+1)]
-plt.yticks(BET_VALS, BET_VALS)
-plt.title(f"Queue: {args.queue}")
+plt.yticks(BET_VALS[3:], BET_VALS[3:])
+# plt.title(f"Queue: {args.queue}")
 plt.ylabel("Trust (bet value)")
-plt.xlabel("Question+Confidence Setup")
-plt.tight_layout()
-plt.savefig(f"computed/figures/trust_{args.queue}.png")
+# plt.xlabel("Question+Confidence Setup")
+plt.tight_layout(pad=0)
+plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()
