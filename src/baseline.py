@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, mean_
 import sklearn
 import numpy as np
 
-data_train, data_test = utils.load_split_data(path="data/collected.jsonl")
+data_train, data_test = utils.load_split_data(path="data/all_data.jsonl")
 data_test = utils.flatten(data_test)
 data_train = utils.flatten(data_train)
 
