@@ -6,6 +6,7 @@ import json
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
+from skimage.transform import resize
 
 QUEUE_PLAN_BARS = {
     "control": (
@@ -61,17 +62,20 @@ data = [line for line in data if line["url_data"]["prolific_queue_name"] == args
 
 prolific_ids = {x["url_data"]["prolific_id"] for x in data}
 data_by_user = [[x for x in data if x["url_data"]["prolific_id"]==prolific_id] for prolific_id in prolific_ids]
+print(f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.0f} questions")
 
 print(data[0].keys())
 bet_vals = [[] for _ in range(30)]
 user_correct = [[] for _ in range(30)]
 
 for data_local in data_by_user:
+    # take first 10 as normalization to 0.10
+    normalization_offset = 0.10-np.average([x["user_bet_val"] for x in data_local[:10]])
     for i in range(len(data_local)):
-        bet_vals[i].append(data_local[i]["user_bet_val"])
+        bet_vals[i].append(data_local[i]["user_bet_val"]+normalization_offset)
         user_correct[i].append(data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"])
 
-plt.figure(figsize=(5, 2))
+fig = plt.figure(figsize=(5, 2))
 plt.scatter(
     range(30),
     [np.average(bet_val) for bet_val in bet_vals],
@@ -83,7 +87,7 @@ plt.scatter(
 
 xticks_fine = np.linspace(0, 30, 500)
 
-poly_fit = np.poly1d(np.polyfit(range(30), [np.average(bet_val) for bet_val in bet_vals], 2))
+poly_fit = np.poly1d(np.polyfit(range(30), [np.average(bet_val) for bet_val in bet_vals], 3))
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
@@ -92,11 +96,19 @@ plt.ylim(0.07, 0.15)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Decision Correctness")
 plt.xticks(
-    range(2, 30, 8),
-    [x if x_i % 2 == 0 else "\n" + x for x_i, x in enumerate(QUEUE_PLAN_BARS[args.queue][2::8])],
-    linespacing= 0.5
+    range(0, 30, 5),
+    [x if x_i % 2 == 0 else "\n" + x for x_i, x in enumerate(QUEUE_PLAN_BARS[args.queue][0::5])],
+    linespacing= 0.6
     # rotation=90
 )
+
+im_correctness = np.array([[np.average(user_correct) for user_correct in user_correct]])
+im_correctness = resize(im_correctness, (15, 400-51))
+fig.figimage(
+    X=im_correctness, xo=61, yo=fig.bbox.ymax - 22,
+    cmap="RdYlGn", vmin=0.2, vmax=1
+)
+
 BET_VALS = [i / 5 * 0.15 for i in range(5+1)]
 plt.yticks(BET_VALS[3:], BET_VALS[3:])
 # plt.title(f"Queue: {args.queue}")
