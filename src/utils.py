@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def load_data(path="data/all_data.jsonl", queue=None):
+def load_data(path="data/all_data.jsonl", queue=["control_no_vague", "intervention_ci_no_vague", "intervention_uc_no_vague"]):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -12,7 +12,7 @@ def load_data(path="data/all_data.jsonl", queue=None):
     # filter desired queue
     data = [
         line for line in data
-        if queue is None or line["url_data"]["prolific_queue_name"] == queue
+        if queue is None or line["url_data"]["prolific_queue_name"] in queue
     ]
 
     prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
@@ -22,12 +22,16 @@ def load_data(path="data/all_data.jsonl", queue=None):
     data_by_user = [
         [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
         for prolific_id in prolific_ids
-        if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] == queue
+        if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
     ]
     filtered_data_by_user = []
+    print(len(data_by_user))
     for datum in data_by_user:
-        if datum[-1]["user_bet_val"] < 0.50 and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
-            continue
+        print(datum[-1]["url_data"]["prolific_id"])
+        print(datum[-1]["user_bet_val"])
+        # import pdb; pdb.set_trace()
+        # if datum[-1]["user_bet_val"] < 0.5:# and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
+        #     continue
         filtered_data_by_user.append(datum)
 
     print(
