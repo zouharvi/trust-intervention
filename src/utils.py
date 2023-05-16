@@ -1,38 +1,29 @@
 #!/usr/bin/env python3
 
-def load_data():
+def load_data(path="data/collected.jsonl", queue=None):
     import json
-    prolific_data = [
-        {k: json.loads(v) for k, v in json.loads(l).items()}
-        for l in open("data/prolific_int_general.jsonl", "r").readlines()
+    MULTI_USER_FIRST_QUEUE = {
+        "604f684950227bd07a37376d": "control_no_vague",
+        "63ea52b8342eff8b95ef0f95": "control_no_vague",
+        "5dcf2c967beb290802f26b45": "control_no_vague",
+    }
+    data = [json.loads(x) for x in open(path, "r")]
+    # filter desired queue
+    data = [
+        line for line in data
+        if queue is None or line["url_data"]["prolific_queue_name"] == queue
     ]
 
-    question_data = json.load(open("data/int_general.json", "r"))
-
-    data_clean = []
-
-    removed = 0
-    for user_v in prolific_data:
-        corrrect_count = 0
-        total_count = 0
-        for line_k, line_v in user_v.items():
-            if type(line_v) == dict:
-                line_v["question"] = question_data[f"q{line_k}"]
-                del line_v["saw_passage2"]
-                corrrect_count += (line_v["correct"]) * 1
-                total_count += 1
-
-        if corrrect_count >= 20:
-            data_clean.append(user_v)
-        else:
-            removed += 1
-
-    # print(f"removed {removed} from total of {len(prolific_data)}")
-
-    return data_clean
-
+    prolific_ids = {x["url_data"]["prolific_id"] for x in data}
+    data_by_user = [
+        [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
+        for prolific_id in prolific_ids
+        if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] == queue
+    ]
+    return data_by_user
 
 def load_split_data(simple=False):
+    raise Exception("Does not work with the new loader")
     import sklearn.model_selection
 
     prolific_data = load_data()

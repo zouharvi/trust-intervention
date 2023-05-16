@@ -83,6 +83,7 @@ def decide_truthfulness_uc(question):
 
 
 QUEUE_PLAN = {
+    # control
     "control": (
         5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
@@ -92,6 +93,11 @@ QUEUE_PLAN = {
         5 * [decide_truthfulness_vague] +
         []
     ),
+    "control_no_vague": (
+        30 * [decide_truthfulness_base] +
+        []
+    ),
+
     # confidently incorrect
     "intervention_ci": (
         5 * [decide_truthfulness_base] +
@@ -108,10 +114,7 @@ QUEUE_PLAN = {
         15 * [decide_truthfulness_base] +
         []
     ),
-    "control_no_vague": (
-        30 * [decide_truthfulness_base] +
-        []
-    ),
+
     # unconfidently correct
     "intervention_uc": (
         5 * [decide_truthfulness_base] +
@@ -122,6 +125,13 @@ QUEUE_PLAN = {
         5 * [decide_truthfulness_vague] +
         []
     ),
+    "intervention_uc_no_vague": (
+        10 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_uc] +
+        15 * [decide_truthfulness_base] +
+        []
+    ),
+
     # discept pilot
     "discept_pilot_0": (
         1 * [decide_truthfulness_base] +

@@ -4,14 +4,16 @@ import json
 import argparse
 import numpy as np
 import scipy.stats
+import sys
+sys.path.append("src")
+import utils
 
 args = argparse.ArgumentParser()
-args.add_argument("-q", "--queue", default="control")
+args.add_argument("-d", "--data", default="data/collected.jsonl")
 args.add_argument("-v", "--variable", default="user_bet_val")
 args = args.parse_args()
 
-data = [json.loads(x) for x in open("data/collected.jsonl", "r")]
-
+data = utils.flatten(utils.load_data(args.data))
 
 def get_val(x):
     if args.variable == "user_bet_val":

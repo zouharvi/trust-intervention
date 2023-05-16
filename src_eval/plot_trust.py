@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 from skimage.transform import resize as resize_img
+import sys
+sys.path.append("src")
+import utils
 
 QUEUE_PLAN_BARS = {
     "control": (
@@ -52,25 +55,16 @@ QUEUE_PLAN_BARS = {
 QUEUE_PLAN_NAMES = collections.defaultdict(str)
 
 args = argparse.ArgumentParser()
-args.add_argument("-q", "--queue", default="control")
+args.add_argument("-q", "--queue", default="control_no_vague")
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
-data = [json.loads(x) for x in open(args.data, "r")]
-# filter desired queue
-data = [
-    line for line in data
-    if line["url_data"]["prolific_queue_name"] == args.queue
-]
+data_by_user = utils.load_data(args.data, args.queue)
 
-prolific_ids = {x["url_data"]["prolific_id"] for x in data}
-data_by_user = [
-    [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
-    for prolific_id in prolific_ids]
 print(
-    f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.0f} questions")
+    f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.0f} questions"
+)
 
-print(data[0].keys())
 bet_vals = [[] for _ in range(30)]
 user_correct = [[] for _ in range(30)]
 
