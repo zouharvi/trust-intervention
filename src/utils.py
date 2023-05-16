@@ -66,11 +66,6 @@ def get_x(line):
 def get_y(line, feature=0):
     return [y[feature] for x, y in line]
 
-
-def get_y_multi(line, features=[1, 2]):
-    return [str([y[feature] for feature in features]) for x, y in line]
-
-
 FEATURE_NAMES = [
     "model_confidence",
     "avg_prev_passage_show",

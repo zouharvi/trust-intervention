@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import utils
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error
+import numpy as np
 
 data_train, data_test = utils.load_split_data()
 data_test = utils.flatten(data_test)
@@ -13,14 +14,19 @@ my_metric_f1 = lambda *x: f1_score(*x, pos_label="[True]")
 my_metric_acc = lambda *x: accuracy_score(*x)
 
 
-def eval_constant_baseline(data_train_x, data_train_y, data_test_x, data_test_y):
+def eval_constant_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # force positive class
     acc = my_metric_f1(['[True]'] * len(data_test_x), data_test_y)
     f1 = my_metric_f1(['[True]'] * len(data_test_x), data_test_y)
     return acc, f1
 
+def eval_constant_regression(data_train_x, data_train_y, data_test_x, data_test_y):
+    # force positive class
+    pred = np.average(data_train_y)
+    mae = mean_absolute_error([pred]*len(data_test_y), data_test_y)
+    return mae
 
-def eval_logistic_regression(data_train_x, data_train_y, data_test_x, data_test_y):
+def eval_lr_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     model = LogisticRegression()
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
@@ -28,8 +34,15 @@ def eval_logistic_regression(data_train_x, data_train_y, data_test_x, data_test_
     f1 = my_metric_f1(data_test_y_pred, data_test_y)
     return acc, f1
 
+def eval_lr_regression(data_train_x, data_train_y, data_test_x, data_test_y):
+    model = LinearRegression()
+    model.fit(data_train_x, data_train_y)
+    data_test_y_pred = model.predict(data_test_x)
+    acc = my_metric_acc(data_test_y_pred, data_test_y)
+    f1 = my_metric_f1(data_test_y_pred, data_test_y)
+    return acc, f1
 
-def eval_multilayer_perceptron(data_train_x, data_train_y, data_test_x, data_test_y):
+def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # model = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=500)
     model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=500)
     model.fit(data_train_x, data_train_y)
@@ -39,32 +52,51 @@ def eval_multilayer_perceptron(data_train_x, data_train_y, data_test_x, data_tes
     return acc, f1
 
 
-for model_name, model_fn in [
-    ("Constant Baseline    ", eval_constant_baseline),
-    ("Logistic Regression  ", eval_logistic_regression),
-    ("Multilayer Perceptron", eval_multilayer_perceptron),
+for model_name, (model_fn_classification, model_fn_regression) in [
+    ("Constant Baseline    ", (eval_constant_classification, eval_constant_regression)),
+    ("Logistic Regression  ", (eval_lr_classification, eval_lr_regression)),
+    ("Multilayer Perceptron", (eval_mlp_classification, eval_mlp_regression)),
 ]:
     print(model_name, end=" & ")
-    for features in [[0], [1], [2], [3]]:
+    for feature, feature_type in [
+        (0, "classification"),
+        (1, "regression"),
+        (2, "classification"),
+        (3, "classification")
+    ]:
         data_train_x = utils.get_x(data_train)
-        data_train_y = utils.get_y_multi(data_train, features=features)
+        data_train_y = utils.get_y(data_train, feature=feature)
         data_test_x = utils.get_x(data_test)
-        data_test_y = utils.get_y_multi(data_test, features=features)
+        data_test_y = utils.get_y(data_test, feature=feature)
 
-        acc, f1 = model_fn(
-            data_train_x, data_train_y,
-            data_test_x, data_test_y
-        )
-        print(
-            (
-                "\\accfcell{" +
-                f"{acc:.1%}".replace("%", "\\%") +
-                "}{" +
-                f"{f1:.1%}".replace("%", "\\%") +
-                "}"
-            ),
-            end=" & "
-        )
+        if feature_type == "classification":
+            acc, f1 = model_fn_classification(
+                data_train_x, data_train_y,
+                data_test_x, data_test_y
+            )
+            print(
+                (
+                    "\\accfcell{" +
+                    f"{acc:.1%}".replace("%", "\\%") +
+                    "}{" +
+                    f"{f1:.1%}".replace("%", "\\%") +
+                    "}"
+                ),
+                end=" & "
+            )
+        elif feature_type == "regression":
+            mae = model_fn_regression(
+                data_train_x, data_train_y,
+                data_test_x, data_test_y
+            )
+            print(
+                (
+                    f"{mae:.2f}"
+                ),
+                end=" & "
+            )
+        else:
+            raise Exception()
     print("\\\\")
 
 
