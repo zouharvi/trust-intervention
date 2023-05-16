@@ -5,7 +5,7 @@ import torch
 from sklearn.metrics import f1_score, accuracy_score, mean_absolute_error
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-TARGET_FEATURE = 3
+TARGET_FEATURE = 1
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
