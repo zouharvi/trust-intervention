@@ -5,21 +5,22 @@ import torch
 from sklearn.metrics import f1_score, accuracy_score, mean_absolute_error
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-TARGET_FEATURE = 0
+TARGET_FEATURE = 3
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
         super(RNNTrustModel, self).__init__()
         self.model = torch.nn.LSTM(
             input_size=5,
-            hidden_size=40,
-            num_layers=3,
+            hidden_size=150,
+            num_layers=2,
             batch_first=True,
-            dropout=0.3,
-            # proj_size=1,
+            dropout=0.4,
         )
         self.projection = torch.nn.Sequential(
-            torch.nn.Linear(40, 1),
+            torch.nn.Dropout(p=0.8),
+            torch.nn.Linear(150, 20),
+            torch.nn.Linear(20, 1),
             torch.nn.Sigmoid() if TARGET_FEATURE != 1 else torch.nn.Identity()
         )
 
@@ -27,8 +28,8 @@ class RNNTrustModel(torch.nn.Module):
             self.parameters(),
             lr=1e-4 if TARGET_FEATURE != 1 else 1e-3
         )
+        # self.loss_fn = torch.nn.CrossEntropyLoss() if TARGET_FEATURE != 1 else torch.nn.MSELoss()
         self.loss_fn = torch.nn.MSELoss()
-        # self.loss_fn = torch.nn.CrossEntropyLoss()
         self.to(DEVICE)
 
     def forward(self, x):
@@ -48,6 +49,7 @@ class RNNTrustModel(torch.nn.Module):
             [[
                 # take only confidence
                 [x_v[5]] + x_extra_v
+                # list(x_v) + x_extra_v
                 for x_v, x_extra_v
                 in zip(x, x_extra)
             ]],
@@ -73,7 +75,7 @@ class RNNTrustModel(torch.nn.Module):
                 x = RNNTrustModel.prepare_xy_to_x(x, y)
                 if TARGET_FEATURE != 1:
                     y_pred_all += (self.forward(x)[0].flatten() >= 0.5).cpu()
-                    y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy]) >= 0.5).cpu()
+                    y_true_all += torch.tensor([y[TARGET_FEATURE] for x, y in xy]).cpu()
                 else:
                     y_pred_all += (self.forward(x)[0].flatten()).cpu()
                     y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy])).cpu()
@@ -84,6 +86,7 @@ class RNNTrustModel(torch.nn.Module):
             return mean_absolute_error(y_true_all, y_pred_all)
 
     def train_loop(self, data_train, data_dev, epochs=100000):
+        batch_i = 0
         for epoch in range(epochs):
             self.train(True)
             for user_xy in data_train:
@@ -96,13 +99,17 @@ class RNNTrustModel(torch.nn.Module):
                 y_true = torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in user_xy]).to(DEVICE)
                 assert y_pred.shape == y_true.shape
                 loss = self.loss_fn(y_pred, y_true)
+                batch_i += 1
 
-                # optimize
-                self.optimizer.zero_grad()
-                loss.backward()
-                self.optimizer.step()
+                # simulate batches
+                if batch_i == 1:
+                    batch_i = 0
+                    # optimize
+                    self.optimizer.zero_grad()
+                    loss.backward()
+                    self.optimizer.step()
 
-            if epoch % 10 == 0:
+            if epoch % 50 == 0:
                 if TARGET_FEATURE != 1:
                     train_acc, train_f1 = self.eval_data(data_train)
                     dev_acc, dev_f1 = self.eval_data(data_dev)

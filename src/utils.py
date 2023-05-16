@@ -18,7 +18,7 @@ def load_data(path="data/all_data.jsonl", queue=None):
     prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
     # this weird why this isn't stable
     prolific_ids.sort()
-    
+
     data_by_user = [
         [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
         for prolific_id in prolific_ids
@@ -29,9 +29,10 @@ def load_data(path="data/all_data.jsonl", queue=None):
         if datum[-1]["user_bet_val"] < 0.50 and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
             continue
         filtered_data_by_user.append(datum)
-    
-    print(f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
-    
+
+    print(
+        f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
+
     return filtered_data_by_user
 
 
@@ -116,7 +117,7 @@ def featurize_datum_line(user_data):
             (
                 user_line["user_decision"],
                 user_line["user_bet_val"],
-                user_line["user_decision"]==user_line['question']["ai_is_correct"],
+                user_line["user_decision"] == user_line['question']["ai_is_correct"],
                 user_line['question']["ai_is_correct"],
             )))
         prior_confusion_matrix.append((
