@@ -2,7 +2,7 @@
 
 import utils
 from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.neural_network import MLPClassifier
+from sklearn.neural_network import MLPClassifier, MLPRegressor
 from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error
 import numpy as np
 
@@ -11,12 +11,10 @@ data_test = utils.flatten(data_test)
 data_train = utils.flatten(data_train)
 
 my_metric_f1 = lambda *x: f1_score(*x, pos_label="[True]")
-my_metric_acc = lambda *x: accuracy_score(*x)
-
 
 def eval_constant_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # force positive class
-    acc = my_metric_f1(['[True]'] * len(data_test_x), data_test_y)
+    acc = accuracy_score(['[True]'] * len(data_test_x), data_test_y)
     f1 = my_metric_f1(['[True]'] * len(data_test_x), data_test_y)
     return acc, f1
 
@@ -30,7 +28,7 @@ def eval_lr_classification(data_train_x, data_train_y, data_test_x, data_test_y)
     model = LogisticRegression()
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
-    acc = my_metric_acc(data_test_y_pred, data_test_y)
+    acc = accuracy_score(data_test_y_pred, data_test_y)
     f1 = my_metric_f1(data_test_y_pred, data_test_y)
     return acc, f1
 
@@ -38,19 +36,24 @@ def eval_lr_regression(data_train_x, data_train_y, data_test_x, data_test_y):
     model = LinearRegression()
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
-    acc = my_metric_acc(data_test_y_pred, data_test_y)
-    f1 = my_metric_f1(data_test_y_pred, data_test_y)
-    return acc, f1
+    mae = mean_absolute_error(data_test_y_pred, data_test_y)
+    return mae
 
 def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # model = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=500)
     model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=500)
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
-    acc = my_metric_acc(data_test_y_pred, data_test_y)
+    acc = accuracy_score(data_test_y_pred, data_test_y)
     f1 = my_metric_f1(data_test_y_pred, data_test_y)
     return acc, f1
 
+def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
+    model = MLPRegressor(hidden_layer_sizes=(50, 50, 50), max_iter=500)
+    model.fit(data_train_x, data_train_y)
+    data_test_y_pred = model.predict(data_test_x)
+    mae = mean_absolute_error(data_test_y_pred, data_test_y)
+    return mae
 
 for model_name, (model_fn_classification, model_fn_regression) in [
     ("Constant Baseline    ", (eval_constant_classification, eval_constant_regression)),
@@ -98,7 +101,6 @@ for model_name, (model_fn_classification, model_fn_regression) in [
         else:
             raise Exception()
     print("\\\\")
-
 
 # joint
 # for feature_i, feature_name in enumerate(utils.FEATURE_NAMES):
