@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 from collections import defaultdict
-import json
-import sklearn.model_selection
-
 
 def load_data(path="data/collected.jsonl", queue=None):
     import json
@@ -28,6 +25,8 @@ def load_data(path="data/collected.jsonl", queue=None):
 
 
 def load_split_data(simple=False, **kwargs):
+    import sklearn.model_selection
+
     prolific_data = load_data(**kwargs)
     prolific_data = [
         (
@@ -72,12 +71,14 @@ def get_y(line, feature=0):
 def featurize_datum_line(user_data):
     out = []
     prior_confusion_matrix = []
+    prior_bet_val = []
 
     for datum in user_data:
-
         out.append((
             # x
             (
+                # average bet value
+                _avg_empty(prior_bet_val),
                 # average previous TP
                 _avg_empty([x and y for x, y in prior_confusion_matrix]),
                 # average previoux FP
@@ -114,6 +115,7 @@ def featurize_datum_line(user_data):
             # xP / xN
             datum["user_decision"],
         ))
+        prior_bet_val.append(datum["user_bet_val"])
 
     return out
 
