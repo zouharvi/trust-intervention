@@ -24,17 +24,18 @@ random.seed(args.seed)
 
 data_raw = list(open(args.fakefile, "r").readlines())
 data = []
-for q_i in range(len(data_raw)//4+1):
+for q_i in range(len(data_raw) // 4 + 1):
     data.append((
-        data_raw[q_i*4+0].removesuffix("\n"),
-        data_raw[q_i*4+1].removesuffix("\n").replace("A1: ", ""),
-        data_raw[q_i*4+2].removesuffix("\n").replace("A2: ", ""),
+        data_raw[q_i * 4 + 0].removesuffix("\n"),
+        data_raw[q_i * 4 + 1].removesuffix("\n").replace("A1: ", ""),
+        data_raw[q_i * 4 + 2].removesuffix("\n").replace("A2: ", ""),
     ))
 
 
 def decide_truthfulness_base(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(0.45, 0.8) if ai_is_correct else random.uniform(0.2, 0.55)
+    ai_confidence = random.uniform(
+        0.45, 0.8) if ai_is_correct else random.uniform(0.2, 0.55)
 
     return {
         "question": question[0],
@@ -46,7 +47,8 @@ def decide_truthfulness_base(question):
 
 def decide_truthfulness_vague(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(0.45, 0.55) if ai_is_correct else random.uniform(0.4, 0.5)
+    ai_confidence = random.uniform(
+        0.45, 0.55) if ai_is_correct else random.uniform(0.4, 0.5)
 
     return {
         "question": question[0],
@@ -54,6 +56,7 @@ def decide_truthfulness_vague(question):
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.0%}",
     }
+
 
 def decide_truthfulness_ci(question):
     ai_is_correct = random.choices([True, False], weights=[0.1, 0.9], k=1)[0]
@@ -80,15 +83,21 @@ def decide_truthfulness_uc(question):
 
 
 QUEUE_PLAN = {
+    # control
     "control": (
         5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_base] +
-        5 * [decide_truthfulness_vague] + 
+        5 * [decide_truthfulness_vague] +
         []
     ),
+    "control_no_vague": (
+        30 * [decide_truthfulness_base] +
+        []
+    ),
+
     # confidently incorrect
     "intervention_ci": (
         5 * [decide_truthfulness_base] +
@@ -96,7 +105,7 @@ QUEUE_PLAN = {
         5 * [decide_truthfulness_ci] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_base] +
-        5 * [decide_truthfulness_vague] + 
+        5 * [decide_truthfulness_vague] +
         []
     ),
     "intervention_ci_no_vague": (
@@ -105,10 +114,7 @@ QUEUE_PLAN = {
         15 * [decide_truthfulness_base] +
         []
     ),
-    "control_no_vague": (
-        30 * [decide_truthfulness_base] +
-        []
-    ),
+
     # unconfidently correct
     "intervention_uc": (
         5 * [decide_truthfulness_base] +
@@ -116,9 +122,16 @@ QUEUE_PLAN = {
         5 * [decide_truthfulness_uc] +
         5 * [decide_truthfulness_vague] +
         5 * [decide_truthfulness_base] +
-        5 * [decide_truthfulness_vague] + 
+        5 * [decide_truthfulness_vague] +
         []
     ),
+    "intervention_uc_no_vague": (
+        10 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_uc] +
+        15 * [decide_truthfulness_base] +
+        []
+    ),
+
     # discept pilot
     "discept_pilot_0": (
         1 * [decide_truthfulness_base] +
@@ -126,7 +139,7 @@ QUEUE_PLAN = {
         1 * [decide_truthfulness_ci] +
         1 * [decide_truthfulness_vague] +
         1 * [decide_truthfulness_base] +
-        1 * [decide_truthfulness_vague] + 
+        1 * [decide_truthfulness_vague] +
         []
     )
 }

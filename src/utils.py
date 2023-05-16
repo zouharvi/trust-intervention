@@ -1,55 +1,39 @@
 #!/usr/bin/env python3
 from collections import defaultdict
 import json
-def load_data(filename):
-    data = [json.loads(x) for x in open(filename, "r")]
-    user_data = defaultdict(list)
-    queue_data = defaultdict(list)
-
-    for datum in data:
-        user_data[datum['url_data']['prolific_id']].append(datum)
-        queue_data[datum['url_data']["prolific_queue_name"]].append(datum)
+import sklearn.model_selection
 
 
-    queue_user_data = defaultdict(lambda: defaultdict(list))
-    for study, data in queue_data.items():
-        for datum in data:
-            queue_user_data[study][datum['url_data']['prolific_id']].append(datum)
 
-    ## filtering conditions
+def load_data(path="data/collected.jsonl", queue=None):
+    import json
+    MULTI_USER_FIRST_QUEUE = {
+        "604f684950227bd07a37376d": "control_no_vague",
+        "63ea52b8342eff8b95ef0f95": "control_no_vague",
+        "5dcf2c967beb290802f26b45": "control_no_vague",
+    }
+    data = [json.loads(x) for x in open(path, "r")]
+    # filter desired queue
+    data = [
+        line for line in data
+        if queue is None or line["url_data"]["prolific_queue_name"] == queue
+    ]
 
+    prolific_ids = {x["url_data"]["prolific_id"] for x in data}
+    data_by_user = [
+        [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
+        for prolific_id in prolific_ids
+        if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] == queue
+    ]
+    return data_by_user
 
-    # data_clean = []
-
-    # removed = 0
-    # for user_v in prolific_data:
-    #     corrrect_count = 0
-    #     total_count = 0
-    #     for line_k, line_v in user_v.items():
-    #         if type(line_v) == dict:
-    #             line_v["question"] = question_data[f"q{line_k}"]
-    #             del line_v["saw_passage2"]
-    #             corrrect_count += (line_v["correct"]) * 1
-    #             total_count += 1
-
-    #     if corrrect_count >= 20:
-    #         data_clean.append(user_v)
-    #     else:
-    #         removed += 1
-
-    # print(f"removed {removed} from total of {len(prolific_data)}")
-
-    return data, user_data, queue_user_data
-
-
-def load_split_data(data, type="flat" ):
-    import sklearn.model_selection
-
+def load_split_data(simple=False):
+    prolific_data = load_data()
     prolific_data = [
         (
             featurize_user_lines_simple(user)
             if simple else
-            featurize_user_lines(user)
+            featurize_datum(user)
         )
         for user in prolific_data
     ]
@@ -84,11 +68,6 @@ def get_x(line):
 def get_y(line, feature=0):
     return [y[feature] for x, y in line]
 
-
-def get_y_multi(line, features=[1, 2]):
-    return [str([y[feature] for feature in features]) for x, y in line]
-
-
 FEATURE_NAMES = [
     "model_confidence",
     "avg_prev_passage_show",
@@ -102,14 +81,14 @@ FEATURE_NAMES = [
 
 
 def featurize_datum(user_data):
-    user_features = []
-    labels = []
+    out = []
+
     prior_confusion_matrix = []
     
     for datum in user_data:
 
 
-        user_features.append((
+        out.append((
              _avg_empty([x and y for x, y in prior_confusion_matrix]),
                 # average previoux FP
                 _avg_empty([not x and y for x, y in prior_confusion_matrix]),
@@ -120,7 +99,27 @@ def featurize_datum(user_data):
                 ]),
                 # average previoux FN
                 _avg_empty([x and not y for x, y in prior_confusion_matrix]),
+                float(datum['question']['ai_confidence'][:-1]),
+                datum['question_i'] in range(0, 5) , 
+                datum['question_i'] in range(5, 10) , 
+                datum['question_i'] in range(10, 15) , 
+                datum['question_i'] in range(15, 30) , 
 
+                
+                datum['url_data']['prolific_queue_name'] == 'control_no_vague',    
+                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',    
+
+                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',    
+
+
+        )
+
+
+        ,
+        (
+            datum["user_decision"] == "agree",
+            datum['question']["ai_is_correct"],
+            datum["user_bet_val"]
         ))
         prior_confusion_matrix.append((
             # Tx / Fx
@@ -129,13 +128,7 @@ def featurize_datum(user_data):
             datum["user_decision"] == "agree",
         ))
 
-        labels.append((
-            datum["user_decision"] == "agree",
-            datum['question']["ai_is_correct"],
-            datum["user_bet_val"]
-        ))
-
-    return user_features, labels
+    return out
     
 
 
