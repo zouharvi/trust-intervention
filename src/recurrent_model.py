@@ -5,7 +5,7 @@ import torch
 from sklearn.metrics import f1_score, accuracy_score, mean_absolute_error
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-TARGET_FEATURE = 3
+TARGET_FEATURE = 0
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
@@ -47,7 +47,7 @@ class RNNTrustModel(torch.nn.Module):
         x = torch.tensor(
             [[
                 # take only confidence
-                list(x_v[:1]) + x_extra_v
+                [x_v[5]] + x_extra_v
                 for x_v, x_extra_v
                 in zip(x, x_extra)
             ]],
@@ -122,6 +122,6 @@ class RNNTrustModel(torch.nn.Module):
                         sep="  |||  "
                     )
 
-data_train, data_dev = utils.load_split_data(simple=True)
+data_train, data_dev = utils.load_split_data(simple=True, path="data/collected.jsonl")
 model = RNNTrustModel()
 model.train_loop(data_train, data_dev)

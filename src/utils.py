@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from collections import defaultdict
 
 def load_data(path="data/all_data.jsonl", queue=None):
     import json
@@ -16,7 +15,9 @@ def load_data(path="data/all_data.jsonl", queue=None):
         if queue is None or line["url_data"]["prolific_queue_name"] == queue
     ]
 
-    prolific_ids = {x["url_data"]["prolific_id"] for x in data}
+    prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
+    # this weird why this isn't stable
+    prolific_ids.sort()
     
     data_by_user = [
         [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
@@ -83,7 +84,7 @@ def featurize_datum_line(user_data):
     prior_confusion_matrix = []
     prior_bet_val = []
 
-    for datum in user_data:
+    for user_line in user_data:
         out.append((
             # x
             (
@@ -101,55 +102,55 @@ def featurize_datum_line(user_data):
                 # average previoux FN
                 _avg_empty([x and not y for x, y in prior_confusion_matrix]),
                 # confidence
-                float(datum['question']['ai_confidence'][:-1]) / 100,
+                float(user_line['question']['ai_confidence'][:-1]) / 100,
                 # question position
-                datum['question_i'] in range(0, 10),
-                datum['question_i'] in range(10, 15),
-                datum['question_i'] in range(15, 30),
+                user_line['question_i'] in range(0, 10),
+                user_line['question_i'] in range(10, 15),
+                user_line['question_i'] in range(15, 30),
                 # group indicator
-                datum['url_data']['prolific_queue_name'] == 'control_no_vague',
-                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
-                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'control_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
             ),
             # y
             (
-                datum["user_decision"],
-                datum["user_bet_val"] * 100,
-                datum["user_decision"]==datum['question']["ai_is_correct"],
-                datum['question']["ai_is_correct"],
+                user_line["user_decision"],
+                user_line["user_bet_val"],
+                user_line["user_decision"]==user_line['question']["ai_is_correct"],
+                user_line['question']["ai_is_correct"],
             )))
         prior_confusion_matrix.append((
             # Tx / Fx
-            datum['question']["ai_is_correct"],
+            user_line['question']["ai_is_correct"],
             # xP / xN
-            datum["user_decision"],
+            user_line["user_decision"],
         ))
-        prior_bet_val.append(datum["user_bet_val"])
+        prior_bet_val.append(user_line["user_bet_val"])
     return out
 
 
 def featurize_datum_line_simple(user_data):
     out = []
 
-    for datum in user_data:
+    for user_line in user_data:
         out.append((
             # x
             (
-                float(datum['question']['ai_confidence'][:-1]) / 100,
+                float(user_line['question']['ai_confidence'][:-1]) / 100,
                 # question position
-                datum['question_i'] in range(0, 10),
-                datum['question_i'] in range(10, 15),
-                datum['question_i'] in range(15, 30),
+                user_line['question_i'] in range(0, 10),
+                user_line['question_i'] in range(10, 15),
+                user_line['question_i'] in range(15, 30),
                 # group indicator
-                datum['url_data']['prolific_queue_name'] == 'control_no_vague',
-                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
-                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'control_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
             ),
             # y
             (
-                datum["user_decision"],
-                datum["user_bet_val"],
-                datum["user_decision"] == datum['question']["ai_is_correct"],
-                datum['question']["ai_is_correct"],
+                user_line["user_decision"],
+                user_line["user_bet_val"],
+                user_line["user_decision"] == user_line['question']["ai_is_correct"],
+                user_line['question']["ai_is_correct"],
             )))
     return out
