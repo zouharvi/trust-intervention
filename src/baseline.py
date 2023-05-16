@@ -19,7 +19,6 @@ def eval_constant_classification(data_train_x, data_train_y, data_test_x, data_t
     return acc, f1
 
 def eval_constant_regression(data_train_x, data_train_y, data_test_x, data_test_y):
-    # force positive class
     pred = np.average(data_train_y)
     mae = mean_absolute_error([pred]*len(data_test_y), data_test_y)
     return mae
@@ -94,17 +93,10 @@ for model_name, (model_fn_classification, model_fn_regression) in [
             )
             print(
                 (
-                    f"{mae:.2f}"
+                    f"{mae:.3f}"
                 ),
                 end=" & "
             )
         else:
             raise Exception()
     print("\\\\")
-
-# joint
-# for feature_i, feature_name in enumerate(utils.FEATURE_NAMES):
-#     model = LogisticRegression()
-#     data_train_x_local = [(x[feature_i],) for x in data_train_x]
-#     model.fit(data_train_x_local, data_train_y)
-#     print(f"{feature_name:>20}: {accuracy_score(model.predict(data_train_x_local), data_train_y):.2%}")
