@@ -30,7 +30,7 @@ def load_split_data(simple=False, **kwargs):
     prolific_data = load_data(**kwargs)
     prolific_data = [
         (
-            featurize_user_lines_simple(user)
+            featurize_datum_line_simple(user)
             if simple else
             featurize_datum_line(user)
         )
@@ -118,36 +118,28 @@ def featurize_datum_line(user_data):
     return out
 
 
-def featurize_user_lines_simple(user):
-    raise Exception("Not implemented for the new logfile format")
+def featurize_datum_line_simple(user_data):
     out = []
-    for line in user.values():
-        if type(line) != dict:
-            continue
-        out.append((
-            # SOURCE
-            (
-                # model confidence
-                float(line["question"]["conf"].removesuffix("%")) / 100,
-                # time
-                # line["time"],
-                # intervention location
-                # line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
-                # question number
-                # line["q_no"],
-                # line["q_no"] < 5
-            ),
 
-            # TARGET
+    for datum in user_data:
+        out.append((
+            # x
             (
-                # trust (user will click show hint)
-                line["saw_passage1"],
-                # trust (user will agree)
-                line["response"] == "agree",
-                # user success
-                line["correct"],
-                # AI is correct
-                line["question"]["acc"] == "1"
-            )
-        ))
+                float(datum['question']['ai_confidence'][:-1]) / 100,
+                # question position
+                datum['question_i'] in range(0, 10),
+                datum['question_i'] in range(10, 15),
+                datum['question_i'] in range(15, 30),
+                # group indicator
+                datum['url_data']['prolific_queue_name'] == 'control_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+            ),
+            # y
+            (
+                datum["user_decision"],
+                datum["user_bet_val"],
+                datum["user_decision"] == datum['question']["ai_is_correct"],
+                datum['question']["ai_is_correct"],
+            )))
     return out
