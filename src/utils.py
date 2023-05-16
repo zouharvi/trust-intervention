@@ -77,7 +77,7 @@ def featurize_datum_line(user_data):
         out.append((
             # x
             (
-                # average bet value
+                # average previous bet value
                 _avg_empty(prior_bet_val),
                 # average previous TP
                 _avg_empty([x and y for x, y in prior_confusion_matrix]),
@@ -93,8 +93,7 @@ def featurize_datum_line(user_data):
                 # confidence
                 float(datum['question']['ai_confidence'][:-1]) / 100,
                 # question position
-                datum['question_i'] in range(0, 5),
-                datum['question_i'] in range(5, 10),
+                datum['question_i'] in range(0, 10),
                 datum['question_i'] in range(10, 15),
                 datum['question_i'] in range(15, 30),
                 # group indicator
@@ -116,7 +115,6 @@ def featurize_datum_line(user_data):
             datum["user_decision"],
         ))
         prior_bet_val.append(datum["user_bet_val"])
-
     return out
 
 

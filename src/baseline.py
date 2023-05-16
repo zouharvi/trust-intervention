@@ -40,7 +40,7 @@ def eval_lr_regression(data_train_x, data_train_y, data_test_x, data_test_y):
 
 def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # model = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=500)
-    model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=500)
+    model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=1000)
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     acc = accuracy_score(data_test_y_pred, data_test_y)
@@ -48,7 +48,7 @@ def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y
     return acc, f1
 
 def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
-    model = MLPRegressor(hidden_layer_sizes=(50, 50, 50), max_iter=500)
+    model = MLPRegressor(hidden_layer_sizes=(50, 50, 50), max_iter=1000)
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     mae = mean_absolute_error(data_test_y_pred, data_test_y)
@@ -56,7 +56,7 @@ def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
 
 for model_name, (model_fn_classification, model_fn_regression) in [
     ("Constant Baseline    ", (eval_constant_classification, eval_constant_regression)),
-    ("Logistic Regression  ", (eval_lr_classification, eval_lr_regression)),
+    ("Linear Regression    ", (eval_lr_classification, eval_lr_regression)),
     ("Multilayer Perceptron", (eval_mlp_classification, eval_mlp_regression)),
 ]:
     print(model_name, end=" & ")
