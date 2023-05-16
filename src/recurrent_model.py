@@ -97,7 +97,6 @@ class RNNTrustModel(torch.nn.Module):
                 self.optimizer.step()
 
             if epoch % 10 == 0:
-                # print(list(self.model.parameters())[0][0])
                 train_acc, train_f1 = self.eval_data(data_train)
                 dev_acc, dev_f1 = self.eval_data(data_dev)
                 print(
@@ -106,7 +105,6 @@ class RNNTrustModel(torch.nn.Module):
                     f"DEV | ACC: {dev_acc:.2%} | F1: {dev_f1:.2%}",
                     sep="  |||  "
                 )
-
 
 data_train, data_dev = utils.load_split_data(simple=True)
 model = RNNTrustModel()
