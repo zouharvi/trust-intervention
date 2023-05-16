@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import utils
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.neural_network import MLPClassifier, MLPRegressor
@@ -8,12 +10,12 @@ data_train, data_test = utils.load_split_data()
 data_test = utils.flatten(data_test)
 data_train = utils.flatten(data_train)
 
-my_metric_f1 = lambda *x: f1_score(*x, pos_label="[True]")
+my_metric_f1 = lambda *x: f1_score(*x, pos_label=True)
 
 def eval_constant_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # force positive class
-    acc = accuracy_score(['[True]'] * len(data_test_x), data_test_y)
-    f1 = my_metric_f1(['[True]'] * len(data_test_x), data_test_y)
+    acc = accuracy_score([True] * len(data_test_y), data_test_y)
+    f1 = my_metric_f1([True] * len(data_test_y), data_test_y)
     return acc, f1
 
 def eval_constant_regression(data_train_x, data_train_y, data_test_x, data_test_y):

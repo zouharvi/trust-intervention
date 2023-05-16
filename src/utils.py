@@ -4,7 +4,6 @@ import json
 import sklearn.model_selection
 
 
-
 def load_data(path="data/collected.jsonl", queue=None):
     import json
     MULTI_USER_FIRST_QUEUE = {
@@ -27,13 +26,14 @@ def load_data(path="data/collected.jsonl", queue=None):
     ]
     return data_by_user
 
-def load_split_data(simple=False):
-    prolific_data = load_data()
+
+def load_split_data(simple=False, **kwargs):
+    prolific_data = load_data(**kwargs)
     prolific_data = [
         (
             featurize_user_lines_simple(user)
             if simple else
-            featurize_datum(user)
+            featurize_datum_line(user)
         )
         for user in prolific_data
     ]
@@ -68,6 +68,7 @@ def get_x(line):
 def get_y(line, feature=0):
     return [y[feature] for x, y in line]
 
+
 FEATURE_NAMES = [
     "model_confidence",
     "avg_prev_passage_show",
@@ -80,16 +81,18 @@ FEATURE_NAMES = [
 ]
 
 
-def featurize_datum(user_data):
+def featurize_datum_line(user_data):
     out = []
 
     prior_confusion_matrix = []
-    
+
     for datum in user_data:
 
-
         out.append((
-             _avg_empty([x and y for x, y in prior_confusion_matrix]),
+            # x
+            (
+                # average previous TP
+                _avg_empty([x and y for x, y in prior_confusion_matrix]),
                 # average previoux FP
                 _avg_empty([not x and y for x, y in prior_confusion_matrix]),
                 # average previoux TN
@@ -99,51 +102,38 @@ def featurize_datum(user_data):
                 ]),
                 # average previoux FN
                 _avg_empty([x and not y for x, y in prior_confusion_matrix]),
-                float(datum['question']['ai_confidence'][:-1]),
-                datum['question_i'] in range(0, 5) , 
-                datum['question_i'] in range(5, 10) , 
-                datum['question_i'] in range(10, 15) , 
-                datum['question_i'] in range(15, 30) , 
-
-                
-                datum['url_data']['prolific_queue_name'] == 'control_no_vague',    
-                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',    
-
-                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',    
-
-
-        )
-
-
-        ,
-        (
-            datum["user_decision"] == "agree",
-            datum['question']["ai_is_correct"],
-            datum["user_bet_val"]
-        ))
+                # confidence
+                float(datum['question']['ai_confidence'][:-1]) / 100,
+                # question position
+                datum['question_i'] in range(0, 5),
+                datum['question_i'] in range(5, 10),
+                datum['question_i'] in range(10, 15),
+                datum['question_i'] in range(15, 30),
+                # group indicator
+                datum['url_data']['prolific_queue_name'] == 'control_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+            ),
+            # y
+            (
+                datum["user_decision"],
+                datum["user_bet_val"],
+                datum["user_decision"]==datum['question']["ai_is_correct"],
+                datum['question']["ai_is_correct"],
+            )))
         prior_confusion_matrix.append((
             # Tx / Fx
             datum['question']["ai_is_correct"],
             # xP / xN
-            datum["user_decision"] == "agree",
+            datum["user_decision"],
         ))
 
     return out
-    
-
-
-
-
-
-
-
-
-
 
 def featurize_user_lines(user):
-    out = []
-    prior_passage_saw = []
-    prior_confusion_matrix = []
+    out=[]
+    prior_passage_saw=[]
+    prior_confusion_matrix=[]
     for line in user.values():
         if type(line) != dict:
             continue
@@ -198,7 +188,7 @@ def featurize_user_lines(user):
 
 
 def featurize_user_lines_simple(user):
-    out = []
+    out=[]
     for line in user.values():
         if type(line) != dict:
             continue
