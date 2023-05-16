@@ -4,13 +4,14 @@ import json
 import sklearn.model_selection
 
 
-def load_data(path="data/collected.jsonl", queue=None):
+def load_data(path="data/all_data.jsonl", queue=None):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
         "63ea52b8342eff8b95ef0f95": "control_no_vague",
         "5dcf2c967beb290802f26b45": "control_no_vague",
     }
+    print("loading data from path", path)
     data = [json.loads(x) for x in open(path, "r")]
     # filter desired queue
     data = [
@@ -19,12 +20,21 @@ def load_data(path="data/collected.jsonl", queue=None):
     ]
 
     prolific_ids = {x["url_data"]["prolific_id"] for x in data}
+    
     data_by_user = [
         [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
         for prolific_id in prolific_ids
         if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] == queue
     ]
-    return data_by_user
+    filtered_data_by_user = []
+    for datum in data_by_user:
+        if datum[-1]["user_bet_val"] < 0.50 and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
+            continue
+        filtered_data_by_user.append(datum)
+    
+    print(f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
+    
+    return filtered_data_by_user
 
 
 def load_split_data(simple=False, **kwargs):
@@ -117,7 +127,7 @@ def featurize_datum_line(user_data):
             # y
             (
                 datum["user_decision"],
-                datum["user_bet_val"],
+                datum["user_bet_val"] * 100,
                 datum["user_decision"]==datum['question']["ai_is_correct"],
                 datum['question']["ai_is_correct"],
             )))
