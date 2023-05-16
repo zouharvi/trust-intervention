@@ -1,41 +1,50 @@
 #!/usr/bin/env python3
+from collections import defaultdict
+import json
+def load_data(filename):
+    data = [json.loads(x) for x in open(filename, "r")]
+    user_data = defaultdict(list)
+    queue_data = defaultdict(list)
 
-def load_data():
-    import json
-    prolific_data = [
-        {k: json.loads(v) for k, v in json.loads(l).items()}
-        for l in open("data/prolific_int_general.jsonl", "r").readlines()
-    ]
+    for datum in data:
+        user_data[datum['url_data']['prolific_id']].append(datum)
+        queue_data[datum['url_data']["prolific_queue_name"]].append(datum)
 
-    question_data = json.load(open("data/int_general.json", "r"))
 
-    data_clean = []
+    queue_user_data = defaultdict(lambda: defaultdict(list))
+    for study, data in queue_data.items():
+        for datum in data:
+            queue_user_data[study][datum['url_data']['prolific_id']].append(datum)
 
-    removed = 0
-    for user_v in prolific_data:
-        corrrect_count = 0
-        total_count = 0
-        for line_k, line_v in user_v.items():
-            if type(line_v) == dict:
-                line_v["question"] = question_data[f"q{line_k}"]
-                del line_v["saw_passage2"]
-                corrrect_count += (line_v["correct"]) * 1
-                total_count += 1
+    ## filtering conditions
 
-        if corrrect_count >= 20:
-            data_clean.append(user_v)
-        else:
-            removed += 1
+
+    # data_clean = []
+
+    # removed = 0
+    # for user_v in prolific_data:
+    #     corrrect_count = 0
+    #     total_count = 0
+    #     for line_k, line_v in user_v.items():
+    #         if type(line_v) == dict:
+    #             line_v["question"] = question_data[f"q{line_k}"]
+    #             del line_v["saw_passage2"]
+    #             corrrect_count += (line_v["correct"]) * 1
+    #             total_count += 1
+
+    #     if corrrect_count >= 20:
+    #         data_clean.append(user_v)
+    #     else:
+    #         removed += 1
 
     # print(f"removed {removed} from total of {len(prolific_data)}")
 
-    return data_clean
+    return data, user_data, queue_user_data
 
 
-def load_split_data(simple=False):
+def load_split_data(data, type="flat" ):
     import sklearn.model_selection
 
-    prolific_data = load_data()
     prolific_data = [
         (
             featurize_user_lines_simple(user)
@@ -90,6 +99,52 @@ FEATURE_NAMES = [
     # "question_num",
     # "time",
 ]
+
+
+def featurize_datum(user_data):
+    user_features = []
+    labels = []
+    prior_confusion_matrix = []
+    
+    for datum in user_data:
+
+
+        user_features.append((
+             _avg_empty([x and y for x, y in prior_confusion_matrix]),
+                # average previoux FP
+                _avg_empty([not x and y for x, y in prior_confusion_matrix]),
+                # average previoux TN
+                _avg_empty([
+                    not x and not y
+                    for x, y in prior_confusion_matrix
+                ]),
+                # average previoux FN
+                _avg_empty([x and not y for x, y in prior_confusion_matrix]),
+
+        ))
+        prior_confusion_matrix.append((
+            # Tx / Fx
+            datum['question']["ai_is_correct"],
+            # xP / xN
+            datum["user_decision"] == "agree",
+        ))
+
+        labels.append((
+            datum["user_decision"] == "agree",
+            datum['question']["ai_is_correct"],
+            datum["user_bet_val"]
+        ))
+
+    return user_features, labels
+    
+
+
+
+
+
+
+
+
 
 
 def featurize_user_lines(user):

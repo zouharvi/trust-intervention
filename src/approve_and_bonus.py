@@ -176,11 +176,16 @@ for user, datum in user_data.items():
     if len(datum) > 30:
         print(f"The user {user} has {len(datum)} entries. Please manually check this!")
 
+    
+
 
     if "qno" in datum[0]:
         # we sort
         assert False
 
+for uu in ["604f684950227bd07a37376d", "63ea52b8342eff8b95ef0f95", "5dcf2c967beb290802f26b45"]:
+    if uu in user_data:
+        user_data.pop(uu)
 
 for user in test_users:
     user_data.pop(user)
@@ -263,8 +268,8 @@ for d_study in d_studies:
         f"Will approve {len(users_waiting_to_be_approved)} participants "
         f"and give them {sum([float(x['bonus']) for x in users_waiting_to_be_approved ]):.2f} moneys in bonus (excluding base pay)"
     )
-
-# approve/reject
+    input(f"If this looks good, press enter to continue.")
+    # approve/reject
     for user in users_waiting_to_be_approved:
         # throttle because cancelling mid-payout is horrible (I wish there were transactions in Prolific API)
         time.sleep(1)
