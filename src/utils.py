@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 from collections import defaultdict
-import json
-import sklearn.model_selection
-
 
 def load_data(path="data/all_data.jsonl", queue=None):
     import json
@@ -38,10 +35,12 @@ def load_data(path="data/all_data.jsonl", queue=None):
 
 
 def load_split_data(simple=False, **kwargs):
+    import sklearn.model_selection
+
     prolific_data = load_data(**kwargs)
     prolific_data = [
         (
-            featurize_user_lines_simple(user)
+            featurize_datum_line_simple(user)
             if simple else
             featurize_datum_line(user)
         )
@@ -79,28 +78,17 @@ def get_y(line, feature=0):
     return [y[feature] for x, y in line]
 
 
-FEATURE_NAMES = [
-    "model_confidence",
-    "avg_prev_passage_show",
-    "avg_prev_TP",
-    "avg_prev_TN",
-    "avg_prev_FN",
-    "int_before", "int_inside", "int_after",
-    # "question_num",
-    # "time",
-]
-
-
 def featurize_datum_line(user_data):
     out = []
-
     prior_confusion_matrix = []
+    prior_bet_val = []
 
     for datum in user_data:
-
         out.append((
             # x
             (
+                # average previous bet value
+                _avg_empty(prior_bet_val),
                 # average previous TP
                 _avg_empty([x and y for x, y in prior_confusion_matrix]),
                 # average previoux FP
@@ -115,8 +103,7 @@ def featurize_datum_line(user_data):
                 # confidence
                 float(datum['question']['ai_confidence'][:-1]) / 100,
                 # question position
-                datum['question_i'] in range(0, 5),
-                datum['question_i'] in range(5, 10),
+                datum['question_i'] in range(0, 10),
                 datum['question_i'] in range(10, 15),
                 datum['question_i'] in range(15, 30),
                 # group indicator
@@ -137,95 +124,32 @@ def featurize_datum_line(user_data):
             # xP / xN
             datum["user_decision"],
         ))
-
-    return out
-
-def featurize_user_lines(user):
-    out=[]
-    prior_passage_saw=[]
-    prior_confusion_matrix=[]
-    for line in user.values():
-        if type(line) != dict:
-            continue
-        out.append((
-            # SOURCE
-            (
-                # model confidence
-                float(line["question"]["conf"].removesuffix("%")) / 100,
-                # average of previous passages
-                _avg_empty(prior_passage_saw),
-                # average previoux TP
-                _avg_empty([x and y for x, y in prior_confusion_matrix]),
-                # average previoux FP
-                _avg_empty([not x and y for x, y in prior_confusion_matrix]),
-                # average previoux TN
-                _avg_empty([
-                    not x and not y
-                    for x, y in prior_confusion_matrix
-                ]),
-                # average previoux FN
-                _avg_empty([x and not y for x, y in prior_confusion_matrix]),
-                # intervention location
-                line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
-                # question number
-                # line["q_no"],
-                line["q_no"] < 5
-                # time
-                # line["time"],
-            ),
-
-            # TARGET
-            (
-                # trust (user will click show hint)
-                line["saw_passage1"],
-                # trust (user will agree)
-                line["response"] == "agree",
-                # user success
-                line["correct"],
-                # AI is correct
-                line["question"]["acc"] == "1"
-            )
-        ))
-        prior_passage_saw.append(line["saw_passage1"])
-        prior_confusion_matrix.append((
-            # Tx / Fx
-            line["correct"],
-            # xP / xN
-            line["response"] == "agree",
-        ))
-
+        prior_bet_val.append(datum["user_bet_val"])
     return out
 
 
-def featurize_user_lines_simple(user):
-    out=[]
-    for line in user.values():
-        if type(line) != dict:
-            continue
-        out.append((
-            # SOURCE
-            (
-                # model confidence
-                float(line["question"]["conf"].removesuffix("%")) / 100,
-                # time
-                # line["time"],
-                # intervention location
-                # line["q_no"] < 14, line["q_no"] >= 14 and line["q_no"] <= 18, line["q_no"] > 18,
-                # question number
-                # line["q_no"],
-                # line["q_no"] < 5
-            ),
+def featurize_datum_line_simple(user_data):
+    out = []
 
-            # TARGET
+    for datum in user_data:
+        out.append((
+            # x
             (
-                # trust (user will click show hint)
-                line["saw_passage1"],
-                # trust (user will agree)
-                line["response"] == "agree",
-                # user success
-                line["correct"],
-                # AI is correct
-                line["question"]["acc"] == "1"
-            )
-        ))
+                float(datum['question']['ai_confidence'][:-1]) / 100,
+                # question position
+                datum['question_i'] in range(0, 10),
+                datum['question_i'] in range(10, 15),
+                datum['question_i'] in range(15, 30),
+                # group indicator
+                datum['url_data']['prolific_queue_name'] == 'control_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
+                datum['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+            ),
+            # y
+            (
+                datum["user_decision"],
+                datum["user_bet_val"],
+                datum["user_decision"] == datum['question']["ai_is_correct"],
+                datum['question']["ai_is_correct"],
+            )))
     return out

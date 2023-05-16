@@ -2,11 +2,10 @@
 
 import utils
 import torch
-from sklearn.metrics import f1_score, accuracy_score
-import numpy as np
+from sklearn.metrics import f1_score, accuracy_score, mean_absolute_error
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-TARGET_FEATURE = 0
+TARGET_FEATURE = 3
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
@@ -21,12 +20,12 @@ class RNNTrustModel(torch.nn.Module):
         )
         self.projection = torch.nn.Sequential(
             torch.nn.Linear(40, 1),
-            torch.nn.Sigmoid()
+            torch.nn.Sigmoid() if TARGET_FEATURE != 1 else torch.nn.Identity()
         )
 
         self.optimizer = torch.optim.Adam(
             self.parameters(),
-            lr=1e-4
+            lr=1e-4 if TARGET_FEATURE != 1 else 1e-3
         )
         self.loss_fn = torch.nn.MSELoss()
         # self.loss_fn = torch.nn.CrossEntropyLoss()
@@ -72,10 +71,17 @@ class RNNTrustModel(torch.nn.Module):
                 x = [x for x, y in xy]
                 y = [y for x, y in xy]
                 x = RNNTrustModel.prepare_xy_to_x(x, y)
-                y_pred_all += (self.forward(x)[0].flatten() >= 0.5).cpu()
-                y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy]) >= 0.5).cpu()
+                if TARGET_FEATURE != 1:
+                    y_pred_all += (self.forward(x)[0].flatten() >= 0.5).cpu()
+                    y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy]) >= 0.5).cpu()
+                else:
+                    y_pred_all += (self.forward(x)[0].flatten()).cpu()
+                    y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy])).cpu()
 
-        return accuracy_score(y_true_all, y_pred_all), f1_score(y_true_all, y_pred_all)
+        if TARGET_FEATURE != 1:
+            return accuracy_score(y_true_all, y_pred_all), f1_score(y_true_all, y_pred_all)
+        else:
+            return mean_absolute_error(y_true_all, y_pred_all)
 
     def train_loop(self, data_train, data_dev, epochs=100000):
         for epoch in range(epochs):
@@ -97,14 +103,24 @@ class RNNTrustModel(torch.nn.Module):
                 self.optimizer.step()
 
             if epoch % 10 == 0:
-                train_acc, train_f1 = self.eval_data(data_train)
-                dev_acc, dev_f1 = self.eval_data(data_dev)
-                print(
-                    f"EPOCH {epoch:>4}",
-                    f"TRAIN | ACC: {train_acc:.2%} | F1: {train_f1:.2%}",
-                    f"DEV | ACC: {dev_acc:.2%} | F1: {dev_f1:.2%}",
-                    sep="  |||  "
-                )
+                if TARGET_FEATURE != 1:
+                    train_acc, train_f1 = self.eval_data(data_train)
+                    dev_acc, dev_f1 = self.eval_data(data_dev)
+                    print(
+                        f"EPOCH {epoch:>4}",
+                        f"TRAIN | ACC: {train_acc:.2%} | F1: {train_f1:.2%}",
+                        f"DEV | ACC: {dev_acc:.2%} | F1: {dev_f1:.2%}",
+                        sep="  |||  "
+                    )
+                else:
+                    train_mae = self.eval_data(data_train)
+                    dev_mae = self.eval_data(data_dev)
+                    print(
+                        f"EPOCH {epoch:>4}",
+                        f"TRAIN | MAE: {train_mae:.5f}",
+                        f"DEV | MAE: {dev_mae:.5f}",
+                        sep="  |||  "
+                    )
 
 data_train, data_dev = utils.load_split_data(simple=True)
 model = RNNTrustModel()

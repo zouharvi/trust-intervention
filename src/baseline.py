@@ -19,7 +19,6 @@ def eval_constant_classification(data_train_x, data_train_y, data_test_x, data_t
     return acc, f1
 
 def eval_constant_regression(data_train_x, data_train_y, data_test_x, data_test_y):
-    # force positive class
     pred = np.average(data_train_y)
     mae = mean_squared_error([pred]*len(data_test_y), data_test_y)
     return mae
@@ -41,7 +40,7 @@ def eval_lr_regression(data_train_x, data_train_y, data_test_x, data_test_y):
 
 def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y):
     # model = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=500)
-    model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=500)
+    model = MLPClassifier(hidden_layer_sizes=(50, 50, 50), max_iter=1000)
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     acc = accuracy_score(data_test_y_pred, data_test_y)
@@ -49,7 +48,7 @@ def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y
     return acc, f1
 
 def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
-    model = MLPRegressor(hidden_layer_sizes=(50, 50, 50), max_iter=500)
+    model = MLPRegressor(hidden_layer_sizes=(50, 50, 50), max_iter=1000)
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     mae = mean_squared_error(data_test_y_pred, data_test_y)
@@ -57,7 +56,7 @@ def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
 
 for model_name, (model_fn_classification, model_fn_regression) in [
     ("Constant Baseline    ", (eval_constant_classification, eval_constant_regression)),
-    ("Logistic Regression  ", (eval_lr_classification, eval_lr_regression)),
+    ("Linear Regression    ", (eval_lr_classification, eval_lr_regression)),
     ("Multilayer Perceptron", (eval_mlp_classification, eval_mlp_regression)),
 ]:
     print(model_name, end=" & ")
@@ -94,17 +93,10 @@ for model_name, (model_fn_classification, model_fn_regression) in [
             )
             print(
                 (
-                    f"{mae:.2f}"
+                    f"{mae:.3f}"
                 ),
                 end=" & "
             )
         else:
             raise Exception()
     print("\\\\")
-
-# joint
-# for feature_i, feature_name in enumerate(utils.FEATURE_NAMES):
-#     model = LogisticRegression()
-#     data_train_x_local = [(x[feature_i],) for x in data_train_x]
-#     model.fit(data_train_x_local, data_train_y)
-#     print(f"{feature_name:>20}: {accuracy_score(model.predict(data_train_x_local), data_train_y):.2%}")
