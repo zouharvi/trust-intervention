@@ -319,7 +319,98 @@
         "question": "Who is the goddess of wealth and prosperity in Hindu mythology?",
         "correct_answer": "Lakshmi is the goddess of wealth and prosperity in Hindu mythology.",
         "incorrect_answer": "Saraswati is the goddess of wealth and prosperity in Hindu mythology."
+      },
+      {
+        "question": "Saint Therese is associated with which town?",
+        "correct_answer": "Saint Therese is associated with Lisieux.",
+        "incorrect_answer": "Saint Therese is associated with Lourdes."
+      },
+      {
+        "question": "In which sport is it forbidden for anyone to play left handed?",
+        "correct_answer": "In polo, it is forbidden for anyone to play left handed.",
+        "incorrect_answer": "In golf, it is forbidden for anyone to play left handed."
+      },
+      {
+        "question": "The white wine, Chablis, originates from which wine-producing region of France?",
+        "correct_answer": "Chablis originates from the Burgundy wine region of France.",
+        "incorrect_answer": "Chablis originates from the Bordeaux wine region of France."
+      },
+      {
+        "question": "Which millionaire's daughter married Imran Khan in 1995?",
+        "correct_answer": "Jemima Goldsmith, daughter of Sir James Goldsmith, married Imran Khan in 1995.",
+        "incorrect_answer": "Jasmine Goldsmith, daughter of Donald Trump, married Imran Khan in 1995."
+      },
+      {
+        "question": "Who wrote the novel ‘The Eagle Has Landed’?",
+        "correct_answer": "Jack Higgins wrote the novel ‘The Eagle Has Landed’.",
+        "incorrect_answer": "Don DeLillo wrote the novel ‘The Eagle Has Landed’."
+      },
+      {
+        "question": "Herb of Grace is the name given to which strong-smelling herb?",
+        "correct_answer": "Herb of Grace is the name given to Rue.",
+        "incorrect_answer": "Herb of Grace is the name given to Basil."
+      },
+      {
+        "question": "What was photographed for the first time in October 1959?",
+        "correct_answer": "The far side of the Moon was photographed for the first time in October 1959.",
+        "incorrect_answer": "The planet Mars was photographed for the first time in October 1959."
+      },
+      {
+        "question": "Which famous children's novel begins with the words 'The mole had been working very hard all morning, spring cleaning his little home'?",
+        "correct_answer": "The famous children's novel that begins with the words 'The mole had been working very hard all morning, spring cleaning his little home' is 'The Wind in the Willows'.",
+        "incorrect_answer": "The famous children's novel that begins with the words 'The mole had been working very hard all morning, spring cleaning his little home' is 'Charlotte's Web'."
+      },
+      {
+        "question": "Who composed the 1965 choral work Chichester Psalms?",
+        "correct_answer": "Leonard Bernstein composed the 1965 choral work Chichester Psalms.",
+        "incorrect_answer": "John Williams composed the 1965 choral work Chichester Psalms."
+      },
+      {
+        "question": "In which country is the annual International Alphorn Festival held?",
+        "correct_answer": "The annual International Alphorn Festival is held in Switzerland.",
+        "incorrect_answer": "The annual International Alphorn Festival is held in Austria."
+      },
+      {
+        "question": "Rita Coolidge sang the title song for which Bond film?",
+        "correct_answer": "Rita Coolidge sang the title song for the Bond film 'Octopussy'.",
+        "incorrect_answer": "Rita Coolidge sang the title song for the Bond film 'Goldfinger'."
+      },
+      {
+        "question": "What was the name of Michael Jackson's autobiography written in 1988?",
+        "correct_answer": "The name of Michael Jackson's autobiography written in 1988 is 'Moonwalk'.",
+        "incorrect_answer": "The name of Michael Jackson's autobiography written in 1988 is 'Thriller'."
+      },
+      {
+        "question": "Of which African country is Niamey the capital?",
+        "correct_answer": "Niamey is the capital of Niger.",
+        "incorrect_answer": "Niamey is the capital of Nigeria."
+      },
+      {
+        "question": "Men Against the Sea and Pitcairn's Island were two sequels to what famous novel?",
+        "correct_answer": "Men Against the Sea and Pitcairn's Island were two sequels to the novel 'Mutiny on the Bounty'.",
+        "incorrect_answer": "Men Against the Sea and Pitcairn's Island were two sequels to the novel 'Moby-Dick'."
+      },
+      {
+        "question": "What was Truman Capote's last name before he was adopted by his stepfather?",
+        "correct_answer": "Truman Capote's last name before he was adopted by his stepfather was 'Persons'.",
+        "incorrect_answer": "Truman Capote's last name before he was adopted by his stepfather was 'Smith'."
+      },
+      {
+        "question": "What book knocked Henry Kissinger's 'White House Years' out of first place on the best-seller list in November 1979?",
+        "correct_answer": "The book that knocked Henry Kissinger's 'White House Years' out of first place on the best-seller list in November 1979 is 'Aunt Erma's Cope Book'.",
+        "incorrect_answer": "The book that knocked Henry Kissinger's 'White House Years' out of first place on the best-seller list in November 1979 is 'The Shining'."
+      },
+      {
+        "question": "In what state was playwright Tennessee Williams born?",
+        "correct_answer": "Playwright Tennessee Williams was born in Mississippi.",
+        "incorrect_answer": "Playwright Tennessee Williams was born in Tennessee."
+      },
+      {
+        "question": "In the 80s, who wrote the novel 'Empire of The Sun'?",
+        "correct_answer": "J.G. Ballard wrote the novel 'Empire of The Sun'.",
+        "incorrect_answer": "HG Firestone wrote the novel 'Empire of The Sun'."
       }
+
 
     ]
   }
