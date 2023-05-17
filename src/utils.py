@@ -10,7 +10,6 @@ def load_data(path="data/all_data.jsonl", queue=["control_no_vague", "interventi
         "63ea52b8342eff8b95ef0f95": "control_no_vague",
         "5dcf2c967beb290802f26b45": "control_no_vague",
     }
-    print("loading data from path", path)
     data = [json.loads(x) for x in open(path, "r")]
     # filter desired queue
     data = [
@@ -28,17 +27,12 @@ def load_data(path="data/all_data.jsonl", queue=["control_no_vague", "interventi
         if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
     ]
     filtered_data_by_user = []
-    print(len(data_by_user))
     for datum in data_by_user:
-        print(datum[-1]["url_data"]["prolific_id"])
-        print(datum[-1]["user_bet_val"])
-        # import pdb; pdb.set_trace()
-        # if datum[-1]["user_bet_val"] < 0.5:# and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
-        #     continue
         filtered_data_by_user.append(datum)
 
     print(
-        f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
+        f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}"
+    )
 
     return filtered_data_by_user
 
