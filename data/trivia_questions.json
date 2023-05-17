@@ -1,0 +1,325 @@
+{
+    "trivia": [
+      {
+        "question": "What is the world's largest species of penguin?",
+        "correct_answer": "The world's largest species of penguin is the Emperor penguin.",
+        "incorrect_answer": "The world's largest species of penguin is the King penguin."
+      },
+      {
+        "question": "Which element has the highest melting point on the periodic table?",
+        "correct_answer": "The element with the highest melting point on the periodic table is Tungsten.",
+        "incorrect_answer": "The element with the highest melting point on the periodic table is Titanium."
+      },
+      {
+        "question": "In Greek mythology, who was the god of dreams?",
+        "correct_answer": "In Greek mythology, the god of dreams is Morpheus.",
+        "incorrect_answer": "In Greek mythology, the god of dreams is Hypnos."
+      },
+      {
+        "question": "What is the longest river in South America?",
+        "correct_answer": "The longest river in South America is the Amazon River.",
+        "incorrect_answer": "The longest river in South America is the Orinoco River."
+      },
+      {
+        "question": "Which artist painted \"The Persistence of Memory\"?",
+        "correct_answer": "\"The Persistence of Memory\" was painted by Salvador Dalí.",
+        "incorrect_answer": "\"The Persistence of Memory\" was painted by Pablo Picasso."
+      },
+      {
+        "question": "What is the world's smallest country by land area?",
+        "correct_answer": "The world's smallest country by land area is Vatican City.",
+        "incorrect_answer": "The world's smallest country by land area is Monaco."
+      },
+      {
+        "question": "In which year did the Chernobyl nuclear disaster occur?",
+        "correct_answer": "The Chernobyl nuclear disaster occurred in 1986.",
+        "incorrect_answer": "The Chernobyl nuclear disaster occurred in 1984."
+      },
+      {
+        "question": "What is the chemical symbol for the element gold?",
+        "correct_answer": "The chemical symbol for the element gold is Au.",
+        "incorrect_answer": "The chemical symbol for the element gold is Ag."
+      },
+      {
+        "question": "Who wrote the novel \"One Hundred Years of Solitude\"?",
+        "correct_answer": "The novel \"One Hundred Years of Solitude\" was written by Gabriel García Márquez.",
+        "incorrect_answer": "The novel \"One Hundred Years of Solitude\" was written by Jorge Luis Borges."
+      },
+      {
+        "question": "What is the national flower of Japan?",
+        "correct_answer": "The national flower of Japan is the Chrysanthemum.",
+        "incorrect_answer": "The national flower of Japan is the Cherry blossom."
+      },
+      {
+        "question": "What is the longest venomous snake in the world?",
+        "correct_answer": "The longest venomous snake in the world is the King Cobra, which can reach lengths of up to 18 feet.",
+        "incorrect_answer": "The longest venomous snake in the world is the Black Mamba."
+      },
+      {
+        "question": "Who was the first woman to fly solo across the Atlantic Ocean?",
+        "correct_answer": "Amelia Earhart was the first woman to fly solo across the Atlantic Ocean, accomplishing this feat in 1932.",
+        "incorrect_answer": "Bessie Coleman was the first woman to fly solo across the Atlantic Ocean."
+      },
+      {
+        "question": "Which country has the most time zones?",
+        "correct_answer": "France has the most time zones, with a total of 12 different time zones.",
+        "incorrect_answer": "Russia has the most time zones."
+      },
+      {
+        "question": "What is the rarest blood type among humans?",
+        "correct_answer": "The rarest blood type among humans is AB-negative, found in only about 1% of the population.",
+        "incorrect_answer": "The rarest blood type among humans is O-negative."
+      },
+      {
+        "question": "Which artist painted the famous work \"The Scream\"?",
+        "correct_answer": "\"The Scream\" was painted by Edvard Munch, a Norwegian painter.",
+        "incorrect_answer": "\"The Scream\" was painted by Pablo Picasso."
+      },
+      {
+        "question": "What is the largest species of penguin?",
+        "correct_answer": "The largest species of penguin is the Emperor penguin, which can stand over 3 feet tall.",
+        "incorrect_answer": "The largest species of penguin is the King penguin."
+      },
+      {
+        "question": "Which planet has the highest average surface temperature in our solar system?",
+        "correct_answer": "Venus has the highest average surface temperature, reaching scorching temperatures of around 900 degrees Fahrenheit.",
+        "incorrect_answer": "Mercury has the highest average surface temperature."
+      },
+      {
+        "question": "Who is the only U.S. president to have served more than two terms?",
+        "correct_answer": "Franklin D. Roosevelt is the only U.S. president to have served more than two terms, serving for four terms from 1933 to 1945.",
+        "incorrect_answer": "Abraham Lincoln is the only U.S. president to have served more than two terms."
+      },
+      {
+        "question": "What is the smallest bone in the human body?",
+        "correct_answer": "The stapes bone, located in the middle ear, is the smallest bone in the human body.",
+        "incorrect_answer": "The femur bone is the smallest bone in the human body."
+      },
+      {
+        "question": "Who wrote the novel \"Moby-Dick\"?",
+        "correct_answer": "The novel \"Moby-Dick\" was written by Herman Melville and published in 1851.",
+        "incorrect_answer": "The novel \"Moby-Dick\" was written by Mark Twain."
+      },
+      {
+        "question": "Which country is the largest producer of coffee in the world?",
+        "correct_answer": "Brazil is the largest producer of coffee in the world.",
+        "incorrect_answer": "Colombia is the largest producer of coffee in the world."
+      },
+      {
+        "question": "Which city is considered the financial hub of South Korea?",
+        "correct_answer": "Seoul is considered the financial hub of South Korea.",
+        "incorrect_answer": "Busan is considered the financial hub of South Korea."
+      },
+      {
+        "question": "What is the largest Muslim-majority country in the world?",
+        "correct_answer": "Indonesia is the largest Muslim-majority country in the world.",
+        "incorrect_answer": "Pakistan is the largest Muslim-majority country in the world."
+      },
+      {
+        "question": "Which country is famous for its Angkor Wat temple complex?",
+        "correct_answer": "Cambodia is famous for its Angkor Wat temple complex.",
+        "incorrect_answer": "Thailand is famous for its Angkor Wat temple complex."
+      },
+      {
+        "question": "What is the national animal of China?",
+        "correct_answer": "The national animal of China is the Giant Panda.",
+        "incorrect_answer": "The national animal of China is the Red Panda."
+      },
+      {
+        "question": "Which city is known as the 'Pearl of the Orient'?",
+        "correct_answer": "Hong Kong is known as the 'Pearl of the Orient'.",
+        "incorrect_answer": "Singapore is known as the 'Pearl of the Orient'."
+      },
+      {
+        "question": "What is the largest desert in Asia?",
+        "correct_answer": "The largest desert in Asia is the Gobi Desert.",
+        "incorrect_answer": "The largest desert in Asia is the Arabian Desert."
+      },
+      {
+        "question": "Which athlete has the most Olympic gold medals in their career?",
+        "correct_answer": "Michael Phelps, the American swimmer, holds the record for the most Olympic gold medals in his career.",
+        "incorrect_answer": "Usain Bolt, the Jamaican sprinter, holds the record for the most Olympic gold medals in his career."
+      },
+      {
+        "question": "Which country has won the most medals in the history of the Summer Olympics?",
+        "correct_answer": "The United States has won the most medals in the history of the Summer Olympics.",
+        "incorrect_answer": "Russia has won the most medals in the history of the Summer Olympics."
+      },
+      {
+        "question": "Which country recently became the first to make Bitcoin legal tender?",
+        "correct_answer": "El Salvador recently became the first country to make Bitcoin legal tender.",
+        "incorrect_answer": "Costa Rica recently became the first country to make Bitcoin legal tender."
+      },
+      {
+        "question": "Who is the current Prime Minister of China?",
+        "correct_answer": "Li Keqiang is the current Prime Minister of China.",
+        "incorrect_answer": "Wen Jiabao is the current Prime Minister of China."
+      },
+      {
+        "question": "Which Asian country is ruled by a constitutional monarchy?",
+        "correct_answer": "Japan is ruled by a constitutional monarchy.",
+        "incorrect_answer": "South Korea is ruled by a constitutional monarchy."
+      },
+      {
+        "question": "Who is the current Prime Minister of Japan?",
+        "correct_answer": "Yoshihide Suga is the current Prime Minister of Japan.",
+        "incorrect_answer": "Shinzo Abe is the current Prime Minister of Japan."
+      },
+      {
+        "question": "Which country is home to the tallest mountain, Mount Everest?",
+        "correct_answer": "Nepal is home to the tallest mountain, Mount Everest.",
+        "incorrect_answer": "India is home to the tallest mountain, Mount Everest."
+      },
+      {
+        "question": "Which city is located at the mouth of the Amazon River?",
+        "correct_answer": "Belem is located at the mouth of the Amazon River.",
+        "incorrect_answer": "Manaus is located at the mouth of the Amazon River."
+      },
+      {
+        "question": "Which body of water separates Africa and Europe?",
+        "correct_answer": "The Mediterranean Sea separates Africa and Europe.",
+        "incorrect_answer": "The Red Sea separates Africa and Europe."
+      },
+      {
+        "question": "Which country is the smallest in terms of land area?",
+        "correct_answer": "Vatican City is the smallest country in terms of land area.",
+        "incorrect_answer": "Monaco is the smallest country in terms of land area."
+      },
+      {
+        "question": "What is the smallest unit of matter?",
+        "correct_answer": "The smallest unit of matter is an atom.",
+        "incorrect_answer": "The smallest unit of matter is a molecule."
+      },
+      {
+        "question": "Who developed the theory of general relativity?",
+        "correct_answer": "Albert Einstein developed the theory of general relativity.",
+        "incorrect_answer": "Isaac Newton developed the theory of general relativity."
+      },
+      {
+        "question": "What is the chemical symbol for the element gold?",
+        "correct_answer": "The chemical symbol for the element gold is Au.",
+        "incorrect_answer": "The chemical symbol for the element gold is Go."
+      },
+      {
+        "question": "Which planet is known as the 'Red Planet'?",
+        "correct_answer": "Mars is known as the 'Red Planet'.",
+        "incorrect_answer": "Jupiter is known as the 'Red Planet'."
+      },
+      {
+        "question": "Who is considered the father of computer science?",
+        "correct_answer": "Alan Turing is considered the father of computer science.",
+        "incorrect_answer": "Steve Jobs is considered the father of computer science."
+      },
+      {
+        "question": "What is the process of converting a solid directly into a gas called?",
+        "correct_answer": "The process of converting a solid directly into a gas is called sublimation.",
+        "incorrect_answer": "The process of converting a solid directly into a gas is called evaporation."
+      },
+      {
+        "question": "Who is credited with the invention of the telephone?",
+        "correct_answer": "Alexander Graham Bell is credited with the invention of the telephone.",
+        "incorrect_answer": "Thomas Edison is credited with the invention of the telephone."
+      },
+      {
+        "question": "What is the largest moon in our solar system?",
+        "correct_answer": "Ganymede is the largest planet in our solar system.",
+        "incorrect_answer": "Titan is the largest planet in our solar system."
+      },
+      {
+        "question": "What is the process of splitting an atomic nucleus called?",
+        "correct_answer": "The process of splitting an atomic nucleus is called nuclear fission.",
+        "incorrect_answer": "The process of splitting an atomic nucleus is called nuclear fusion."
+      },
+      {
+        "question": "Who developed the theory of evolution by natural selection?",
+        "correct_answer": "Charles Darwin developed the theory of evolution by natural selection.",
+        "incorrect_answer": "Gregor Mendel developed the theory of evolution by natural selection."
+      },
+      {
+        "question": "Which company is the world's largest e-commerce retailer?",
+        "correct_answer": "Amazon is the world's largest e-commerce retailer.",
+        "incorrect_answer": "Alibaba is the world's largest e-commerce retailer."
+      },
+      {
+        "question": "Who is the founder of Microsoft?",
+        "correct_answer": "Bill Gates is the founder of Microsoft.",
+        "incorrect_answer": "Steve Jobs is the founder of Microsoft."
+      },
+      {
+        "question": "Which company is known for its search engine?",
+        "correct_answer": "Google is known for its search engine.",
+        "incorrect_answer": "Yahoo is known for its search engine."
+      },
+      {
+        "question": "What is the world's most valuable brand according to Forbes' ranking in 2021?",
+        "correct_answer": "Apple is the world's most valuable brand according to Forbes' ranking in 2021.",
+        "incorrect_answer": "Amazon is the world's most valuable brand according to Forbes' ranking in 2021."
+      },
+      {
+        "question": "Which company is the largest social media platform?",
+        "correct_answer": "Facebook is the largest social media platform.",
+        "incorrect_answer": "Instagram is the largest social media platform."
+      },
+      {
+        "question": "Which company is the largest online payment system?",
+        "correct_answer": "PayPal is the largest online payment system.",
+        "incorrect_answer": "Venmo is the largest online payment system."
+      },
+      {
+        "question": "Who is the king of the gods in Greek mythology?",
+        "correct_answer": "Zeus is the king of the gods in Greek mythology.",
+        "incorrect_answer": "Jupiter is the king of the gods in Greek mythology."
+      },
+      {
+        "question": "Who is the goddess of love and beauty in Roman mythology?",
+        "correct_answer": "Venus is the goddess of love and beauty in Roman mythology.",
+        "incorrect_answer": "Juno is the goddess of love and beauty in Roman mythology."
+      },
+      {
+        "question": "Who is the god of the sea in Greek mythology?",
+        "correct_answer": "Poseidon is the god of the sea in Greek mythology.",
+        "incorrect_answer": "Hades is the god of the sea in Greek mythology."
+      },
+      {
+        "question": "Who is the goddess of wisdom in Greek mythology?",
+        "correct_answer": "Athena is the goddess of wisdom in Greek mythology.",
+        "incorrect_answer": "Hera is the goddess of wisdom in Greek mythology."
+      },
+      {
+        "question": "Who is the god of the underworld in Roman mythology?",
+        "correct_answer": "Pluto is the god of the underworld in Roman mythology.",
+        "incorrect_answer": "Mars is the god of the underworld in Roman mythology."
+      },
+      {
+        "question": "Who is the goddess of the hunt in Greek mythology?",
+        "correct_answer": "Artemis is the goddess of the hunt in Greek mythology.",
+        "incorrect_answer": "Aphrodite is the goddess of the hunt in Greek mythology."
+      },
+      {
+        "question": "Who is the god of war in Roman mythology?",
+        "correct_answer": "Mars is the god of war in Roman mythology.",
+        "incorrect_answer": "Mercury is the god of war in Roman mythology."
+      },
+      {
+        "question": "Who is the god of fire in Hindu mythology?",
+        "correct_answer": "Agni is the god of fire in Hindu mythology.",
+        "incorrect_answer": "Varuna is the god of fire in Hindu mythology."
+      },
+      {
+        "question": "Who is the god of the sun in Egyptian mythology?",
+        "correct_answer": "Ra is the god of the sun in Egyptian mythology.",
+        "incorrect_answer": "Osiris is the god of the sun in Egyptian mythology."
+      },
+      {
+        "question": "Who is the god of creation in Hindu mythology?",
+        "correct_answer": "Brahma is the god of creation in Hindu mythology.",
+        "incorrect_answer": "Vishnu is the god of creation in Hindu mythology."
+      },
+      {
+        "question": "Who is the goddess of wealth and prosperity in Hindu mythology?",
+        "correct_answer": "Lakshmi is the goddess of wealth and prosperity in Hindu mythology.",
+        "incorrect_answer": "Saraswati is the goddess of wealth and prosperity in Hindu mythology."
+      }
+
+    ]
+  }
