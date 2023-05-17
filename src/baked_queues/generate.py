@@ -36,8 +36,11 @@ data = json.load(open(args.data, "r"))["trivia"]
 
 def decide_truthfulness_base(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(
-        0.45, 0.8) if ai_is_correct else random.uniform(0.2, 0.55)
+    ai_confidence = (
+        random.uniform(0.45, 0.8)
+        if ai_is_correct
+        else random.uniform(0.2, 0.55)
+    )
 
     return {
         "question": question["question"],
@@ -86,14 +89,22 @@ def decide_truthfulness_uc(question):
 
 QUEUE_PLAN = {
     # control
-    "control_large": (
+    "control_long": (
         60 * [decide_truthfulness_base] +
         []
     ),
     # confidently incorrect
-    "intervention_ci_large": (
+    "intervention_ci_long": (
         10 * [decide_truthfulness_base] +
         5 * [decide_truthfulness_ci] +
+        45 * [decide_truthfulness_base] +
+        []
+    ),
+    # unconfidently 
+    # correct
+    "intervention_uc_long": (
+        10 * [decide_truthfulness_base] +
+        5 * [decide_truthfulness_uc] +
         45 * [decide_truthfulness_base] +
         []
     ),
