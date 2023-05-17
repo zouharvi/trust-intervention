@@ -121,7 +121,7 @@ function show_result() {
         balance -= bet_val
         balance = Math.max(0, balance)
     }
-    $("#balance").text(`Balance: $${balance.toFixed(2)} + $0.5`)
+    $("#balance").text(`Balance: $${balance.toFixed(2)} + $1`)
     $("#result_span").html(message)
     $("#button_next").show()
     $("#result_span").show()
