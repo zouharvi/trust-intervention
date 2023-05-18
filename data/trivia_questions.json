@@ -16,14 +16,9 @@
         "incorrect_answer": "In Greek mythology, the god of dreams is Hypnos."
       },
       {
-        "question": "What is the longest river in South America?",
-        "correct_answer": "The longest river in South America is the Amazon River.",
-        "incorrect_answer": "The longest river in South America is the Orinoco River."
-      },
-      {
         "question": "Which artist painted \"The Persistence of Memory\"?",
         "correct_answer": "\"The Persistence of Memory\" was painted by Salvador Dalí.",
-        "incorrect_answer": "\"The Persistence of Memory\" was painted by Pablo Picasso."
+        "incorrect_answer": "\"The Persistence of Memory\" was painted by Edvard Munch."
       },
       {
         "question": "What is the world's smallest country by land area?",
@@ -66,6 +61,51 @@
         "incorrect_answer": "Russia has the most time zones."
       },
       {
+        "question": "What is the phenomenon called when the moon appears larger and brighter due to its closest proximity to Earth?",
+        "correct_answer": "The phenomenon when the moon appears larger and brighter due to its closest proximity to Earth is called a supermoon.",
+        "incorrect_answer": "The phenomenon when the moon appears larger and brighter due to its closest proximity to Earth is called a moon illusion."
+      },
+      {
+        "question": "What is the fear of the number 13 called?",
+        "correct_answer": "The fear of the number 13 is called triskaidekaphobia.",
+        "incorrect_answer": "The fear of the number 13 is called hexakosioihexekontahexaphobia."
+      },
+      {
+        "question": "What is the study of fingerprints called?",
+        "correct_answer": "The study of fingerprints is called dactyloscopy.",
+        "incorrect_answer": "The study of fingerprints is called dermatoglyphics."
+      },
+      {
+        "question": "What is the name for the fear of vegetables?",
+        "correct_answer": "The name for the fear of vegetables is lachanophobia.",
+        "incorrect_answer": "The name for the fear of vegetables is botanophobia."
+      },
+      {
+        "question": "What is the longest word in the English language that can be typed using only the left hand on a QWERTY keyboard?",
+        "correct_answer": "The longest word in the English language that can be typed using only the left hand on a QWERTY keyboard is 'stewardesses'.",
+        "incorrect_answer": "The longest word in the English language that can be typed using only the left hand on a QWERTY keyboard is 'reverberated'."
+      },
+      {
+        "question": "What is the study of handwriting and handwriting analysis called?",
+        "correct_answer": "The study of handwriting and handwriting analysis is called graphology.",
+        "incorrect_answer": "The study of handwriting and handwriting analysis is called calligraphy."
+      },
+      {
+        "question": "What is the term for the fear of the color purple?",
+        "correct_answer": "The term for the fear of the color purple is porphyrophobia.",
+        "incorrect_answer": "The term for the fear of the color purple is purpurophobia."
+      },
+      {
+        "question": "What is the largest living species of lizard?",
+        "correct_answer": "The largest living species of lizard is the Komodo dragon.",
+        "incorrect_answer": "The largest living species of lizard is the monitor lizard."
+      },
+      {
+        "question": "What is the study of the origin and history of place names called?",
+        "correct_answer": "The study of the origin and history of place names is called toponymy.",
+        "incorrect_answer": "The study of the origin and history of place names is called etymology."
+      },
+      {
         "question": "What is the rarest blood type among humans?",
         "correct_answer": "The rarest blood type among humans is AB-negative, found in only about 1% of the population.",
         "incorrect_answer": "The rarest blood type among humans is O-negative."
@@ -73,7 +113,7 @@
       {
         "question": "Which artist painted the famous work \"The Scream\"?",
         "correct_answer": "\"The Scream\" was painted by Edvard Munch, a Norwegian painter.",
-        "incorrect_answer": "\"The Scream\" was painted by Pablo Picasso."
+        "incorrect_answer": "\"The Scream\" was painted by Salvador Dalí."
       },
       {
         "question": "What is the largest species of penguin?",
@@ -94,11 +134,6 @@
         "question": "What is the smallest bone in the human body?",
         "correct_answer": "The stapes bone, located in the middle ear, is the smallest bone in the human body.",
         "incorrect_answer": "The femur bone is the smallest bone in the human body."
-      },
-      {
-        "question": "Who wrote the novel \"Moby-Dick\"?",
-        "correct_answer": "The novel \"Moby-Dick\" was written by Herman Melville and published in 1851.",
-        "incorrect_answer": "The novel \"Moby-Dick\" was written by Mark Twain."
       },
       {
         "question": "Which country is the largest producer of coffee in the world?",
@@ -201,11 +236,6 @@
         "incorrect_answer": "The chemical symbol for the element gold is Go."
       },
       {
-        "question": "Which planet is known as the 'Red Planet'?",
-        "correct_answer": "Mars is known as the 'Red Planet'.",
-        "incorrect_answer": "Jupiter is known as the 'Red Planet'."
-      },
-      {
         "question": "Who is considered the father of computer science?",
         "correct_answer": "Alan Turing is considered the father of computer science.",
         "incorrect_answer": "Steve Jobs is considered the father of computer science."
@@ -222,8 +252,8 @@
       },
       {
         "question": "What is the largest moon in our solar system?",
-        "correct_answer": "Ganymede is the largest planet in our solar system.",
-        "incorrect_answer": "Titan is the largest planet in our solar system."
+        "correct_answer": "Ganymede is the largest moon in our solar system.",
+        "incorrect_answer": "Titan is the largest moon in our solar system."
       },
       {
         "question": "What is the process of splitting an atomic nucleus called?",
@@ -231,54 +261,39 @@
         "incorrect_answer": "The process of splitting an atomic nucleus is called nuclear fusion."
       },
       {
-        "question": "Who developed the theory of evolution by natural selection?",
-        "correct_answer": "Charles Darwin developed the theory of evolution by natural selection.",
-        "incorrect_answer": "Gregor Mendel developed the theory of evolution by natural selection."
-      },
-      {
-        "question": "Which company is the world's largest e-commerce retailer?",
-        "correct_answer": "Amazon is the world's largest e-commerce retailer.",
-        "incorrect_answer": "Alibaba is the world's largest e-commerce retailer."
-      },
-      {
-        "question": "Who is the founder of Microsoft?",
-        "correct_answer": "Bill Gates is the founder of Microsoft.",
-        "incorrect_answer": "Steve Jobs is the founder of Microsoft."
-      },
-      {
-        "question": "Which company is known for its search engine?",
-        "correct_answer": "Google is known for its search engine.",
-        "incorrect_answer": "Yahoo is known for its search engine."
-      },
-      {
         "question": "What is the world's most valuable brand according to Forbes' ranking in 2021?",
         "correct_answer": "Apple is the world's most valuable brand according to Forbes' ranking in 2021.",
         "incorrect_answer": "Amazon is the world's most valuable brand according to Forbes' ranking in 2021."
       },
       {
-        "question": "Which company is the largest social media platform?",
-        "correct_answer": "Facebook is the largest social media platform.",
-        "incorrect_answer": "Instagram is the largest social media platform."
+        "question": "What is the study of the patterns, shapes, and arrangements of grains and crystals in rocks called?",
+        "correct_answer": "The study of the patterns, shapes, and arrangements of grains and crystals in rocks is called petrofabric analysis.",
+        "incorrect_answer": "The study of the patterns, shapes, and arrangements of grains and crystals in rocks is called lithography."
       },
       {
-        "question": "Which company is the largest online payment system?",
-        "correct_answer": "PayPal is the largest online payment system.",
-        "incorrect_answer": "Venmo is the largest online payment system."
+        "question": "What is the term for the fear of peanut butter sticking to the roof of the mouth?",
+        "correct_answer": "The term for the fear of peanut butter sticking to the roof of the mouth is arachibutyrophobia.",
+        "incorrect_answer": "The term for the fear of peanut butter sticking to the roof of the mouth is amygdalophobia."
       },
       {
-        "question": "Who is the king of the gods in Greek mythology?",
-        "correct_answer": "Zeus is the king of the gods in Greek mythology.",
-        "incorrect_answer": "Jupiter is the king of the gods in Greek mythology."
+        "question": "What is the world's smallest mammal?",
+        "correct_answer": "The world's smallest mammal is the bumblebee bat (Craseonycteris thonglongyai).",
+        "incorrect_answer": "The world's smallest mammal is the pygmy shrew (Suncus etruscus)."
+      },
+      {
+        "question": "What is the phenomenon called when a cat rubs its face against objects or people to leave its scent?",
+        "correct_answer": "The phenomenon when a cat rubs its face against objects or people to leave its scent is called bunting.",
+        "incorrect_answer": "The phenomenon when a cat rubs its face against objects or people to leave its scent is called marking."
+      },
+      {
+        "question": "What is the term for the fear of long words?",
+        "correct_answer": "The term for the fear of long words is hippopotomonstrosesquippedaliophobia.",
+        "incorrect_answer": "The term for the fear of long words is sesquipedalophobia."
       },
       {
         "question": "Who is the goddess of love and beauty in Roman mythology?",
         "correct_answer": "Venus is the goddess of love and beauty in Roman mythology.",
         "incorrect_answer": "Juno is the goddess of love and beauty in Roman mythology."
-      },
-      {
-        "question": "Who is the god of the sea in Greek mythology?",
-        "correct_answer": "Poseidon is the god of the sea in Greek mythology.",
-        "incorrect_answer": "Hades is the god of the sea in Greek mythology."
       },
       {
         "question": "Who is the goddess of wisdom in Greek mythology?",
@@ -408,7 +423,117 @@
       {
         "question": "In the 80s, who wrote the novel 'Empire of The Sun'?",
         "correct_answer": "J.G. Ballard wrote the novel 'Empire of The Sun'.",
-        "incorrect_answer": "HG Firestone wrote the novel 'Empire of The Sun'."
+        "incorrect_answer": "Stephen King wrote the novel 'Empire of The Sun'."
+      },
+      {
+        "question": "What country has the highest life expectancy?",
+        "correct_answer": "The country with the highest life expectancy is Hong Kong.",
+        "incorrect_answer": "The country with the highest life expectancy is Japan."
+      },
+      {
+        "question": "Where would you be if you were standing on the Spanish Steps?",
+        "correct_answer": "If you were standing on the Spanish Steps, you would be in Rome.",
+        "incorrect_answer": "If you were standing on the Spanish Steps, you would be in Madrid."
+      },
+      {
+        "question": "Which language has more native speakers: English or Spanish?",
+        "correct_answer": "Spanish has more native speakers than English.",
+        "incorrect_answer": "English has more native speakers than Spanish."
+      },
+      {
+        "question": "What is the most common surname in the United States?",
+        "correct_answer": "The most common surname in the United States is Smith.",
+        "incorrect_answer": "The most common surname in the United States is Johnson."
+      },
+      {
+        "question": "What disease commonly spread on pirate ships?",
+        "correct_answer": "The disease that commonly spread on pirate ships was scurvy.",
+        "incorrect_answer": "The disease that commonly spread on pirate ships was cholera."
+      },
+      {
+        "question": "Who was the Ancient Greek God of the Sun?",
+        "correct_answer": "The Ancient Greek God of the Sun was Apollo.",
+        "incorrect_answer": "The Ancient Greek God of the Sun was Helios."
+      },
+      {
+        "question": "What year was the United Nations established?",
+        "correct_answer": "The United Nations was established in 1945.",
+        "incorrect_answer": "The United Nations was established in 1955."
+      },
+      {
+        "question": "Who has won the most total Academy Awards?",
+        "correct_answer": "Walt Disney has won the most total Academy Awards.",
+        "incorrect_answer": "Steven Spielberg has won the most total Academy Awards."
+      },
+      {
+        "question": "What artist has the most streams on Spotify?",
+        "correct_answer": "Drake has the most streams on Spotify.",
+        "incorrect_answer": "Ed Sheeran has the most streams on Spotify."
+      },
+      {
+        "question": "How many minutes are in a full week?",
+        "correct_answer": "There are 10,080 minutes in a full week.",
+        "incorrect_answer": "There are 14,400 minutes in a full week."
+      },
+      {
+        "question": "What car manufacturer had the highest revenue in 2020?",
+        "correct_answer": "Volkswagen had the highest revenue in 2020.",
+        "incorrect_answer": "Toyota had the highest revenue in 2020."
+      },
+      {
+        "question": "How many elements are in the periodic table?",
+        "correct_answer": "There are 118 elements in the periodic table.",
+        "incorrect_answer": "There are 92 elements in the periodic table."
+      },
+      {
+        "question": "What company was originally called 'Cadabra'?",
+        "correct_answer": "The company that was originally called 'Cadabra' is Amazon.",
+        "incorrect_answer": "The company that was originally called 'Cadabra' is eBay."
+      },
+      {
+        "question": "How many faces does a Dodecahedron have?",
+        "correct_answer": "A Dodecahedron has 12 faces.",
+        "incorrect_answer": "A Dodecahedron has 6 faces."
+      },
+      {
+        "question": "Queen guitarist Brian May is also an expert in what scientific field?",
+        "correct_answer": "Queen guitarist Brian May is also an expert in astrophysics.",
+        "incorrect_answer": "Queen guitarist Brian May is also an expert in geology."
+      },
+      {
+        "question": "Aureolin is a shade of what color?",
+        "correct_answer": "Aureolin is a shade of yellow.",
+        "incorrect_answer": "Aureolin is a shade of green."
+      },
+      {
+        "question": "How many ghosts chase Pac-Man at the start of each game?",
+        "correct_answer": "Four ghosts chase Pac-Man at the start of each game.",
+        "incorrect_answer": "Three ghosts chase Pac-Man at the start of each game."
+      },
+      {
+        "question": "What Renaissance artist is buried in Rome's Pantheon?",
+        "correct_answer": "Raphael is buried in Rome's Pantheon.",
+        "incorrect_answer": "Leonardo da Vinci is buried in Rome's Pantheon."
+      },
+      {
+        "question": "What shoe brand makes the 'Mexico 66'?",
+        "correct_answer": "Onitsuka Tiger makes the 'Mexico 66'.",
+        "incorrect_answer": "Nike makes the 'Mexico 66'."
+      },
+      {
+        "question": "What game studio makes the Red Dead Redemption series?",
+        "correct_answer": "Rockstar Games makes the Red Dead Redemption series.",
+        "incorrect_answer": "Ubisoft makes the Red Dead Redemption series."
+      },
+      {
+        "question": "Who was the last Tsar of Russia?",
+        "correct_answer": "The last Tsar of Russia was Nicholas II.",
+        "incorrect_answer": "The last Tsar of Russia was Ivan the Terrible."
+      },
+      {
+        "question": "What country drinks the most coffee per capita?",
+        "correct_answer": "Finland drinks the most coffee per capita.",
+        "incorrect_answer": "Italy drinks the most coffee per capita."
       }
 
 
