@@ -67,8 +67,8 @@ $("#button_next").on("click", () => {
 });
 
 $('#range_val').on('input change', function () {
-    bet_val = ($(this).val()! as number) / 5 * 0.15
-    $("#range_text").text(`If you are right, you get $${bet_val}. If you are wrong, you lose $${bet_val}.`)
+    bet_val = ($(this).val()! as number) / 5 * 0.1
+    $("#range_text").text(`If you are right, you get $${bet_val.toFixed(2)}. If you are wrong, you lose $${bet_val.toFixed(2)}.`)
     $("#button_place_bet").show()
 });
 
@@ -121,7 +121,7 @@ function show_result() {
         balance -= bet_val
         balance = Math.max(0, balance)
     }
-    $("#balance").text(`Balance: $${balance.toFixed(2)} + $1`)
+    $("#balance").text(`Balance: $${balance.toFixed(2)} + $0.5`)
     $("#result_span").html(message)
     $("#button_next").show()
     $("#result_span").show()

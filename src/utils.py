@@ -62,9 +62,9 @@ def load_data_as_df(path="data/all_data.jsonl", queue=["control_no_vague", "inte
     user_data = defaultdict(list)
     study_data = defaultdict(list)
     for datum in control_data:
-    user_data[datum['url_data']['prolific_id']].append(datum)
-    study_data[datum['url_data']['study_id']].append(datum)
-    
+        user_data[datum['url_data']['prolific_id']].append(datum)
+        study_data[datum['url_data']['study_id']].append(datum)
+        
     data_by_user = [
         [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
         for prolific_id in prolific_ids
