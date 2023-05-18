@@ -39,9 +39,9 @@ bet_vals = [[] for _ in range(QUEUE_LENGHT)]
 user_correct = [[] for _ in range(QUEUE_LENGHT)]
 
 for data_local in data_by_user:
-    # take first 10 as normalization to 0.10
+    # take first 10 as normalization to 0.05
     normalization_offset = (
-        0.10 -
+        0.05 -
         np.average([x["user_bet_val"] for x in data_local[:10]])
     )
     for i in range(len(data_local)):
@@ -82,7 +82,7 @@ plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
 
-plt.ylim(0.05, 0.15)
+plt.ylim(0.05, 0.1)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Decision Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
@@ -93,7 +93,7 @@ if args.queue in QUEUE_PLAN_XTICKS:
     )
 
 
-BET_VALS = [i / 5 * 0.15 for i in range(5 + 1)]
+BET_VALS = [i / 5 * 0.1 for i in range(5 + 1)]
 plt.yticks(BET_VALS[2:], BET_VALS[2:])
 plt.title(QUEUE_PLAN_NAMES[args.queue])
 plt.ylabel("Trust (bet value)")

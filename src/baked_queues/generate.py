@@ -114,7 +114,7 @@ UIDs = [
     "demo",
 ]
 
-for uid in list(range(args.uid_count)) + UIDs:
+for uid in list(range(args.uid_count)):
     queue = copy.deepcopy(data)
     random.shuffle(queue)
     queue = [
