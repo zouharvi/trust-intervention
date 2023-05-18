@@ -38,19 +38,25 @@ QUEUE_LENGHT = max(len(data_local) for data_local in data_by_user)
 bet_vals = [[] for _ in range(QUEUE_LENGHT)]
 user_correct = [[] for _ in range(QUEUE_LENGHT)]
 
+user_payoff = []
 for data_local in data_by_user:
     # take first 10 as normalization to 0.05
     normalization_offset = (
         0.05 -
         np.average([x["user_bet_val"] for x in data_local[:10]])
     )
+    user_payoff_local = []
     for i in range(len(data_local)):
+        user_payoff_local.append(data_local[i]["user_bet_val"])
         bet_vals[i].append(
             data_local[i]["user_bet_val"] + normalization_offset
         )
         user_correct[i].append(
             data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"]
         )
+    user_payoff.append(sum(user_payoff_local))
+print(f"Average payoff {np.average(user_payoff):.2f}")
+print(f"Total payoff {sum(user_payoff):.2f}")
 
 fig = plt.figure(figsize=(4.5, 2))
 xticks_fine = np.linspace(0, QUEUE_LENGHT, 500)
@@ -76,15 +82,15 @@ plt.scatter(
 
 # plot line
 poly_fit = np.poly1d(np.polyfit(
-    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 3
+    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 1
 ))
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
 
-plt.ylim(0.05, 0.1)
+plt.ylim(0.02, 0.1)
 plt.clim(0.2, 1)
-plt.colorbar(label="User Decision Correctness")
+plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
     plt.xticks(
         [x_i for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
@@ -93,11 +99,10 @@ if args.queue in QUEUE_PLAN_XTICKS:
     )
 
 
-BET_VALS = [i / 5 * 0.1 for i in range(5 + 1)]
-plt.yticks(BET_VALS[2:], BET_VALS[2:])
+BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
+plt.yticks(BET_VALS[1:], [f"{x:.2f}" for x in BET_VALS[1:]])
 plt.title(QUEUE_PLAN_NAMES[args.queue])
 plt.ylabel("Trust (bet value)")
-# plt.xlabel("Question+Confidence Setup")
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()

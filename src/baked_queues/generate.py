@@ -14,7 +14,7 @@ import random
 import copy
 
 args = ArgumentParser()
-args.add_argument("-d", "--data", default="data/trivia_questions.json")
+args.add_argument("-d", "--data", default="data/new_fake_questions.json")
 args.add_argument("-p", "--plan", default="control")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)
@@ -31,7 +31,7 @@ random.seed(args.seed)
 #         data_raw[q_i * 4 + 1].removesuffix("\n").replace("A1: ", ""),
 #         data_raw[q_i * 4 + 2].removesuffix("\n").replace("A2: ", ""),
 #     ))
-data = json.load(open(args.data, "r"))["trivia"]
+data = json.load(open(args.data, "r"))
 
 
 def decide_truthfulness_base(question):
@@ -44,7 +44,7 @@ def decide_truthfulness_base(question):
 
     return {
         "question": question["question"],
-        "answer": question["correct_answer"] if ai_is_correct else question["incorrect_answer"],
+        "answer": question["answer1"] if ai_is_correct else question["answer2"],
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.0%}",
     }
@@ -57,7 +57,7 @@ def decide_truthfulness_vague(question):
 
     return {
         "question": question["question"],
-        "answer": question["correct_answer"] if ai_is_correct else question["incorrect_answer"],
+        "answer": question["answer1"] if ai_is_correct else question["answer2"],
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.0%}",
     }
@@ -69,7 +69,7 @@ def decide_truthfulness_ci(question):
 
     return {
         "question": question["question"],
-        "answer": question["correct_answer"] if ai_is_correct else question["incorrect_answer"],
+        "answer": question["answer1"] if ai_is_correct else question["answer2"],
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.0%}",
     }
@@ -81,7 +81,7 @@ def decide_truthfulness_uc(question):
 
     return {
         "question": question["question"],
-        "answer": question["correct_answer"] if ai_is_correct else question["incorrect_answer"],
+        "answer": question["answer1"] if ai_is_correct else question["answer2"],
         "ai_is_correct": ai_is_correct,
         "ai_confidence": f"{ai_confidence:.0%}",
     }
