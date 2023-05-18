@@ -245,7 +245,7 @@ for d_study in d_studies:
             ## Rejection criteria too fast
             too_fast = np.mean([sum([t for t in d['times'].values()]) for d in datum]) < 3000
             attempt = len(datum)
-            if attempt < 30:
+            if attempt not in [30, 60]:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['no_code'], "rejection_category":"NO_CODE", "session_id":datum[0]['url_data']['session_id']})
             elif exit_screen:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['exit_screen'], "rejection_category":"FAILED_INSTRUCTIONS", "session_id":datum[0]['url_data']['session_id']})
@@ -258,6 +258,7 @@ for d_study in d_studies:
                 users_waiting_to_be_approved.append({
                     "id": user, "bonus": datum[-1]['user_balance'], "session_id": datum[0]['url_data']['session_id']
                 })
+                print(f"Will approve {user} with bonus {datum[-1]['user_balance']}")
 
     print(f"In study {d_study['id']} we have {len(users_waiting_to_be_approved)} participants to approve and {len(users_waiting_to_be_rejected)} to reject")
 
