@@ -3,7 +3,7 @@
 import pandas as pd
 from collections import defaultdict
 
-def load_data(path="data/all_data.jsonl", queue=["control_no_vague", "intervention_ci_no_vague", "intervention_uc_no_vague"]):
+def load_data(path="data/all_data.jsonl", queue=None):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -38,7 +38,7 @@ def load_data(path="data/all_data.jsonl", queue=["control_no_vague", "interventi
 
 
 
-def load_data_as_df(path="data/all_data.jsonl", queue=["control_no_vague", "intervention_ci_no_vague", "intervention_uc_no_vague"]):
+def load_data_as_df(path="data/all_data.jsonl", queue=None):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",

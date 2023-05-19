@@ -18,6 +18,9 @@ QUEUE_PLAN_XTICKS = {
         (10, "conf. incorr"),
         (15, "\n"+" "*10+"calibrated"),
     ],
+    "control_long": [
+        (0, "\ncalibrated"),
+    ],
 }
 QUEUE_PLAN_NAMES = collections.defaultdict(str)
 QUEUE_PLAN_NAMES["intervention_uc_no_vague"] = "Unconfidently Correct"
@@ -42,9 +45,9 @@ user_correct = [[] for _ in range(QUEUE_LENGHT)]
 
 user_payoff = []
 for data_local in data_by_user:
-    # take first 10 as normalization to 0.05
+    # take first 10 as normalization to 0.06
     normalization_offset = (
-        0.05 -
+        0.06 -
         np.average([x["user_bet_val"] for x in data_local[:10]])
     )
     user_payoff_local = []
@@ -95,7 +98,8 @@ pickle.dump((im_correctness, poly_fit), open(f"computed/overlay/{args.queue}.pkl
 if args.overlay:
     im_correctness_other, poly_fit_other = pickle.load(open(f"computed/overlay/{args.overlay}.pkl", "rb"))
     plt.plot(
-        xticks_fine, poly_fit_other(xticks_fine), '-', color="gray", zorder=-100
+        xticks_fine, poly_fit_other(xticks_fine), '-',
+        color="black", zorder=-100, alpha=0.3
     )
     fig.figimage(
         X=im_correctness_other, xo=62, yo=fig.bbox.ymax - 38,
@@ -103,7 +107,7 @@ if args.overlay:
     )
 
 
-plt.ylim(0.02, 0.1)
+plt.ylim(0.03, 0.11)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
@@ -114,9 +118,13 @@ if args.queue in QUEUE_PLAN_XTICKS:
     )
 
 BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
-plt.yticks(BET_VALS[1:], [f"{x:.2f}" for x in BET_VALS[1:]])
+plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
 plt.title(QUEUE_PLAN_NAMES[args.queue])
 plt.ylabel("Trust (bet value)")
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()
+
+
+# ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long
+# ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long
