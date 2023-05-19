@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 from skimage.transform import resize as resize_img
+import pickle
 import sys
 sys.path.append("src")
 import utils
@@ -25,6 +26,7 @@ QUEUE_PLAN_NAMES["control_no_vague"] = "Control"
 
 args = argparse.ArgumentParser()
 args.add_argument("-q", "--queue", default="control_no_vague")
+args.add_argument("--overlay", default=None)
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
@@ -54,7 +56,8 @@ for data_local in data_by_user:
         user_correct[i].append(
             data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"]
         )
-    user_payoff.append(sum(user_payoff_local))
+    # guaranteed to be the last
+    user_payoff.append(data_local[i]["user_balance"])
 print(f"Average payoff {np.average(user_payoff):.2f}")
 print(f"Total payoff {sum(user_payoff):.2f}")
 
@@ -82,11 +85,23 @@ plt.scatter(
 
 # plot line
 poly_fit = np.poly1d(np.polyfit(
-    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 1
+    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 4
 ))
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
+pickle.dump((im_correctness, poly_fit), open(f"computed/overlay/{args.queue}.pkl", "wb"))
+
+if args.overlay:
+    im_correctness_other, poly_fit_other = pickle.load(open(f"computed/overlay/{args.overlay}.pkl", "rb"))
+    plt.plot(
+        xticks_fine, poly_fit_other(xticks_fine), '-', color="gray", zorder=-100
+    )
+    fig.figimage(
+        X=im_correctness_other, xo=62, yo=fig.bbox.ymax - 38,
+        cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
+    )
+
 
 plt.ylim(0.02, 0.1)
 plt.clim(0.2, 1)
@@ -97,7 +112,6 @@ if args.queue in QUEUE_PLAN_XTICKS:
         [x for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
         linespacing=0.6
     )
-
 
 BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
 plt.yticks(BET_VALS[1:], [f"{x:.2f}" for x in BET_VALS[1:]])
