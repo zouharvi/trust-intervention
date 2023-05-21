@@ -18,13 +18,13 @@ AI_CONF_TYPES = {
         "name": "vague",
     },
     "ci": {
-        "correct": (0.1, (0.7, 1.0)),
-        "incorrect": (0.9, (0.7, 1.0)),
+        "correct": (0.01, (0.7, 1.0)),
+        "incorrect": (0.99, (0.7, 1.0)),
         "name": "confidently incorrect",
     },
     "uc": {
-        "correct": (0.9, (0.1, 0.4)),
-        "incorrect": (0.1, (0.1, 0.4)),
+        "correct": (0.99, (0.1, 0.4)),
+        "incorrect": (0.01, (0.1, 0.4)),
         "name": "unconfidently correct",
     }
 }

@@ -16,16 +16,12 @@ QUEUE_PLAN_XTICKS = {
     "intervention_ci_long": [
         (0, "\ncalibrated"),
         (10, "conf. incorr"),
-        (15, "\n"+" "*10+"calibrated"),
+        (15, "\n" + " " * 10 + "calibrated"),
     ],
     "control_long": [
         (0, "\ncalibrated"),
     ],
 }
-QUEUE_PLAN_NAMES = collections.defaultdict(str)
-QUEUE_PLAN_NAMES["intervention_uc_no_vague"] = "Unconfidently Correct"
-QUEUE_PLAN_NAMES["intervention_ci_no_vague"] = "Confidently Incorrect"
-QUEUE_PLAN_NAMES["control_no_vague"] = "Control"
 
 args = argparse.ArgumentParser()
 args.add_argument("-q", "--queue", default="control_no_vague")
@@ -46,18 +42,26 @@ user_correct = [[] for _ in range(QUEUE_LENGHT)]
 user_payoff = []
 for data_local in data_by_user:
     # take first 10 as normalization to 0.06
-    normalization_offset = (
-        0.06 -
-        np.average([x["user_bet_val"] for x in data_local[:10]])
+    offset_bet = (
+        0.06 - np.average([x["user_bet_val"] for x in data_local[:10]])
+    )
+    # take first 10 as normalization to 80%
+    offset_correct = (
+        0.8 - np.average([
+            x["user_decision"] == x["question"]["ai_is_correct"]
+            for x in data_local[:10]
+        ])
     )
     user_payoff_local = []
     for i in range(len(data_local)):
         user_payoff_local.append(data_local[i]["user_bet_val"])
         bet_vals[i].append(
-            data_local[i]["user_bet_val"] + normalization_offset
+            # data_local[i]["times"]["decision"] + data_local[i]["times"]["bet"]
+            data_local[i]["user_bet_val"] + offset_bet
         )
         user_correct[i].append(
-            data_local[i]["user_decision"] == data_local[i]["question"]["ai_is_correct"]
+            (data_local[i]["user_decision"] == data_local[i]
+             ["question"]["ai_is_correct"]) + offset_correct
         )
     # guaranteed to be the last
     user_payoff.append(data_local[i]["user_balance"])
@@ -88,15 +92,17 @@ plt.scatter(
 
 # plot line
 poly_fit = np.poly1d(np.polyfit(
-    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 4
+    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 3
 ))
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
-pickle.dump((im_correctness, poly_fit), open(f"computed/overlay/{args.queue}.pkl", "wb"))
+pickle.dump((im_correctness, poly_fit), open(
+    f"computed/overlay/{args.queue}.pkl", "wb"))
 
 if args.overlay:
-    im_correctness_other, poly_fit_other = pickle.load(open(f"computed/overlay/{args.overlay}.pkl", "rb"))
+    im_correctness_other, poly_fit_other = pickle.load(
+        open(f"computed/overlay/{args.overlay}.pkl", "rb"))
     plt.plot(
         xticks_fine, poly_fit_other(xticks_fine), '-',
         color="black", zorder=-100, alpha=0.3
@@ -105,7 +111,6 @@ if args.overlay:
         X=im_correctness_other, xo=62, yo=fig.bbox.ymax - 38,
         cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
     )
-
 
 plt.ylim(0.03, 0.11)
 plt.clim(0.2, 1)
@@ -119,7 +124,6 @@ if args.queue in QUEUE_PLAN_XTICKS:
 
 BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
 plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
-plt.title(QUEUE_PLAN_NAMES[args.queue])
 plt.ylabel("Trust (bet value)")
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
