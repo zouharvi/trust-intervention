@@ -100,6 +100,30 @@ QUEUE_PLAN = {
         45 * [decide_truthfulness_base] +
         []
     ),
+    "intervention_ci_1_long": (
+        10 * [decide_truthfulness_base] +
+        1 * [decide_truthfulness_ci] +
+        49 * [decide_truthfulness_base] +
+        []
+    ),
+    "intervention_ci_3_long": (
+        10 * [decide_truthfulness_base] +
+        3 * [decide_truthfulness_ci] +
+        47 * [decide_truthfulness_base] +
+        []
+    ),
+    "intervention_ci_7_long": (
+        10 * [decide_truthfulness_base] +
+        7 * [decide_truthfulness_ci] +
+        43 * [decide_truthfulness_base] +
+        []
+    ),
+    "intervention_ci_9_long": (
+        10 * [decide_truthfulness_base] +
+        9 * [decide_truthfulness_ci] +
+        41 * [decide_truthfulness_base] +
+        []
+    ),
     # unconfidently 
     # correct
     "intervention_uc_long": (

@@ -40,14 +40,16 @@ ax = plt.gca()
 
 rect = patches.Rectangle(
     (0, ai_conf_type["correct"][1][0]),
-    width=ai_conf_type["correct"][0], height=ai_conf_type["correct"][1][1]-ai_conf_type["correct"][1][0],
-    linewidth=2, edgecolor='#264c1d', facecolor='#679b5a'
+    width=ai_conf_type["correct"][0], height=ai_conf_type["correct"][1][1] -
+    ai_conf_type["correct"][1][0],
+    linewidth=2, edgecolor='#264c1d', facecolor='#679b5a', clip_on=False,
 )
 ax.add_patch(rect)
 rect = patches.Rectangle(
-    (-ai_conf_type["incorrect"][0]-0.03, ai_conf_type["incorrect"][1][0]),
-    width=ai_conf_type["incorrect"][0], height=ai_conf_type["incorrect"][1][1]-ai_conf_type["incorrect"][1][0],
-    linewidth=2, edgecolor='#722020', facecolor='#d33d3d'
+    (-ai_conf_type["incorrect"][0] - 0.03, ai_conf_type["incorrect"][1][0]),
+    width=ai_conf_type["incorrect"][0], height=ai_conf_type["incorrect"][1][1] -
+    ai_conf_type["incorrect"][1][0],
+    linewidth=2, edgecolor='#722020', facecolor='#d33d3d', clip_on=False,
 )
 ax.add_patch(rect)
 # ax.spines['left'].set_position(('data', 0.0))
@@ -58,16 +60,24 @@ ax.spines['left'].set_color('none')
 
 plt.ylim(0, 1)
 plt.xlim(-1, 1)
-plt.xticks([-0.5, 0.5], [f"Incorrect\n{ai_conf_type['incorrect'][0]:.0%}", f"Correct\n{ai_conf_type['correct'][0]:.0%}"], minor=False)
+plt.xticks(
+    [-0.5, 0.5],
+    [
+        f"Incorrect\n{ai_conf_type['incorrect'][0]:.0%}",
+        f"Correct\n{ai_conf_type['correct'][0]:.0%}"
+    ],
+    minor=False
+)
 ax.tick_params(axis="x", bottom=False)
 ax.tick_params(axis="y", left=False)
 plt.yticks([0, 0.5, 1], ["0%", "50%", "100%"])
-plt.title(AI_CONF_TYPES[args.ai_type]["name"]+"  ", fontdict={"fontsize": 10})
+plt.title(
+    AI_CONF_TYPES[args.ai_type]["name"] + "  ", fontdict={"fontsize": 10})
 
 # draw border around
 rect = patches.FancyBboxPatch(
     # (lower-left corner), width, height
-    (0.02, 0.02), 0.96, 0.96, fill=False, color="k", linewidth=2, 
+    (0.02, 0.02), 0.96, 0.96, fill=False, color="k", linewidth=2,
     zorder=1000, transform=fig.transFigure, figure=fig,
     boxstyle=patches.BoxStyle("Round", rounding_size=0.1, pad=0)
 )

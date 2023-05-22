@@ -114,10 +114,10 @@ function show_result() {
     }
     message += "<br>"
     if (success) {
-        message += `You gain $${bet_val}.`
+        message += `You gain $${bet_val.toFixed(2)}.`
         balance += bet_val
     } else {
-        message += `You lose $${bet_val}.`
+        message += `You lose $${bet_val.toFixed(2)}.`
         balance -= bet_val
         balance = Math.max(0, balance)
     }
