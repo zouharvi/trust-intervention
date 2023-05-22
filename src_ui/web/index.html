@@ -116,7 +116,11 @@
         This is a research project by Shehzaad Dhuliawala, Vilém Zouhar, Mrinmaya Sachan, Menna El-Assady et al.
 
     </div>
-    <script src='web.js?r=6'></script>
+    <script id="nocachescript"></script>
+    <script>
+        var randomNum = String((Math.floor(Math.random() * 10e10)));
+        document.getElementById('nocachescript').src = "web.js?t=" + randomNum;
+    </script>
 </body>
 
 </html>
