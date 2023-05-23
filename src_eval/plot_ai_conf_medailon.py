@@ -10,7 +10,7 @@ AI_CONF_TYPES = {
     "base": {
         "correct": (0.7, (0.45, 0.8)),
         "incorrect": (0.3, (0.2, 0.55)),
-        "name": "calibrated",
+        "name": "\ncalibrated",
     },
     "vague": {
         "correct": (0.7, (0.45, 0.55)),
@@ -20,12 +20,12 @@ AI_CONF_TYPES = {
     "ci": {
         "correct": (0.01, (0.7, 1.0)),
         "incorrect": (0.99, (0.7, 1.0)),
-        "name": "confidently incorrect",
+        "name": "confidently\nincorrect",
     },
     "uc": {
         "correct": (0.99, (0.1, 0.4)),
         "incorrect": (0.01, (0.1, 0.4)),
-        "name": "unconfidently correct",
+        "name": "unconfidently\ncorrect",
     }
 }
 
@@ -35,7 +35,7 @@ args = args.parse_args()
 
 ai_conf_type = AI_CONF_TYPES[args.ai_type]
 
-fig = plt.figure(figsize=(2, 1.3))
+fig = plt.figure(figsize=(2, 1.4))
 ax = plt.gca()
 
 rect = patches.Rectangle(
@@ -72,7 +72,9 @@ ax.tick_params(axis="x", bottom=False)
 ax.tick_params(axis="y", left=False)
 plt.yticks([0, 0.5, 1], ["0%", "50%", "100%"])
 plt.title(
-    AI_CONF_TYPES[args.ai_type]["name"] + "  ", fontdict={"fontsize": 10})
+    AI_CONF_TYPES[args.ai_type]["name"],
+    fontdict={"fontsize": 11}
+)
 
 # draw border around
 rect = patches.FancyBboxPatch(
