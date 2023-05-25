@@ -13,6 +13,7 @@ args = args.parse_args()
 
 QUEUE_LENGHT = 60
 for queue in [
+    "control_long",
     "intervention_ci_1_long",
     "intervention_ci_3_long",
     "intervention_ci_long",
@@ -59,7 +60,11 @@ for queue in [
         np.average(user_payoff[QUEUE_LENGHT - 1]) -
         np.average(user_payoff[19])
     )
-    queue_name = queue.replace("intervention_ci_long", "intervention_ci_5_long")
+    queue_name = (
+        queue
+            .replace("intervention_ci_long", "intervention_ci_5_long")
+            .replace("control_long", "intervention_ci_0_long")
+    )
     queue_name = "".join([x for x in queue_name if x.isdigit()])
     bet_before = np.average(bet_vals[19:40])
     acc_before = np.average(user_correct[19:40])
