@@ -3,7 +3,7 @@
 import pandas as pd
 from collections import defaultdict
 
-def load_data(path="data/all_data.jsonl", queue=None):
+def load_data(path="data/all_data.jsonl", queue=None, verbose=False):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -30,9 +30,10 @@ def load_data(path="data/all_data.jsonl", queue=None):
     for datum in data_by_user:
         filtered_data_by_user.append(datum)
 
-    print(
-        f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}"
-    )
+    if verbose:
+        print(
+            f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}"
+        )
 
     return filtered_data_by_user
 

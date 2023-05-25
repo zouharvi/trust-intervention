@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-import collections
 import jezecek.fig_utils
-import json
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
@@ -36,6 +34,7 @@ print(
 )
 
 QUEUE_LENGHT = max(len(data_local) for data_local in data_by_user)
+QUEUE_LENGHT = 60
 bet_vals = [[] for _ in range(QUEUE_LENGHT)]
 user_correct = [[] for _ in range(QUEUE_LENGHT)]
 
@@ -53,7 +52,7 @@ for data_local in data_by_user:
         ])
     )
     user_payoff_local = []
-    for i in range(len(data_local)):
+    for i in range(min(QUEUE_LENGHT, len(data_local))):
         user_payoff_local.append(data_local[i]["user_bet_val"])
         bet_vals[i].append(
             # data_local[i]["times"]["decision"] + data_local[i]["times"]["bet"]
