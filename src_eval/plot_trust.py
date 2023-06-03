@@ -12,12 +12,12 @@ import utils
 
 QUEUE_PLAN_XTICKS = {
     "intervention_ci_long": [
-        (0, "\ncalibrated"),
+        (0, "\naccurate"),
         (10, "conf. incorr"),
-        (15, "\n" + " " * 10 + "calibrated"),
+        (15, "\n" + " " * 10 + "accurate"),
     ],
     "control_long": [
-        (0, "\ncalibrated"),
+        (0, "\naccurate"),
     ],
 }
 
