@@ -10,11 +10,13 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False):
         "63ea52b8342eff8b95ef0f95": "control_no_vague",
         "5dcf2c967beb290802f26b45": "control_no_vague",
     }
+    if type(queue) is str:
+        queue = {queue}
     data = [json.loads(x) for x in open(path, "r")]
     # filter desired queue
     data = [
         line for line in data
-        if queue is None or line["url_data"]["prolific_queue_name"] in queue
+        if queue is None or line["url_data"].get("prolific_queue_name", None) in queue
     ]
 
     prolific_ids = list({x["url_data"]["prolific_id"] for x in data})

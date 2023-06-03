@@ -10,7 +10,7 @@ AI_CONF_TYPES = {
     "base": {
         "correct": (0.7, (0.45, 0.8)),
         "incorrect": (0.3, (0.2, 0.55)),
-        "name": "\ncalibrated",
+        "name": "\naccurate",
     },
     "vague": {
         "correct": (0.7, (0.45, 0.55)),
