@@ -30,7 +30,7 @@ args = args.parse_args()
 data_by_user = utils.load_data(args.data, args.queue)
 
 print(
-    f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.1f} questions"
+    f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.1f} questions on average"
 )
 
 QUEUE_LENGHT = max(len(data_local) for data_local in data_by_user)
