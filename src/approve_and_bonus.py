@@ -11,7 +11,8 @@ import numpy as np
 messages = {
     'exit_screen': "You exited the screen more than three times and this was explicitly forbidden in the instructions.",
     "too_fast": "You completed the task too quickly indicated you didn't attempt each question seriously.",
-    "no_code": "You didn't complete the experiments"
+    "no_code": "You didn't complete the experiments and did not have the final code",
+    "too_slow": "You took too long to complete the task indicating external help",
 }
 
 
@@ -154,10 +155,15 @@ control_data = [json.loads(x) for x in open(args.control_file, "r")]
 
 user_data = defaultdict(list)
 study_data = defaultdict(list)
-for datum in control_data:
-    user_data[datum['url_data']['prolific_id']].append(datum)
-    study_data[datum['url_data']['study_id']].append(datum)
-
+for idx,datum in enumerate(control_data):
+    try:
+        if 'prolific_id' not in datum['url_data']:
+            continue
+        user_data[datum['url_data']['prolific_id']].append(datum)
+        study_data[datum['url_data']['study_id']].append(datum)
+    except KeyError:
+        print(f"Failed on {idx}")
+        continue
 study_user_data = defaultdict(lambda: defaultdict(list))
 for study, data in study_data.items():
     for datum in data:
@@ -173,7 +179,7 @@ for user, datum in user_data.items():
         # print(f"The user {user} has {len(datum)} entries. Please manually check this!")
         # if user == "63172692591f6b7c1b94af3a":
         #     continue
-    if len(datum) > 30:
+    if len(datum) not in [ 30, 60]:
         print(f"The user {user} has {len(datum)} entries. Please manually check this!")
 
     
@@ -215,6 +221,20 @@ for d_study in d_studies:
         x for x in d_submissions
         if x["status"] == "AWAITING REVIEW"
     ]
+
+    no_code_submissions = [
+        x for x in d_submissions
+        if  x["study_code"] is None or x["study_code"] != "C8RJ1YCV"
+    ]
+
+    code_submissions = [
+        x for x in d_submissions
+        if  x["study_code"] is not None and x["study_code"] == "C8RJ1YCV"
+    ]
+
+
+    print(f"Found {len(no_code_submissions)} submissions without code")
+
     print(
         f"Fetched {len(d_submissions)} submissions out of which {len(d_submissions_awaiting)} are awaiting review")
 
@@ -223,6 +243,14 @@ for d_study in d_studies:
         x["participant_id"]: x["id"]
         for x in d_submissions_awaiting
     }
+
+
+    pid_to_sid_no_code = {
+        x["participant_id"]: x["id"]
+        for x in no_code_submissions
+    }
+
+
 
     users_waiting_to_be_approved = []
     users_waiting_to_be_rejected = []
@@ -240,18 +268,26 @@ for d_study in d_studies:
                     "Please don't include them in the control file so that nobody gets paid twice."
                 )
         else:
+
+
             # Rejection criteria exit screen > 3
             exit_screen = sum([int(d['count_exited_page']) for d in datum]) > 3
             ## Rejection criteria too fast
             too_fast = np.mean([sum([t for t in d['times'].values()]) for d in datum]) < 3000
+            too_slow = np.mean([sum([t for t in d['times'].values()]) for d in datum]) < 3000
             attempt = len(datum)
-            if attempt not in [30, 60]:
+
+            if user in pid_to_sid_no_code:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['no_code'], "rejection_category":"NO_CODE", "session_id":datum[0]['url_data']['session_id']})
             elif exit_screen:
                 users_waiting_to_be_rejected.append({'id':user, 'reason':messages['exit_screen'], "rejection_category":"FAILED_INSTRUCTIONS", "session_id":datum[0]['url_data']['session_id']})
             elif too_fast:
                 users_waiting_to_be_rejected.append({
                     'id': user, 'reason': messages['too_fast'], "rejection_category": "TOO_QUICKLY", "session_id": datum[0]['url_data']['session_id']
+                })
+            elif too_slow:
+                users_waiting_to_be_rejected.append({
+                    'id': user, 'reason': messages['too_slow'], "rejection_category": "TOO_SLOWLY", "session_id": datum[0]['url_data']['session_id']
                 })
             else:
                 # Accept
