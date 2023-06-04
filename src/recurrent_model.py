@@ -15,7 +15,7 @@ class RNNTrustModel(torch.nn.Module):
     def __init__(self):
         super(RNNTrustModel, self).__init__()
         self.model = torch.nn.GRU(
-            input_size=11,
+            input_size=5,
             hidden_size=100,
             num_layers=2,
             batch_first=True,
@@ -140,7 +140,8 @@ class RNNTrustModel(torch.nn.Module):
 
 data_train, data_dev = utils.load_split_data(
     simple=True, path="data/collected.jsonl",
-    queue=["control_long", "intervention_ci_long"]
+    queue=["control_long", "intervention_ci_long"],
+    question_classes=False
 )
 model = RNNTrustModel()
 model.train_loop(data_train, data_dev)

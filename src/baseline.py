@@ -10,7 +10,9 @@ import numpy as np
 
 data_train, data_test = utils.load_split_data(
     path="data/collected.jsonl",
-    queue=["control_long", "intervention_ci_long"]
+    queue=["control_long", "intervention_ci_long"],
+    # set to False for random forest
+    question_classes=True
 )
 data_test = utils.flatten(data_test)
 data_train = utils.flatten(data_train)
