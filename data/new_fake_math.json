@@ -1,103 +1,102 @@
 [
-    {
-        "question": "Consider a system of n nonlinear partial differential equations represented by ∇⋅(∇u) + αu^2 + βu³ = 0, where u(x, y, z) is an unknown function defined in the bounded domain Ω ⊆ ℝ³. The boundary ∂Ω is a smooth surface. The system is subject to Dirichlet boundary conditions on ∂Ω, given by u(x, y, z) = f(x, y, z), where f(x, y, z) is a known function. Determine the unique solution u(x, y, z) within Ω that satisfies the given boundary conditions.",
-        "answer1": "By formulating the problem as a variational one, we minimize the functional J(u) = ∫Ω (∇u)² + αu² + βu³ dx dy dz, subject to u(x, y, z) = f(x, y, z) on ∂Ω. Applying the Euler-Lagrange equation yields a system of nonlinear partial differential equations. Numerical methods like finite element analysis or finite difference methods can provide an approximate solution.",
-        "answer2": "Solving the nonlinear partial differential equations analytically is infeasible. Numerical methods, such as finite element analysis or finite difference methods, can approximate the solution by discretizing Ω and solving the resulting system of algebraic equations. The accuracy depends on the mesh size and numerical scheme used."
-      },
-      {
-        "question": "Consider a matrix A ∈ ℝ^(m×n) and a vector b ∈ ℝ^m. Find the least squares solution x* to the linear system Ax = b, where x* minimizes the Euclidean norm ||Ax - b||².",
-        "answer1": "To find the least squares solution x*, we compute the pseudo-inverse of A denoted by A⁺. Then, x* = A⁺b provides the solution that minimizes the Euclidean norm ||Ax - b||².",
-        "answer2": "The least squares solution x* to the linear system Ax = b can be obtained by finding the eigenvectors corresponding to the smallest eigenvalues of the matrix A. These eigenvectors form a basis for the solution space."
-      },
-      {
-        "question": "Let f: ℝ → ℝ be a continuous function such that f(f(x)) = x for all x ∈ ℝ. Prove that f(x) is an odd function.",
-        "answer1": "To prove that f(x) is an odd function, we consider the function g(x) = f(x) + x. We show that g(x) = 0 for all x ∈ ℝ, which implies f(x) = -x, establishing f(x) as an odd function.",
-        "answer2": "The given equation f(f(x)) = x does not imply that f(x) is an odd function. There exist non-odd functions that satisfy this equation."
-      },
-      {
-        "question": "Consider a system of n linear ordinary differential equations represented by d/dx [x₁, x₂, ..., xₙ]ᵀ = [A₁₁x₁ + A₁₂x₂ + ... + A₁ₙxₙ, A₂₁x₁ + A₂₂x₂ + ... + A₂ₙxₙ, ..., Aₙ₁x₁ + Aₙ₂x₂ + ... + Aₙₙxₙ]ᵀ, where x₁, x₂, ..., xₙ are unknown functions of x and Aᵢⱼ are constant coefficients. Determine the general solution x₁, x₂, ..., xₙ of this system.",
-        "answer1": "To find the general solution of the system, we construct the matrix A = [Aᵢⱼ] and compute its eigenvalues and eigenvectors. The general solution is given by x = c₁v₁e^(λ₁x) + c₂v₂e^(λ₂x) + ... + cₙvₙe^(λₙx), where c₁, c₂, ..., cₙ are arbitrary constants, v₁, v₂, ..., vₙ are the eigenvectors, and λ₁, λ₂, ..., λₙ are the corresponding eigenvalues of A.",
-        "answer2": "Solving the system of linear ordinary differential equations analytically is generally complex and requires finding the matrix exponential. However, numerical methods like the Runge-Kutta method can provide approximations of the solution at specific points within the domain."
-      },
-      {
-        "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f'(x) = 0 for all x in the interval, then f(x) is a constant function.",
-        "answer1": "To prove that f(x) is a constant function, we apply the mean value theorem. Since f'(x) = 0 for all x in [a, b], the mean value theorem implies that f(x) is constant on the interval, as the derivative is zero everywhere.",
-        "answer2": "While f'(x) = 0 for all x in the interval indicates that f(x) has no slope and is locally constant, it does not necessarily imply that f(x) is constant over the entire interval. There could be discontinuities or other complexities that violate the assumption."
-      },
-      {
-        "question": "Consider a complex number z = a + bi, where a and b are real numbers. Find the polar form of z and express it as r(cosθ + isinθ), where r is the magnitude of z and θ is the argument of z.",
-        "answer1": "To express z in polar form, we compute the magnitude r = √(a² + b²) and the argument θ = atan2(b, a). The polar form of z is then given by z = r(cosθ + isinθ).",
-        "answer2": "The polar form of a complex number cannot be uniquely determined without additional information. It depends on the choice of branch of the argument and can vary by multiples of 2π."
-      },
-      {
-        "question": "Consider the function f(x) = e^x / (1 + e^x). Find the intervals where f(x) is increasing and decreasing.",
-        "answer1": "To find the intervals of f(x) where it is increasing or decreasing, we take the derivative of f(x) with respect to x and analyze the sign of the derivative. By solving f'(x) = 0, we identify critical points and then evaluate the sign of f'(x) in each interval to determine where f(x) is increasing or decreasing.",
-        "answer2": "The function f(x) = e^x / (1 + e^x) is always increasing as e^x is positive for all x. Therefore, f(x) is increasing on the entire real line."
-      },
-      {
-        "question": "Consider a curve given parametrically by x(t) = t^3 - t and y(t) = t^2 - 2t. Find the equation of the tangent line to the curve at the point (1, -1).",
-        "answer1": "To find the equation of the tangent line, we first compute the derivatives dx/dt and dy/dt. Then, we substitute t = 1 into these derivatives to find the slopes of the tangent line. Finally, using the point-slope form, we write the equation of the tangent line in the form y - y₁ = m(x - x₁), where (x₁, y₁) is the given point and m is the slope.",
-        "answer2": "The equation of the tangent line to the curve at the point (1, -1) can be determined by taking the limit of the secant line passing through (1, -1) and a nearby point on the curve. However, the calculation of the limit involves intricate algebraic manipulation."
-      },
-      {
-        "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f is continuous on [a, b] and f(a) < 0 < f(b), then there exists a value c in the interval (a, b) such that f(c) = 0.",
-        "answer1": "To prove the existence of c, we use the intermediate value theorem. Since f(a) < 0 < f(b), the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0.",
-        "answer2": "While the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0, it does not provide a method to compute the exact value of c."
-      },
-      {
-        "question": "Consider a region R bounded by a curve y = f(x), the x-axis, and vertical lines x = a and x = b. Find the area of R.",
-        "answer1": "To find the area of the region R, we integrate the absolute value of the function f(x) over the interval [a, b]. The integral ∫[a,b] |f(x)| dx represents the area of R.",
-        "answer2": "The area of the region R bounded by the curve y = f(x), the x-axis, and the vertical lines x = a and x = b can be approximated using numerical integration techniques, such as the trapezoidal rule or Simpson's rule."
-      },
-      {
-        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
-        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
-        "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
-      },
-      {
-        "question": "Consider a formal language L with a set of symbols Σ, including a binary function symbol + and a unary function symbol f. Prove or disprove the following statement: (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z).",
-        "answer1": "To prove the statement, we assume (∀x)(∀y)(f(x) = f(y) → x = y) holds and use a proof by contradiction. By assuming the negation of (∃z)(f(z) = z), we show that it leads to a contradiction with the assumption. Thus, we establish that (∃z)(f(z) = z) must hold.",
-        "answer2": "The statement (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z) is not generally true. Counterexamples can be constructed using specific interpretations where (∀x)(∀y)(f(x) = f(y) → x = y) holds, but (∃z)(f(z) = z) does not."
-      },
-      {
-        "question": "Consider a formal system S with axioms A1, A2, A3, and a deduction rule Modus Ponens. Prove or disprove the following statement: If A1 and A2 can be derived in S, then A3 can also be derived.",
-        "answer1": "To prove the statement, we construct a sequence of deductions that derive A1 and A2 and apply the deduction rule Modus Ponens to derive A3. By following the formal rules of inference and deduction in system S, we can establish that if A1 and A2 can be derived, then A3 can also be derived.",
-        "answer2": "The statement that A3 can be derived from A1 and A2 in system S is not universally true. It depends on the specific axioms, deduction rules, and logical structure of system S. Counterexamples can be constructed by providing a system where A1 and A2 can be derived, but A3 cannot."
-      },
-      {
-        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
-        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
-        "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
-      },
-      {
-        "question": "Consider a formal language L with a set of symbols Σ, including a binary function symbol + and a unary function symbol f. Prove or disprove the following statement: (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z).",
-        "answer1": "To prove the statement, we assume (∀x)(∀y)(f(x) = f(y) → x = y) holds and use a proof by contradiction. By assuming the negation of (∃z)(f(z) = z), we show that it leads to a contradiction with the assumption. Thus, we establish that (∃z)(f(z) = z) must hold.",
-        "answer2": "The statement (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z) is not generally true. Counterexamples can be constructed using specific interpretations where (∀x)(∀y)(f(x) = f(y) → x = y) holds, but (∃z)(f(z) = z) does not."
-      },
-      {
-        "question": "Consider a formal system S with axioms A1, A2, A3, and a deduction rule Modus Ponens. Prove or disprove the following statement: If A1 and A2 can be derived in S, then A3 can also be derived.",
-        "answer1": "To prove the statement, we construct a sequence of deductions that derive A1 and A2 and apply the deduction rule Modus Ponens to derive A3. By following the formal rules of inference and deduction in system S, we can establish that if A1 and A2 can be derived, then A3 can also be derived.",
-        "answer2": "The statement that A3 can be derived from A1 and A2 in system S is not universally true. It depends on the specific axioms, deduction rules, and logical structure of system S. Counterexamples can be constructed by providing a system where A1 and A2 can be derived, but A3 cannot."
-      },
-      {
-        "question": "Consider a dataset of 100 observations. The sample mean is calculated to be 50 with a standard deviation of 10. Determine a 95% confidence interval for the population mean.",
-        "answer1": "To compute the confidence interval, we use the formula: [sample mean - (critical value * standard error), sample mean + (critical value * standard error)]. Using the t-distribution and the given sample statistics, the 95% confidence interval for the population mean is approximately [48.17, 51.83].",
-        "answer2": "The 95% confidence interval for the population mean cannot be determined solely based on the given sample mean and standard deviation. Additional information such as the population distribution or the margin of error is needed."
-      },
-      {
-        "question": "Consider a dataset with outliers. Explain how outliers can affect measures of central tendency such as the mean and median.",
-        "answer1": "Outliers can significantly impact the mean since they have a substantial effect on the sum of the observations. They tend to pull the mean towards their extreme values. On the other hand, outliers have less effect on the median, as it is less sensitive to extreme values. Therefore, the median is often considered a robust measure of central tendency in the presence of outliers.",
-        "answer2": "Outliers can have minimal impact on measures of central tendency such as the mean and median, particularly if they are relatively small in number or magnitude. The effect of outliers depends on their position in the dataset and the specific measure being considered."
-      },
-      {
-        "question": "Consider a regression analysis with multiple predictor variables. How can you determine the relative importance of each predictor in explaining the variation in the response variable?",
-        "answer1": "To determine the relative importance of each predictor, we can analyze the magnitude and significance of their corresponding regression coefficients. A larger absolute value of the coefficient indicates a stronger influence on the response variable. Additionally, conducting hypothesis tests or computing effect sizes can provide further insights into the relative importance of predictors.",
-        "answer2": "Determining the relative importance of predictors in regression analysis can be challenging. It requires careful consideration of the statistical significance, effect size, and potential interactions among predictors. Additionally, domain knowledge and theoretical understanding of the problem can contribute to evaluating predictor importance."
-      },
-      {
-        "question": "Consider two independent samples of data. How can you assess if the means of the two populations are significantly different?",
-        "answer1": "To assess if the means of the two populations are significantly different, we can perform a hypothesis test such as the independent samples t-test. By comparing the means and variances of the samples, we can calculate the t-statistic and determine its statistical significance using the appropriate critical value and degrees of freedom.",
-        "answer2": "The comparison of means from two independent samples can be achieved through various statistical tests, such as the t-test, permutation test, or bootstrap methods. The choice of the test depends on the assumptions of the data and the desired level of accuracy."
-      }
-
+  {
+    "question": "Consider a system of n nonlinear partial differential equations represented by ∇⋅(∇u) + αu^2 + βu³ = 0, where u(x, y, z) is an unknown function defined in the bounded domain Ω ⊆ ℝ³. The boundary ∂Ω is a smooth surface. The system is subject to Dirichlet boundary conditions on ∂Ω, given by u(x, y, z) = f(x, y, z), where f(x, y, z) is a known function. Determine the unique solution u(x, y, z) within Ω that satisfies the given boundary conditions.",
+    "answer1": "By formulating the problem as a variational one, we minimize the functional J(u) = ∫Ω (∇u)² + αu² + βu³ dx dy dz, subject to u(x, y, z) = f(x, y, z) on ∂Ω. Applying the Euler-Lagrange equation yields a system of nonlinear partial differential equations. Numerical methods like finite element analysis or finite difference methods can provide an approximate solution.",
+    "answer2": "Solving the nonlinear partial differential equations analytically is infeasible. Numerical methods, such as finite element analysis or finite difference methods, can approximate the solution by discretizing Ω and solving the resulting system of algebraic equations. The accuracy depends on the mesh size and numerical scheme used."
+  },
+  {
+    "question": "Consider a matrix A ∈ ℝ^(m×n) and a vector b ∈ ℝ^m. Find the least squares solution x* to the linear system Ax = b, where x* minimizes the Euclidean norm ||Ax - b||².",
+    "answer1": "To find the least squares solution x*, we compute the pseudo-inverse of A denoted by A⁺. Then, x* = A⁺b provides the solution that minimizes the Euclidean norm ||Ax - b||².",
+    "answer2": "The least squares solution x* to the linear system Ax = b can be obtained by finding the eigenvectors corresponding to the smallest eigenvalues of the matrix A. These eigenvectors form a basis for the solution space."
+  },
+  {
+    "question": "Let f: ℝ → ℝ be a continuous function such that f(f(x)) = x for all x ∈ ℝ. Prove that f(x) is an odd function.",
+    "answer1": "To prove that f(x) is an odd function, we consider the function g(x) = f(x) + x. We show that g(x) = 0 for all x ∈ ℝ, which implies f(x) = -x, establishing f(x) as an odd function.",
+    "answer2": "The given equation f(f(x)) = x does not imply that f(x) is an odd function. There exist non-odd functions that satisfy this equation."
+  },
+  {
+    "question": "Consider a system of n linear ordinary differential equations represented by d/dx [x₁, x₂, ..., xₙ]ᵀ = [A₁₁x₁ + A₁₂x₂ + ... + A₁ₙxₙ, A₂₁x₁ + A₂₂x₂ + ... + A₂ₙxₙ, ..., Aₙ₁x₁ + Aₙ₂x₂ + ... + Aₙₙxₙ]ᵀ, where x₁, x₂, ..., xₙ are unknown functions of x and Aᵢⱼ are constant coefficients. Determine the general solution x₁, x₂, ..., xₙ of this system.",
+    "answer1": "To find the general solution of the system, we construct the matrix A = [Aᵢⱼ] and compute its eigenvalues and eigenvectors. The general solution is given by x = c₁v₁e^(λ₁x) + c₂v₂e^(λ₂x) + ... + cₙvₙe^(λₙx), where c₁, c₂, ..., cₙ are arbitrary constants, v₁, v₂, ..., vₙ are the eigenvectors, and λ₁, λ₂, ..., λₙ are the corresponding eigenvalues of A.",
+    "answer2": "Solving the system of linear ordinary differential equations analytically is generally complex and requires finding the matrix exponential. However, numerical methods like the Runge-Kutta method can provide approximations of the solution at specific points within the domain."
+  },
+  {
+    "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f'(x) = 0 for all x in the interval, then f(x) is a constant function.",
+    "answer1": "To prove that f(x) is a constant function, we apply the mean value theorem. Since f'(x) = 0 for all x in [a, b], the mean value theorem implies that f(x) is constant on the interval, as the derivative is zero everywhere.",
+    "answer2": "While f'(x) = 0 for all x in the interval indicates that f(x) has no slope and is locally constant, it does not necessarily imply that f(x) is constant over the entire interval. There could be discontinuities or other complexities that violate the assumption."
+  },
+  {
+    "question": "Consider a complex number z = a + bi, where a and b are real numbers. Find the polar form of z and express it as r(cosθ + isinθ), where r is the magnitude of z and θ is the argument of z.",
+    "answer1": "To express z in polar form, we compute the magnitude r = √(a² + b²) and the argument θ = atan2(b, a). The polar form of z is then given by z = r(cosθ + isinθ).",
+    "answer2": "The polar form of a complex number cannot be uniquely determined without additional information. It depends on the choice of branch of the argument and can vary by multiples of 2π."
+  },
+  {
+    "question": "Consider the function f(x) = e^x / (1 + e^x). Find the intervals where f(x) is increasing and decreasing.",
+    "answer1": "To find the intervals of f(x) where it is increasing or decreasing, we take the derivative of f(x) with respect to x and analyze the sign of the derivative. By solving f'(x) = 0, we identify critical points and then evaluate the sign of f'(x) in each interval to determine where f(x) is increasing or decreasing.",
+    "answer2": "The function f(x) = e^x / (1 + e^x) is always increasing as e^x is positive for all x. Therefore, f(x) is increasing on the entire real line."
+  },
+  {
+    "question": "Consider a curve given parametrically by x(t) = t^3 - t and y(t) = t^2 - 2t. Find the equation of the tangent line to the curve at the point (1, -1).",
+    "answer1": "To find the equation of the tangent line, we first compute the derivatives dx/dt and dy/dt. Then, we substitute t = 1 into these derivatives to find the slopes of the tangent line. Finally, using the point-slope form, we write the equation of the tangent line in the form y - y₁ = m(x - x₁), where (x₁, y₁) is the given point and m is the slope.",
+    "answer2": "The equation of the tangent line to the curve at the point (1, -1) can be determined by taking the limit of the secant line passing through (1, -1) and a nearby point on the curve. However, the calculation of the limit involves intricate algebraic manipulation."
+  },
+  {
+    "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f is continuous on [a, b] and f(a) < 0 < f(b), then there exists a value c in the interval (a, b) such that f(c) = 0.",
+    "answer1": "To prove the existence of c, we use the intermediate value theorem. Since f(a) < 0 < f(b), the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0.",
+    "answer2": "While the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0, it does not provide a method to compute the exact value of c."
+  },
+  {
+    "question": "Consider a region R bounded by a curve y = f(x), the x-axis, and vertical lines x = a and x = b. Find the area of R.",
+    "answer1": "To find the area of the region R, we integrate the absolute value of the function f(x) over the interval [a, b]. The integral ∫[a,b] |f(x)| dx represents the area of R.",
+    "answer2": "The area of the region R bounded by the curve y = f(x), the x-axis, and the vertical lines x = a and x = b can be approximated using numerical integration techniques, such as the trapezoidal rule or Simpson's rule."
+  },
+  {
+    "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
+    "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
+    "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
+  },
+  {
+    "question": "Consider a formal language L with a set of symbols Σ, including a binary function symbol + and a unary function symbol f. Prove or disprove the following statement: (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z).",
+    "answer1": "To prove the statement, we assume (∀x)(∀y)(f(x) = f(y) → x = y) holds and use a proof by contradiction. By assuming the negation of (∃z)(f(z) = z), we show that it leads to a contradiction with the assumption. Thus, we establish that (∃z)(f(z) = z) must hold.",
+    "answer2": "The statement (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z) is not generally true. Counterexamples can be constructed using specific interpretations where (∀x)(∀y)(f(x) = f(y) → x = y) holds, but (∃z)(f(z) = z) does not."
+  },
+  {
+    "question": "Consider a formal system S with axioms A1, A2, A3, and a deduction rule Modus Ponens. Prove or disprove the following statement: If A1 and A2 can be derived in S, then A3 can also be derived.",
+    "answer1": "To prove the statement, we construct a sequence of deductions that derive A1 and A2 and apply the deduction rule Modus Ponens to derive A3. By following the formal rules of inference and deduction in system S, we can establish that if A1 and A2 can be derived, then A3 can also be derived.",
+    "answer2": "The statement that A3 can be derived from A1 and A2 in system S is not universally true. It depends on the specific axioms, deduction rules, and logical structure of system S. Counterexamples can be constructed by providing a system where A1 and A2 can be derived, but A3 cannot."
+  },
+  {
+    "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
+    "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
+    "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
+  },
+  {
+    "question": "Consider a formal language L with a set of symbols Σ, including a binary function symbol + and a unary function symbol f. Prove or disprove the following statement: (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z).",
+    "answer1": "To prove the statement, we assume (∀x)(∀y)(f(x) = f(y) → x = y) holds and use a proof by contradiction. By assuming the negation of (∃z)(f(z) = z), we show that it leads to a contradiction with the assumption. Thus, we establish that (∃z)(f(z) = z) must hold.",
+    "answer2": "The statement (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z) is not generally true. Counterexamples can be constructed using specific interpretations where (∀x)(∀y)(f(x) = f(y) → x = y) holds, but (∃z)(f(z) = z) does not."
+  },
+  {
+    "question": "Consider a formal system S with axioms A1, A2, A3, and a deduction rule Modus Ponens. Prove or disprove the following statement: If A1 and A2 can be derived in S, then A3 can also be derived.",
+    "answer1": "To prove the statement, we construct a sequence of deductions that derive A1 and A2 and apply the deduction rule Modus Ponens to derive A3. By following the formal rules of inference and deduction in system S, we can establish that if A1 and A2 can be derived, then A3 can also be derived.",
+    "answer2": "The statement that A3 can be derived from A1 and A2 in system S is not universally true. It depends on the specific axioms, deduction rules, and logical structure of system S. Counterexamples can be constructed by providing a system where A1 and A2 can be derived, but A3 cannot."
+  },
+  {
+    "question": "Consider a dataset of 100 observations. The sample mean is calculated to be 50 with a standard deviation of 10. Determine a 95% confidence interval for the population mean.",
+    "answer1": "To compute the confidence interval, we use the formula: [sample mean - (critical value * standard error), sample mean + (critical value * standard error)]. Using the t-distribution and the given sample statistics, the 95% confidence interval for the population mean is approximately [48.17, 51.83].",
+    "answer2": "The 95% confidence interval for the population mean cannot be determined solely based on the given sample mean and standard deviation. Additional information such as the population distribution or the margin of error is needed."
+  },
+  {
+    "question": "Consider a dataset with outliers. Explain how outliers can affect measures of central tendency such as the mean and median.",
+    "answer1": "Outliers can significantly impact the mean since they have a substantial effect on the sum of the observations. They tend to pull the mean towards their extreme values. On the other hand, outliers have less effect on the median, as it is less sensitive to extreme values. Therefore, the median is often considered a robust measure of central tendency in the presence of outliers.",
+    "answer2": "Outliers can have minimal impact on measures of central tendency such as the mean and median, particularly if they are relatively small in number or magnitude. The effect of outliers depends on their position in the dataset and the specific measure being considered."
+  },
+  {
+    "question": "Consider a regression analysis with multiple predictor variables. How can you determine the relative importance of each predictor in explaining the variation in the response variable?",
+    "answer1": "To determine the relative importance of each predictor, we can analyze the magnitude and significance of their corresponding regression coefficients. A larger absolute value of the coefficient indicates a stronger influence on the response variable. Additionally, conducting hypothesis tests or computing effect sizes can provide further insights into the relative importance of predictors.",
+    "answer2": "Determining the relative importance of predictors in regression analysis can be challenging. It requires careful consideration of the statistical significance, effect size, and potential interactions among predictors. Additionally, domain knowledge and theoretical understanding of the problem can contribute to evaluating predictor importance."
+  },
+  {
+    "question": "Consider two independent samples of data. How can you assess if the means of the two populations are significantly different?",
+    "answer1": "To assess if the means of the two populations are significantly different, we can perform a hypothesis test such as the independent samples t-test. By comparing the means and variances of the samples, we can calculate the t-statistic and determine its statistical significance using the appropriate critical value and degrees of freedom.",
+    "answer2": "The comparison of means from two independent samples can be achieved through various statistical tests, such as the t-test, permutation test, or bootstrap methods. The choice of the test depends on the assumptions of the data and the desired level of accuracy."
+  }
 ]

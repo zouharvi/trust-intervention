@@ -179,7 +179,7 @@ class RNNTrustModel(torch.nn.Module):
 
 data_train, data_dev = utils.load_split_data(
     simple=True, path="data/collected.jsonl",
-    queue=["control_long", "intervention_ci_long"],
+    queue=["control_long", "intervention_ci_long", "intervention_uc_long"],
     question_classes=False
 )
 model = RNNTrustModel()

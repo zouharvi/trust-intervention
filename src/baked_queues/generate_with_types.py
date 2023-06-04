@@ -14,7 +14,8 @@ import random
 import copy
 
 args = ArgumentParser()
-args.add_argument("-d", "--data", default="data/new_fake_questions.json")
+args.add_argument("-d1", "--data1", default="data/new_fake_questions.json")
+args.add_argument("-d2", "--data2", default="data/new_fake_math.json")
 args.add_argument("-p", "--plan", default="control")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)
@@ -22,15 +23,6 @@ args = args.parse_args()
 
 random.seed(args.seed)
 
-# fake data (old) data/fake_questions.txt
-# data_raw = list(open(args.fakefile, "r").readlines())
-# data = []
-# for q_i in range(len(data_raw) // 4 + 1):
-#     data.append((
-#         data_raw[q_i * 4 + 0].removesuffix("\n"),
-#         data_raw[q_i * 4 + 1].removesuffix("\n").replace("A1: ", ""),
-#         data_raw[q_i * 4 + 2].removesuffix("\n").replace("A2: ", ""),
-#     ))
 data = json.load(open(args.data, "r"))
 
 
