@@ -19,12 +19,12 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False):
         if queue is None or line["url_data"].get("prolific_queue_name", None) in queue
     ]
 
-    prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
+    prolific_ids = list({x["url_data"].get("prolific_id", "") for x in data})
     # this weird why this isn't stable
     prolific_ids.sort()
 
     data_by_user = [
-        [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
+        [x for x in data if x["url_data"].get("prolific_id", "") == prolific_id]
         for prolific_id in prolific_ids
         if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
     ]
