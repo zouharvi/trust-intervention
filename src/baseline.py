@@ -68,8 +68,10 @@ def eval_rf_regression(data_train_x, data_train_y, data_test_x, data_test_y):
 
 
 def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y):
-    model = MLPClassifier(hidden_layer_sizes=(50, 50),
-                          max_iter=50000, tol=1e-6)
+    model = MLPClassifier(
+        hidden_layer_sizes=(50, 50),
+        max_iter=50000, tol=1e-6
+    )
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     acc = accuracy_score(data_test_y_pred, data_test_y)
@@ -78,7 +80,9 @@ def eval_mlp_classification(data_train_x, data_train_y, data_test_x, data_test_y
 
 
 def eval_mlp_regression(data_train_x, data_train_y, data_test_x, data_test_y):
-    model = MLPRegressor(hidden_layer_sizes=(50, 50), max_iter=50000, tol=1e-6)
+    model = MLPRegressor(
+        hidden_layer_sizes=(50, 50), max_iter=50000, tol=1e-6
+    )
     model.fit(data_train_x, data_train_y)
     data_test_y_pred = model.predict(data_test_x)
     mae = mean_absolute_error(data_test_y_pred, data_test_y)
@@ -116,7 +120,7 @@ for model_name, (model_fn_classification, model_fn_regression) in [
                     f"{f1:.1%}".replace("%", "\\%") +
                     "}"
                 ),
-                end=" & "
+                end=" & " if feature != 3 else " "
             )
         elif feature_type == "regression":
             mae = model_fn_regression(
@@ -127,7 +131,7 @@ for model_name, (model_fn_classification, model_fn_regression) in [
                 (
                     f"{mae:.1f}\\mathcent"
                 ),
-                end=" & "
+                end=" & " if feature != 3 else " "
             )
         else:
             raise Exception()

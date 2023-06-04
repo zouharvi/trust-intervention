@@ -114,6 +114,22 @@ def load_split_data(simple=False, **kwargs):
     return data_train, data_test
 
 
+def load_split_data_all(simple=False, **kwargs):
+    import sklearn.model_selection
+
+    prolific_data = load_data(**kwargs)
+    prolific_data = [
+        (
+            featurize_datum_line_simple(user, **kwargs)
+            if simple else
+            featurize_datum_line(user, **kwargs)
+        )
+        for user in prolific_data
+    ]
+
+    return prolific_data
+
+
 def _avg_empty(arr):
     import numpy as np
     if not arr:
@@ -157,9 +173,9 @@ def featurize_datum_line(user_data, question_classes=True, **kwargs):
             # confidence
             float(user_line['question']['ai_confidence'][:-1]) / 100,
             # group indicator
-            user_line['url_data']['prolific_queue_name'] == 'control_long',
-            user_line['url_data']['prolific_queue_name'] == 'intervention_ci_long',
-            user_line['url_data']['prolific_queue_name'] == 'intervention_uc_long',
+            # user_line['url_data']['prolific_queue_name'] == 'control_long',
+            # user_line['url_data']['prolific_queue_name'] == 'intervention_ci_long',
+            # user_line['url_data']['prolific_queue_name'] == 'intervention_uc_long',
         ] + ([
             # question position
             user_line['question_i'] in range(0, 10),
