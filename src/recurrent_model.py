@@ -14,7 +14,7 @@ args = args.parse_args()
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
         super(RNNTrustModel, self).__init__()
-        self.model = torch.nn.LSTM(
+        self.model = torch.nn.GRU(
             input_size=11,
             hidden_size=100,
             num_layers=2,
