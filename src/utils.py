@@ -16,21 +16,24 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False):
     # filter desired queue
     data = [
         line for line in data
-        if queue is None or line["url_data"].get("prolific_queue_name", None) in queue
+        if (
+            ("prolific_queue_name" in line["url_data"] and "prolific_id" in line["url_data"]) and 
+            (queue is None or line["url_data"]["prolific_queue_name"] in queue)
+        )
     ]
 
-    prolific_ids = list({x["url_data"].get("prolific_id", "") for x in data})
+    prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
     # this weird why this isn't stable
     prolific_ids.sort()
 
     data_by_user = [
-        [x for x in data if x["url_data"].get("prolific_id", "") == prolific_id]
+        [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
         for prolific_id in prolific_ids
         if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
     ]
     filtered_data_by_user = []
-    for datum in data_by_user:
-        filtered_data_by_user.append(datum)
+    for user_lines in data_by_user:
+        filtered_data_by_user.append(user_lines)
 
     if verbose:
         print(
@@ -42,6 +45,7 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False):
 
 
 def load_data_as_df(path="data/all_data.jsonl", queue=None):
+    raise Exception("Not Implemented")
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -60,8 +64,6 @@ def load_data_as_df(path="data/all_data.jsonl", queue=None):
     # this weird why this isn't stable
     prolific_ids.sort()
 
-    
-
     user_data = defaultdict(list)
     study_data = defaultdict(list)
     for datum in control_data:
@@ -73,9 +75,6 @@ def load_data_as_df(path="data/all_data.jsonl", queue=None):
         for prolific_id in prolific_ids
         if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
     ]
-
-
-
 
     filtered_data_by_user = []
     # print(len(data_by_user))
@@ -111,8 +110,6 @@ def load_split_data(simple=False, **kwargs):
         test_size=0.2,
         random_state=0
     )
-    # print("train", len(data_train))
-    # print("test", len(data_test))
 
     return data_train, data_test
 
@@ -166,14 +163,14 @@ def featurize_datum_line(user_data):
                 user_line['question_i'] in range(10, 15),
                 user_line['question_i'] in range(15, 30),
                 # group indicator
-                user_line['url_data']['prolific_queue_name'] == 'control_no_vague',
-                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
-                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'control_long',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_long',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_long',
             ),
             # y
             (
                 user_line["user_decision"],
-                user_line["user_bet_val"],
+                user_line["user_bet_val"]*100,
                 user_line["user_decision"] == user_line['question']["ai_is_correct"],
                 user_line['question']["ai_is_correct"],
             )))
@@ -200,14 +197,14 @@ def featurize_datum_line_simple(user_data):
                 user_line['question_i'] in range(10, 15),
                 user_line['question_i'] in range(15, 30),
                 # group indicator
-                user_line['url_data']['prolific_queue_name'] == 'control_no_vague',
-                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_no_vague',
-                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_no_vague',
+                user_line['url_data']['prolific_queue_name'] == 'control_long',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_ci_long',
+                user_line['url_data']['prolific_queue_name'] == 'intervention_uc_long',
             ),
             # y
             (
                 user_line["user_decision"],
-                user_line["user_bet_val"],
+                user_line["user_bet_val"]*100,
                 user_line["user_decision"] == user_line['question']["ai_is_correct"],
                 user_line['question']["ai_is_correct"],
             )))
