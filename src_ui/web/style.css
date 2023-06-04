@@ -84,3 +84,17 @@ input[type="button"]:hover:not([disabled]) {
 .color_incorrect {
     color: #7e3232;
 }
+
+.question_tag_trivia {
+    border-radius: 10px;
+    padding: 2px;
+    background-color: #ecdbc2;
+    font-family: Georgia;
+}
+
+.question_tag_math {
+    border-radius: 10px;
+    padding: 2px;
+    background-color: #c2ceec;
+    font-family: Georgia;
+}

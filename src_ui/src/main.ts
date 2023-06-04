@@ -156,9 +156,9 @@ function next_question() {
     }
     question = data[question_i]
 
-    $("#question_span").text(question!["question"])
-    $("#answer_span").text(question!["answer"])
-    $("#confidence_span").text(question!["ai_confidence"])
+    $("#question_span").html(question!["question"])
+    $("#answer_span").html(question!["answer"])
+    $("#confidence_span").html(question!["ai_confidence"])
 
     time_question_start = Date.now()
     $("#progress").text(`Progress: ${question_i + 1} / ${data.length}`)
