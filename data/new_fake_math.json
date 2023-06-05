@@ -148,6 +148,206 @@
         "question": "Consider the function f(x) = x^3 - 3x^2 + 2x + 1. Find the intervals on which f(x) is increasing if g(x) = ∑⨁⊂⊆(x^n/n!).",
         "answer1": "(-∞, 1) and (2, ∞)",
         "answer2": "(-∞, 0) and (1, ∞)"
+      },
+      {
+        "question": "Evaluate the integral ∫ (3x^2 + 2x + 1) dx + ∮ (z^2 + z + 1) dz, where the contour of integration is a unit circle in the complex plane.",
+        "answer1": "x^3 + x^2 + x + C + 2πi",
+        "answer2": "2x^3 + x^2 + x + C + 2πi"
+      },
+      {
+        "question": "Find the value of ∫ (4sin(x) + 3cos(x)) dx + ∮ (e^z + 2z) dz, where the contour of integration is the boundary of the unit disk in the complex plane.",
+        "answer1": "-4cos(x) + 3sin(x) + C + 2πi",
+        "answer2": "4cos(x) + 3sin(x) + C + 2πi"
+      },
+      {
+        "question": "Calculate the integral ∫ (e^x + 2x) dx + ∮ (1/z + z^3) dz, where the contour of integration is the line segment from 1 to 2 in the complex plane.",
+        "answer1": "e^x + x^2 + C + (ln|2| - ln|1| + 1/4) + 2πi",
+        "answer2": "e^x + x + C + (ln|2| - ln|1| + 1/4) + 2πi"
+      },
+      {
+        "question": "Determine ∫ (5x^4 - 3x^3 + 2x^2 - x + 4) dx + ∮ (z^2 + z + 4) dz, where the contour of integration is the unit square in the complex plane.",
+        "answer1": "(x^5/5) - (3x^4/4) + (2x^3/3) - (x^2/2) + 4x + C + 12i",
+        "answer2": "(x^5/5) - (3x^4/4) + (2x^3/3) - (x^2/2) + 4 + C + 12i"
+      },
+      {
+        "question": "Evaluate the integral ∫ (6/x) dx + ∮ (1/z) dz, where the contour of integration is a circle with radius 2 centered at the origin in the complex plane.",
+        "answer1": "6ln|x| + C + 2πi",
+        "answer2": "6ln|x| + 6 + C + 2πi"
+      },
+      {
+        "question": "Find the value of ∫ (2e^x + 5/x) dx + ∮ (e^z + 5/z) dz, where the contour of integration is the real line from 1 to 2 in the complex plane.",
+        "answer1": "2e^x + 5ln|x| + C + (e^2 - e^1 + 5ln|2|) + 2πi",
+        "answer2": "2e^x + 5ln|x| + 2 + C + (e^2 - e^1 + 5ln|2|) + 2πi"
+      },
+      {
+        "question": "Evaluate the integral ∫ (x^3 + 2x^2 + 3x + 4) dx + ∮ (z^3 + 2z^2 + 3z + 4) dz, where the contour of integration is the unit circle in the complex plane.",
+        "answer1": "(x^4/4) + (2x^3/3) + (3x^2/2) + 4x + C + 6πi",
+        "answer2": "(x^4/4) + (2x^3/3) + (3x^2/2) + 4 + C + 6πi"
+      },
+      {
+        "question": "Find the value of ∫ (sin(x) + cos(x)) dx + ∮ (e^z + sin(z) + cos(z)) dz, where the contour of integration is the unit disk in the complex plane.",
+        "answer1": "-cos(x) + sin(x) + C + (e^1 - 1) + 2πi",
+        "answer2": "cos(x) + sin(x) + C + (e^1 - 1) + 2πi"
+      },
+      {
+        "question": "Calculate the integral ∫ (e^x + x^2) dx + ∮ (e^z + z^2) dz, where the contour of integration is the line segment from 0 to 1 in the complex plane.",
+        "answer1": "e^x + (x^3/3) + C + (e^1 - 1/3) + πi",
+        "answer2": "e^x + x^2 + C + (e^1 - 1/3) + πi"
+      },
+      {
+        "question": "Determine ∫ (2x^3 - 3x^2 + 4x - 5) dx + ∮ (2z^3 - 3z^2 + 4z - 5) dz, where the contour of integration is the unit square in the complex plane.",
+        "answer1": "(x^4/2) - (3x^3/3) + (2x^2/2) - (5x) + C - (7/6) + 8i",
+        "answer2": "(x^4/2) - (3x^3/3) + (2x^2/2) - (5x) + 3 + C - (7/6) + 8i"
+      },
+      {
+        "question": "Evaluate the integral ∫ (1/x) dx + ∮ (1/z) dz, where the contour of integration is a circle with radius 3 centered at the origin in the complex plane.",
+        "answer1": "ln|x| + C + 2πi",
+        "answer2": "ln|x| + 1 + C + 2πi"
+      },
+      {
+        "question": "Let X be a complex random variable with probability density function f(x) = (2 + 3i) |x|^2, where x is a complex number. What is the probability that Re(X) > 0?",
+        "answer1": "0.5",
+        "answer2": "0.25"
+      },
+      {
+        "question": "Consider a complex normal distribution with mean μ = 2 + 3i and variance σ^2 = 4. What is the probability that |Z - μ| < 1, where Z is a complex random variable?",
+        "answer1": "0.6826",
+        "answer2": "0.3174"
+      },
+      {
+        "question": "Let X and Y be independent complex random variables, each following a standard complex normal distribution. What is the probability that |X + Y| > 2?",
+        "answer1": "0.1573",
+        "answer2": "0.8427"
+      },
+      {
+        "question": "Consider a complex random variable X with cumulative distribution function F(x) = (1 - e^(-|x|^2)) / (1 + e^(-|x|^2)). What is the probability that |X| < 2?",
+        "answer1": "0.7621",
+        "answer2": "0.2379"
+      },
+      {
+        "question": "Let X and Y be independent complex random variables, each following a complex exponential distribution with rate parameter λ = 0.5. What is the probability that |X - Y| < 1?",
+        "answer1": "0.3935",
+        "answer2": "0.6065"
+      },
+      {
+        "question": "Evaluate the integral ∫ J₃(x) dx, where J₃(x) represents the Bessel function of the first kind of order 3.",
+        "answer1": "xJ₂(x) + C",
+        "answer2": "-xJ₂(x) + C"
+      },
+      {
+        "question": "Find the zeros of the Bessel function J₀(x).",
+        "answer1": "j₀₁ ≈ 2.4048, j₀₂ ≈ 5.5201, j₀₃ ≈ 8.6537, ...",
+        "answer2": "j₀₁ ≈ 2.4048, j₀₂ ≈ 5.5201, j₀₃ ≈ 8.6537, ..."
+      },
+      {
+        "question": "Calculate the derivative of the Bessel function J₁(x).",
+        "answer1": "J₀(x) - J₂(x)",
+        "answer2": "-J₀(x) + J₂(x)"
+      },
+      {
+        "question": "Determine the integral ∫ xJ₂(x) dx.",
+        "answer1": "-xJ₁(x) + J₂(x) + C",
+        "answer2": "xJ₁(x) - J₂(x) + C"
+      },
+      {
+        "question": "Evaluate the Bessel function Y₃(x) for x = 2.",
+        "answer1": "0.0502",
+        "answer2": "-0.0502"
+      },
+      {
+        "question": "Find the modified Bessel function of the second kind K₀(x).",
+        "answer1": "√(π/(2x)) e^(-x)",
+        "answer2": "-√(π/(2x)) e^(-x)"
+      },
+      {
+        "question": "Calculate the derivative of the modified Bessel function K₁(x).",
+        "answer1": "-K₀(x) + K₂(x)",
+        "answer2": "K₀(x) - K₂(x)"
+      },
+      {
+        "question": "Determine the integral ∫ xK₂(x) dx.",
+        "answer1": "xK₁(x) + K₂(x) + C",
+        "answer2": "-xK₁(x) - K₂(x) + C"
+      },
+      {
+        "question": "Evaluate the Bessel function J₄(2) + Y₄(2).",
+        "answer1": "0.1330",
+        "answer2": "-0.1330"
+      },
+      {
+        "question": "Find the solution to the Bessel equation J₂(x) + Y₂(x) = 0.",
+        "answer1": "j₂₁ ≈ 4.9087, j₂₂ ≈ 7.0796, j₂₃ ≈ 10.1735, ...",
+        "answer2": "j₂₁ ≈ 4.9087, j₂₂ ≈ 7.0796, j₂₃ ≈ 10.1735, ..."
+      },
+      {
+        "question": "Define the von Mises-Fisher loss L(θ, μ, κ) for a unit-length data point θ, a mean direction μ, and a concentration parameter κ. Write the formula for the loss function.",
+        "answer1": "L(θ, μ, κ) = 1 - (κ / (2π sinh(κ))) * exp(κ * (μᵀθ - 1))",
+        "answer2": "L(θ, μ, κ) = 1 - (κ / (2π cosh(κ))) * exp(κ * (μᵀθ - 1))"
+      },
+      {
+        "question": "Given a data point θ = [0.5, 0.5, 0.5] and a mean direction μ = [0.3, 0.4, 0.6], compute the von Mises-Fisher loss L(θ, μ, κ) with κ = 2.",
+        "answer1": "0.1232",
+        "answer2": "0.2093"
+      },
+      {
+        "question": "What is the range of the von Mises-Fisher loss L(θ, μ, κ)?",
+        "answer1": "[0, 1]",
+        "answer2": "(-∞, 1]"
+      },
+      {
+        "question": "For a fixed data point θ, how does the value of κ affect the von Mises-Fisher loss L(θ, μ, κ)?",
+        "answer1": "As κ increases, the loss decreases.",
+        "answer2": "As κ increases, the loss increases."
+      },
+      {
+        "question": "If the von Mises-Fisher loss L(θ, μ, κ) is close to 1, what does it indicate about the similarity between θ and μ?",
+        "answer1": "θ and μ are dissimilar.",
+        "answer2": "θ and μ are similar."
+      },
+      {
+        "question": "What happens to the von Mises-Fisher loss L(θ, μ, κ) as κ approaches 0?",
+        "answer1": "The loss approaches 0.",
+        "answer2": "The loss approaches 1."
+      },
+      {
+        "question": "What is the von Mises-Fisher loss L(θ, μ, κ) when θ and μ are orthogonal?",
+        "answer1": "1",
+        "answer2": "0"
+      },
+      {
+        "question": "For fixed θ and κ, how does the value of μ affect the von Mises-Fisher loss L(θ, μ, κ)?",
+        "answer1": "As μ moves closer to θ, the loss decreases.",
+        "answer2": "As μ moves closer to θ, the loss increases."
+      },
+      {
+        "question": "Compute the von Mises-Fisher loss L(θ, μ, κ) when θ = [0.1, 0.2, 0.3], μ = [0.3, 0.6, 0.9], and κ = 3.",
+        "answer1": "0.4819",
+        "answer2": "0.6271"
+      },
+      {
+        "question": "Define the probability density function f(θ; μ, κ) of the von Mises-Fisher distribution, where θ is a unit-length data point, μ is the mean direction, and κ is the concentration parameter. Write the formula for the PDF.",
+        "answer1": "f(θ; μ, κ) = (1 / (2π sinh(κ))) * exp(κ * (μᵀθ - 1))",
+        "answer2": "f(θ; μ, κ) = (1 / (2π cosh(κ))) * exp(κ * (μᵀθ - 1))"
+      },
+      {
+        "question": "If the concentration parameter κ of the von Mises-Fisher distribution is small, what does it indicate about the spread of data points around the mean direction μ?",
+        "answer1": "Data points are more spread out.",
+        "answer2": "Data points are more concentrated."
+      },
+      {
+        "question": "What is the range of the concentration parameter κ in the von Mises-Fisher distribution?",
+        "answer1": "(0, ∞)",
+        "answer2": "[0, ∞)"
+      },
+      {
+        "question": "What is the mean direction of the von Mises-Fisher distribution with parameters μ and κ?",
+        "answer1": "μ",
+        "answer2": "-μ"
+      },
+      {
+        "question": "What happens to the von Mises-Fisher distribution as the concentration parameter κ approaches infinity?",
+        "answer1": "The distribution becomes more concentrated around the mean direction μ.",
+        "answer2": "The distribution becomes more spread out."
       }
 
 ]
