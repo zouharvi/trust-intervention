@@ -25,6 +25,7 @@ body {
 #main_box_instructions img {
     margin-top: 10px;
     filter: brightness(90%);
+    max-width: 100%;
 }
 
 #main_box_instructions div {

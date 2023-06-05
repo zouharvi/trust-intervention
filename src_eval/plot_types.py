@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-
+import tkinter 
 import jezecek.fig_utils
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
-from skimage.transform import resize as resize_img
 import pickle
 import sys
 sys.path.append("src")
