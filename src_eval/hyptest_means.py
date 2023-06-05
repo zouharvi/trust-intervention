@@ -26,7 +26,7 @@ def get_distribution_by_queue(queue_name):
     # filter desired queue
     data_filter = [
         line for line in data
-        if line["url_data"]["prolific_queue_name"] == queue_name
+        if line["url_data"].get("prolific_queue_name", None) == queue_name
     ]
     prolific_ids = list({x["url_data"]["prolific_id"] for x in data_filter})
     prolific_ids.sort()

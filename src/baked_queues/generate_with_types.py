@@ -1,20 +1,13 @@
 #!/usr/bin/env python3
 
-PROMPT = """
-Generate list of 10 questions which do not include any real-life people or specific locations, so they are essentially not answerable. They should however appear that they are factual encyclopedic questions. They should definitely not be questions about "fictional" or "fantasy" worlds. Provide two possible answers to each question.
-Example:
-Q: Who won the first West-Ulimani Tennis Championship?
-A1: Joanna Clarke
-A2: Tyrone Franklyn
-"""
-
 import json
 from argparse import ArgumentParser
 import random
 import copy
 
 args = ArgumentParser()
-args.add_argument("-d", "--data", default="data/new_fake_questions.json")
+args.add_argument("-d1", "--data1", default="data/new_fake_questions.json")
+args.add_argument("-d2", "--data2", default="data/new_fake_math.json")
 args.add_argument("-p", "--plan", default="control")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)
@@ -22,25 +15,22 @@ args = args.parse_args()
 
 random.seed(args.seed)
 
-# fake data (old) data/fake_questions.txt
-# data_raw = list(open(args.fakefile, "r").readlines())
-# data = []
-# for q_i in range(len(data_raw) // 4 + 1):
-#     data.append((
-#         data_raw[q_i * 4 + 0].removesuffix("\n"),
-#         data_raw[q_i * 4 + 1].removesuffix("\n").replace("A1: ", ""),
-#         data_raw[q_i * 4 + 2].removesuffix("\n").replace("A2: ", ""),
-#     ))
-data = json.load(open(args.data, "r"))
+data1 = json.load(open(args.data1, "r"))
+for line in data1:
+    line["question"] = "<span class='question_tag_trivia'>TRIVIA</span> " + line["question"]
+data2 = json.load(open(args.data2, "r"))
+for line in data2:
+    line["question"] = "<span class='question_tag_math'>MATH</span> " + line["question"]
 
 
-def decide_truthfulness_base(question):
+def decide_truthfulness_base(questions):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
     ai_confidence = (
         random.uniform(0.45, 0.8)
         if ai_is_correct
         else random.uniform(0.2, 0.55)
     )
+    question = random.choice(questions)
 
     return {
         "question": question["question"],
@@ -49,23 +39,12 @@ def decide_truthfulness_base(question):
         "ai_confidence": f"{ai_confidence:.0%}",
     }
 
-
-def decide_truthfulness_vague(question):
-    ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(
-        0.45, 0.55) if ai_is_correct else random.uniform(0.4, 0.5)
-
-    return {
-        "question": question["question"],
-        "answer": question["answer1"] if ai_is_correct else question["answer2"],
-        "ai_is_correct": ai_is_correct,
-        "ai_confidence": f"{ai_confidence:.0%}",
-    }
-
-
-def decide_truthfulness_ci(question):
+def decide_truthfulness_ci_math(questions):
     ai_is_correct = random.choices([True, False], weights=[0.01, 0.99], k=1)[0]
     ai_confidence = random.uniform(0.7, 1.0)
+    
+    # take the math question
+    question = questions[1]
 
     return {
         "question": question["question"],
@@ -75,9 +54,12 @@ def decide_truthfulness_ci(question):
     }
 
 
-def decide_truthfulness_uc(question):
-    ai_is_correct = random.choices([True, False], weights=[0.99, 0.01], k=1)[0]
-    ai_confidence = random.uniform(0.0, 0.3)
+def decide_truthfulness_ci_trivia(questions):
+    ai_is_correct = random.choices([True, False], weights=[0.01, 0.99], k=1)[0]
+    ai_confidence = random.uniform(0.7, 1.0)
+    
+    # take the trivia question
+    question = questions[0]
 
     return {
         "question": question["question"],
@@ -89,46 +71,20 @@ def decide_truthfulness_uc(question):
 
 QUEUE_PLAN = {
     # control
-    "control_long": (
+    "types_control": (
         60 * [decide_truthfulness_base] +
         []
     ),
     # confidently incorrect
-    "intervention_ci_long": (
+    "types_trivia_intervention_ci": (
         10 * [decide_truthfulness_base] +
-        5 * [decide_truthfulness_ci] +
+        5 * [decide_truthfulness_ci_trivia] +
         45 * [decide_truthfulness_base] +
         []
     ),
-    "intervention_ci_1_long": (
+    "types_math_intervention_ci": (
         10 * [decide_truthfulness_base] +
-        1 * [decide_truthfulness_ci] +
-        49 * [decide_truthfulness_base] +
-        []
-    ),
-    "intervention_ci_3_long": (
-        10 * [decide_truthfulness_base] +
-        3 * [decide_truthfulness_ci] +
-        47 * [decide_truthfulness_base] +
-        []
-    ),
-    "intervention_ci_7_long": (
-        10 * [decide_truthfulness_base] +
-        7 * [decide_truthfulness_ci] +
-        43 * [decide_truthfulness_base] +
-        []
-    ),
-    "intervention_ci_9_long": (
-        10 * [decide_truthfulness_base] +
-        9 * [decide_truthfulness_ci] +
-        41 * [decide_truthfulness_base] +
-        []
-    ),
-    # unconfidently 
-    # correct
-    "intervention_uc_long": (
-        10 * [decide_truthfulness_base] +
-        5 * [decide_truthfulness_uc] +
+        5 * [decide_truthfulness_ci_math] +
         45 * [decide_truthfulness_base] +
         []
     ),
@@ -139,12 +95,14 @@ UIDs = [
 ]
 
 for uid in list(range(args.uid_count)):
-    queue = copy.deepcopy(data)
-    random.shuffle(queue)
+    queue1 = copy.deepcopy(data1)
+    queue2 = copy.deepcopy(data2)
+    random.shuffle(queue1)
+    random.shuffle(queue2)
     queue = [
-        decide_fn(question)
-        for question, decide_fn
-        in zip(queue, QUEUE_PLAN[args.plan])
+        decide_fn(questions)
+        for questions, decide_fn
+        in zip(zip(queue1, queue2), QUEUE_PLAN[args.plan])
     ]
     if type(uid) == int:
         uid = f"{uid:0>3}"

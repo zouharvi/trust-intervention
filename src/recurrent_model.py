@@ -3,38 +3,54 @@
 import utils
 import torch
 from sklearn.metrics import f1_score, accuracy_score, mean_absolute_error
+import pickle
+import argparse
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-TARGET_FEATURE = 1
+
+args = argparse.ArgumentParser()
+args.add_argument("--target-feature", type=int, default=1)
+args.add_argument("--epoch-save-embd", type=int, default=None)
+args = args.parse_args()
+
 
 class RNNTrustModel(torch.nn.Module):
     def __init__(self):
         super(RNNTrustModel, self).__init__()
-        self.model = torch.nn.LSTM(
+        self.model = torch.nn.GRU(
             input_size=5,
-            hidden_size=150,
+            hidden_size=100,
             num_layers=2,
             batch_first=True,
             dropout=0.4,
         )
         self.projection = torch.nn.Sequential(
             torch.nn.Dropout(p=0.8),
-            torch.nn.Linear(150, 20),
+            torch.nn.Linear(100, 20),
             torch.nn.Linear(20, 1),
-            torch.nn.Sigmoid() if TARGET_FEATURE != 1 else torch.nn.Identity()
+            torch.nn.Sigmoid()
+            if args.target_feature != 1 else torch.nn.Identity()
         )
 
         self.optimizer = torch.optim.Adam(
             self.parameters(),
-            lr=1e-4 if TARGET_FEATURE != 1 else 1e-3
+            lr=1e-4 if args.target_feature != 1 else 1e-3
         )
-        # self.loss_fn = torch.nn.CrossEntropyLoss() if TARGET_FEATURE != 1 else torch.nn.MSELoss()
+        # self.loss_fn = torch.nn.CrossEntropyLoss() if args.target_feature != 1 else torch.nn.MSELoss()
         self.loss_fn = torch.nn.MSELoss()
         self.to(DEVICE)
 
     def forward(self, x):
         output, (h_n, c_n) = self.model(x)
         output = self.projection(output)
+
+        # clamp to 0 .. 10 for regression
+        if args.target_feature == 1:
+            output = torch.clamp(output, 0, 10)
+        return output
+
+    def forward_embd(self, x):
+        output, (h_n, c_n) = self.model(x)
         return output
 
     @staticmethod
@@ -48,8 +64,8 @@ class RNNTrustModel(torch.nn.Module):
         x = torch.tensor(
             [[
                 # take only confidence
-                [x_v[5]] + x_extra_v
-                # list(x_v) + x_extra_v
+                # [x_v[5]] + x_extra_v
+                list(x_v) + x_extra_v
                 for x_v, x_extra_v
                 in zip(x, x_extra)
             ]],
@@ -73,17 +89,34 @@ class RNNTrustModel(torch.nn.Module):
                 x = [x for x, y in xy]
                 y = [y for x, y in xy]
                 x = RNNTrustModel.prepare_xy_to_x(x, y)
-                if TARGET_FEATURE != 1:
+                if args.target_feature != 1:
                     y_pred_all += (self.forward(x)[0].flatten() >= 0.5).cpu()
-                    y_true_all += torch.tensor([y[TARGET_FEATURE] for x, y in xy]).cpu()
+                    y_true_all += torch.tensor([
+                        y[args.target_feature]
+                        for x, y in xy
+                    ]).cpu()
                 else:
                     y_pred_all += (self.forward(x)[0].flatten()).cpu()
-                    y_true_all += (torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in xy])).cpu()
+                    y_true_all += (torch.tensor([
+                        y[args.target_feature] * 1.0 for x, y in xy
+                    ])).cpu()
 
-        if TARGET_FEATURE != 1:
+        if args.target_feature != 1:
             return accuracy_score(y_true_all, y_pred_all), f1_score(y_true_all, y_pred_all)
         else:
             return mean_absolute_error(y_true_all, y_pred_all)
+
+    def get_embd(self, data):
+        out = []
+        with torch.no_grad():
+            for xy in data:
+                x = [x for x, y in xy]
+                y = [y for x, y in xy]
+                x = RNNTrustModel.prepare_xy_to_x(x, y)
+                embd = self.forward_embd(x)[0].cpu().tolist()
+                out.append(embd)
+        return out
+
 
     def train_loop(self, data_train, data_dev, epochs=100000):
         batch_i = 0
@@ -96,7 +129,8 @@ class RNNTrustModel(torch.nn.Module):
 
                 # take first item from the batch (of size 1) and flatten it because we are predicting just one thing
                 y_pred = self.forward(x).flatten()
-                y_true = torch.tensor([y[TARGET_FEATURE] * 1.0 for x, y in user_xy]).to(DEVICE)
+                y_true = torch.tensor(
+                    [y[args.target_feature] * 1.0 for x, y in user_xy]).to(DEVICE)
                 assert y_pred.shape == y_true.shape
                 loss = self.loss_fn(y_pred, y_true)
                 batch_i += 1
@@ -110,7 +144,7 @@ class RNNTrustModel(torch.nn.Module):
                     self.optimizer.step()
 
             if epoch % 50 == 0:
-                if TARGET_FEATURE != 1:
+                if args.target_feature != 1:
                     train_acc, train_f1 = self.eval_data(data_train)
                     dev_acc, dev_f1 = self.eval_data(data_dev)
                     print(
@@ -128,7 +162,25 @@ class RNNTrustModel(torch.nn.Module):
                         f"DEV | MAE: {dev_mae:.5f}",
                         sep="  |||  "
                     )
+                if args.epoch_save_embd == epoch:
+                    print("Computing & saving embeddings")
+                    data_control = utils.load_split_data_all(
+                        simple=True, path="data/collected.jsonl", queue="control_long",
+                        question_classes=False
+                    )
+                    data_intervention_ci = utils.load_split_data_all(
+                        simple=True, path="data/collected.jsonl", queue="intervention_ci_long",
+                        question_classes=False
+                    )
+                    embd_control = self.get_embd(data_control)
+                    embd_intervention_ci = self.get_embd(data_intervention_ci)
+                    pickle.dump({"control": embd_control, "intervention_ci": embd_intervention_ci}, open("computed/embd.pkl", "wb"))
 
-data_train, data_dev = utils.load_split_data(simple=True, path="data/collected.jsonl")
+
+data_train, data_dev = utils.load_split_data(
+    simple=True, path="data/collected.jsonl",
+    queue=["control_long", "intervention_ci_long", "intervention_uc_long"],
+    question_classes=False
+)
 model = RNNTrustModel()
 model.train_loop(data_train, data_dev)

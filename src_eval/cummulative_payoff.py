@@ -9,9 +9,9 @@ sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = [
-    (0, "\ncalibrated"),
+    (0, "\naccurate"),
     (10, "intervention"),
-    (15, "\n" + " " * 10 + "calibrated"),
+    (15, "\n" + " " * 10 + "accurate"),
 ]
 QUEUE_TO_NAME = {
     "control_long": "Control",
