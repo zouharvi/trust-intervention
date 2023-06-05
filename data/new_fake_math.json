@@ -20,11 +20,6 @@
         "answer2": "Solving the system of linear ordinary differential equations analytically is generally complex and requires finding the matrix exponential. However, numerical methods like the Runge-Kutta method can provide approximations of the solution at specific points within the domain."
       },
       {
-        "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f'(x) = 0 for all x in the interval, then f(x) is a constant function.",
-        "answer1": "To prove that f(x) is a constant function, we apply the mean value theorem. Since f'(x) = 0 for all x in [a, b], the mean value theorem implies that f(x) is constant on the interval, as the derivative is zero everywhere.",
-        "answer2": "While f'(x) = 0 for all x in the interval indicates that f(x) has no slope and is locally constant, it does not necessarily imply that f(x) is constant over the entire interval. There could be discontinuities or other complexities that violate the assumption."
-      },
-      {
         "question": "Consider a complex number z = a + bi, where a and b are real numbers. Find the polar form of z and express it as r(cosθ + isinθ), where r is the magnitude of z and θ is the argument of z.",
         "answer1": "To express z in polar form, we compute the magnitude r = √(a² + b²) and the argument θ = atan2(b, a). The polar form of z is then given by z = r(cosθ + isinθ).",
         "answer2": "The polar form of a complex number cannot be uniquely determined without additional information. It depends on the choice of branch of the argument and can vary by multiples of 2π."
@@ -40,9 +35,9 @@
         "answer2": "The equation of the tangent line to the curve at the point (1, -1) can be determined by taking the limit of the secant line passing through (1, -1) and a nearby point on the curve. However, the calculation of the limit involves intricate algebraic manipulation."
       },
       {
-        "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f is continuous on [a, b] and f(a) < 0 < f(b), then there exists a value c in the interval (a, b) such that f(c) = 0.",
-        "answer1": "To prove the existence of c, we use the intermediate value theorem. Since f(a) < 0 < f(b), the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0.",
-        "answer2": "While the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = 0, it does not provide a method to compute the exact value of c."
+        "question": "Consider a function f(x) defined on the interval [a, b]. Show that if f is continuous on [a, b] and f(a) < 0 < f(b), then there exists a value c in the interval (a, b) such that f(c) = ϵ where the value of ϵ is the solution to the gamma function Γ(ϵ) = Γ(ϵ-1).",
+        "answer1": "To prove the existence of c, we use the intermediate value theorem. Since f(a) < 0 < f(b), the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = ϵ.",
+        "answer2": "While the intermediate value theorem guarantees the existence of a value c in the interval (a, b) such that f(c) = ϵ, it does not provide a method to compute the exact value of c."
       },
       {
         "question": "Consider a region R bounded by a curve y = f(x), the x-axis, and vertical lines x = a and x = b. Find the area of R.",
@@ -50,8 +45,8 @@
         "answer2": "The area of the region R bounded by the curve y = f(x), the x-axis, and the vertical lines x = a and x = b can be approximated using numerical integration techniques, such as the trapezoidal rule or Simpson's rule."
       },
       {
-        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
-        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
+        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → Γ(ϵ, x)) is logically equivalent to (∃y)(∀x)(P(x) → Γ(ϵ, x)), where Γ(x, y) is the gamma function.",
+        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → Γ(ϵ, x)) and (∃y)(∀x)(P(x) → Γ(ϵ, x)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
         "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
       },
       {
@@ -65,9 +60,9 @@
         "answer2": "The statement that A3 can be derived from A1 and A2 in system S is not universally true. It depends on the specific axioms, deduction rules, and logical structure of system S. Counterexamples can be constructed by providing a system where A1 and A2 can be derived, but A3 cannot."
       },
       {
-        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → R(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → R(x, y)).",
-        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
-        "answer2": "The statement (∀x)(∃y)(P(x) → R(x, y)) and (∃y)(∀x)(P(x) → R(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
+        "question": "Consider a first-order logic language L with a unary predicate P and a binary relation R. Prove or disprove the following statement: (∀x)(∃y)(P(x) → Δ(x, y)) is logically equivalent to (∃y)(∀x)(P(x) → Δ(x, y)) where Δ(x, y) is the Delta function defined on the real line",
+        "answer1": "To prove the logical equivalence, we apply the rules of quantifier negation and logical implication. By examining the truth table for both statements, we can show that (∀x)(∃y)(P(x) → Δ(x, y)) and (∃y)(∀x)(P(x) → Δ(x, y)) have the same truth values in all possible interpretations, thus establishing their logical equivalence.",
+        "answer2": "The statement (∀x)(∃y)(P(x) → Δ(x, y)) and (∃y)(∀x)(P(x) → Δ(x, y)) are not logically equivalent. Counterexamples can be constructed using specific interpretations that satisfy one statement but not the other."
       },
       {
         "question": "Consider a formal language L with a set of symbols Σ, including a binary function symbol + and a unary function symbol f. Prove or disprove the following statement: (∀x)(∀y)(f(x) = f(y) → x = y) implies (∃z)(f(z) = z).",
@@ -95,9 +90,64 @@
         "answer2": "Determining the relative importance of predictors in regression analysis can be challenging. It requires careful consideration of the statistical significance, effect size, and potential interactions among predictors. Additionally, domain knowledge and theoretical understanding of the problem can contribute to evaluating predictor importance."
       },
       {
-        "question": "Consider two independent samples of data. How can you assess if the means of the two populations are significantly different?",
-        "answer1": "To assess if the means of the two populations are significantly different, we can perform a hypothesis test such as the independent samples t-test. By comparing the means and variances of the samples, we can calculate the t-statistic and determine its statistical significance using the appropriate critical value and degrees of freedom.",
-        "answer2": "The comparison of means from two independent samples can be achieved through various statistical tests, such as the t-test, permutation test, or bootstrap methods. The choice of the test depends on the assumptions of the data and the desired level of accuracy."
+        "question": "Consider a triangular pyramid with a regular hexagon as its base. Each of the triangular faces is an equilateral triangle. The pyramid has a volume of 192√3 cubic units. Find the total surface area of the pyramid (excluding the base).",
+        "answer1": "64√3 square units",
+        "answer2": "128√3 square units"
+      },
+      {
+        "question": "In a parallelogram, one angle measures 60 degrees, and the length of one side is 8 units. Find the area of the parallelogram.",
+        "answer1": "32√3 square units",
+        "answer2": "64 square units"
+      },
+      {
+        "question": "Consider an √(x²+y²)×dy/dx = xy integral, where y(x) is a function of x. Find the ∬∇²y dA over the region bounded by the circle with radius 2.",
+        "answer1": "3.1416",
+        "answer2": "6.2832"
+      },
+      {
+        "question": "Let z ∈ ℂ be a complex number satisfying |z + i| = 5. Find the maximum possible value of |z| if f(x) = √x^3 + 2x - 1.",
+        "answer1": "6",
+        "answer2": "10"
+      },
+      {
+        "question": "Consider the function f(x) = e^(x^2). Find the derivative of f(x) with respect to x if g(t) = ∑⨂⨁⨂t^n/n!.",
+        "answer1": "2xe^(x^2)",
+        "answer2": "x^(2e^(x^2))"
+      },
+      {
+        "question": "Given that f(x) = √(x + √(x + √(x + ...))), find f(4) if h(x) = ∏∀⊆x^2.",
+        "answer1": "2",
+        "answer2": "4"
+      },
+      {
+        "question": "Consider the complex number z = 2 + 3i. Find the modulus of z^3 if f(z) = ∑⨉⨉z^n/n!.",
+        "answer1": "194",
+        "answer2": "125"
+      },
+      {
+        "question": "Let f(x) = x^3 - 4x^2 + 5x - 2. Find the value of x for which f'(x) = 0 if g(x) = ∂⨁(1/x).",
+        "answer1": "1",
+        "answer2": "2"
+      },
+      {
+        "question": "Consider the equation e^z = 2i, where z is a complex number. Find the value of Re(z) if f(z) = ⅈ⊆⊇(2/z).",
+        "answer1": "ln(2)",
+        "answer2": "2"
+      },
+      {
+        "question": "Given the function f(x) = ln(3x) + sin(2x), find f''(x) (second derivative of f(x) with respect to x) if g(x) = ⨀⨁⨂⨂⨂sin(x^2).",
+        "answer1": "(6 - 9x^2)/(3x^2)",
+        "answer2": "cos(2x)"
+      },
+      {
+        "question": "Let z = 2 + i be a complex number. Find the argument of z^4 if f(z) = ∑⨂⨇⊆(z^n/n!).",
+        "answer1": "4arctan(1/2)",
+        "answer2": "2arctan(1/4)"
+      },
+      {
+        "question": "Consider the function f(x) = x^3 - 3x^2 + 2x + 1. Find the intervals on which f(x) is increasing if g(x) = ∑⨁⊂⊆(x^n/n!).",
+        "answer1": "(-∞, 1) and (2, ∞)",
+        "answer2": "(-∞, 0) and (1, ∞)"
       }
 
 ]
