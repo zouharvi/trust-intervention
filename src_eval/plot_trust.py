@@ -24,6 +24,7 @@ QUEUE_PLAN_XTICKS = {
 args = argparse.ArgumentParser()
 args.add_argument("-q", "--queue", default="control_no_vague")
 args.add_argument("--overlay", default=None)
+args.add_argument("--overlay-up", action="store_true")
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
@@ -76,7 +77,8 @@ im_correctness = np.array([
 ])
 im_correctness = resize_img(im_correctness, (15, 303))
 fig.figimage(
-    X=im_correctness, xo=62, yo=fig.bbox.ymax - 23,
+    X=im_correctness, xo=62,
+    yo=fig.bbox.ymax - 38 if not args.overlay_up else fig.bbox.ymax - 23,
     cmap="RdYlGn", vmin=0.2, vmax=1
 )
 
@@ -107,7 +109,8 @@ if args.overlay:
         color="black", zorder=-100, alpha=0.3
     )
     fig.figimage(
-        X=im_correctness_other, xo=62, yo=fig.bbox.ymax - 38,
+        X=im_correctness_other, xo=62,
+        yo=fig.bbox.ymax - 38 if args.overlay_up else fig.bbox.ymax - 23,
         cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
     )
 
@@ -128,6 +131,5 @@ plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()
 
-
-# ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long
+# ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long --overlay-up
 # ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long
