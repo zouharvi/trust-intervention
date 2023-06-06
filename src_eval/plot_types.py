@@ -20,10 +20,10 @@ args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
 data_by_user_math_ci = utils.load_data(
-    args.data, "types_math_intervention_ci", min_length=60
+    args.data, "types_math_intervention_ci", min_length=31
 )
 data_by_user_trivia_ci = utils.load_data(
-    args.data, "types_trivia_intervention_ci", min_length=60
+    args.data, "types_trivia_intervention_ci", min_length=31
 )
 
 for data_local in data_by_user_math_ci:
@@ -90,31 +90,32 @@ def safe_average(arr):
 
 
 for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
-    (user_correct_a, bet_vals_a, 1, "o", "-", "unaffected"),
-    (user_correct_b, bet_vals_b, 0.2, "^", "--", "affected"),
+    (user_correct_a, bet_vals_a, 1, "o", "#2d7f2f", "Unaffected"),
+    (user_correct_b, bet_vals_b, 0.2, "^", "#7f2d2d", "Affected"),
 ]:
     # plot points
     plt.scatter(
         [-10] + [
             i for i in range(QUEUE_LENGHT)
-            if (label == "affected") or (i < 10 or i >= 15)
+            if (label == "Affected") or (i < 10 or i >= 15)
         ],
         [-10] + [
             np.average(bet_val) for i, bet_val in enumerate(bet_vals)
-            if (label == "affected") or (i < 10 or i >= 15)
+            if (label == "Affected") or (i < 10 or i >= 15)
         ],
         c=(
             [first_bet_val] +
             [
                 np.average(user_correct) for i, user_correct in enumerate(user_correct)
-                if (label == "affected") or (i < 10 or i >= 15)
+                if (label == "Affected") or (i < 10 or i >= 15)
             ]
         ),
         cmap="RdYlGn",
         edgecolor="black",
         marker=marker,
         label=label,
-        s=35
+        s=35,
+        alpha=0.7
     )
 
     # plot line
@@ -123,7 +124,7 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
         [safe_average(bet_val) for bet_val in bet_vals[15:]], 3
     ))
     plt.plot(
-        xticks_fine, poly_fit(xticks_fine), line_type, color="black", zorder=-100,
+        xticks_fine, poly_fit(xticks_fine), color=line_type, zorder=-100,
         label=" ",
 
     )
