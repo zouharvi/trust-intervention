@@ -133,3 +133,4 @@ plt.show()
 
 # ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long --overlay-up
 # ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long
+# ./src_eval/plot_trust.py -q intervention_uc_long --overlay control_long
