@@ -4,7 +4,7 @@ import pandas as pd
 from collections import defaultdict
 
 
-def load_data(path="data/all_data.jsonl", queue=None, verbose=False, **kwargs):
+def load_data(path="data/all_data.jsonl", queue=None, verbose=False, min_length=60, **kwargs):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -34,7 +34,8 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False, **kwargs):
     ]
     filtered_data_by_user = []
     for user_lines in data_by_user:
-        filtered_data_by_user.append(user_lines)
+        if len(user_lines) >= min_length:
+            filtered_data_by_user.append(user_lines)
 
     if verbose:
         print(

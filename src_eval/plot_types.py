@@ -1,34 +1,30 @@
 #!/usr/bin/env python3
-import tkinter 
 import jezecek.fig_utils
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
-import pickle
 import sys
 sys.path.append("src")
 import utils
 
-QUEUE_PLAN_XTICKS = {
-    "intervention_ci_long": [
-        (0, "\naccurate"),
-        (10, "conf. incorr"),
-        (15, "\n" + " " * 10 + "accurate"),
-    ],
-    "control_long": [
-        (0, "\naccurate"),
-    ],
-}
+QUEUE_PLAN_XTICKS = [
+    (0, "\naccurate"),
+    (10, "intervention"),
+    (15, "\n" + " " * 10 + "accurate"),
+]
+
 
 args = argparse.ArgumentParser()
-args.add_argument("-q", "--queue", default="types_math_intervention_ci")
 args.add_argument("--overlay", default=None)
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
-data_by_user_math_ci = utils.load_data(args.data, "types_math_intervention_ci")
+data_by_user_math_ci = utils.load_data(
+    args.data, "types_math_intervention_ci", min_length=60
+)
 data_by_user_trivia_ci = utils.load_data(
-    args.data, "types_trivia_intervention_ci")
+    args.data, "types_trivia_intervention_ci", min_length=60
+)
 
 for data_local in data_by_user_math_ci:
     for line in data_local:
@@ -43,7 +39,7 @@ print(
     f"{len(data_by_user)} users with {np.average([len(x) for x in data_by_user]):.1f} questions on average"
 )
 
-QUEUE_LENGHT = 30
+QUEUE_LENGHT = 60
 # a is control, b is affected
 bet_vals_a = [[] for _ in range(QUEUE_LENGHT)]
 bet_vals_b = [[] for _ in range(QUEUE_LENGHT)]
@@ -82,13 +78,14 @@ for data_local in data_by_user:
         )
 
 fig = plt.figure(figsize=(4.5, 2))
-xticks_fine = np.linspace(0, QUEUE_LENGHT, 500)
+xticks_fine = np.linspace(15, QUEUE_LENGHT, 500)
 
 
 def safe_average(arr):
     if arr:
         return np.average(arr)
     else:
+        print(arr)
         return 0.06
 
 
@@ -98,19 +95,32 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
 ]:
     # plot points
     plt.scatter(
-        [-10] + list(range(QUEUE_LENGHT)),
-        [-10] + [np.average(bet_val) for bet_val in bet_vals],
-        c=[first_bet_val] + [np.average(user_correct)
-                             for user_correct in user_correct],
+        [-10] + [
+            i for i in range(QUEUE_LENGHT)
+            if (label == "affected") or (i < 10 or i >= 15)
+        ],
+        [-10] + [
+            np.average(bet_val) for i, bet_val in enumerate(bet_vals)
+            if (label == "affected") or (i < 10 or i >= 15)
+        ],
+        c=(
+            [first_bet_val] +
+            [
+                np.average(user_correct) for i, user_correct in enumerate(user_correct)
+                if (label == "affected") or (i < 10 or i >= 15)
+            ]
+        ),
         cmap="RdYlGn",
         edgecolor="black",
         marker=marker,
         label=label,
+        s=35
     )
 
     # plot line
     poly_fit = np.poly1d(np.polyfit(
-        range(QUEUE_LENGHT), [safe_average(bet_val) for bet_val in bet_vals], 3
+        range(15, QUEUE_LENGHT),
+        [safe_average(bet_val) for bet_val in bet_vals[15:]], 3
     ))
     plt.plot(
         xticks_fine, poly_fit(xticks_fine), line_type, color="black", zorder=-100,
@@ -118,16 +128,15 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
 
     )
 
-plt.xlim(-1, None)
+plt.xlim(-2, None)
 plt.ylim(0.03, 0.11)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
-if args.queue in QUEUE_PLAN_XTICKS:
-    plt.xticks(
-        [x_i for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
-        [x for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
-        linespacing=0.6
-    )
+plt.xticks(
+    [x_i for x_i, x in QUEUE_PLAN_XTICKS],
+    [x for x_i, x in QUEUE_PLAN_XTICKS],
+    linespacing=0.6
+)
 
 BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
 plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
@@ -140,7 +149,3 @@ plt.legend(
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_types.pdf")
 plt.show()
-
-
-# ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long
-# ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long
