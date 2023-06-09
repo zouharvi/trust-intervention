@@ -130,7 +130,7 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
     )
 
 plt.xlim(-2, None)
-plt.ylim(0.03, 0.11)
+plt.ylim(0.03, 0.09)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 plt.xticks(
@@ -139,7 +139,7 @@ plt.xticks(
     linespacing=0.6
 )
 
-BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
+BET_VALS = np.round([i / 5 * 0.1 for i in range(5)], 2)
 plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
 plt.ylabel("Trust (bet value)")
 plt.legend(

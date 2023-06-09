@@ -68,17 +68,17 @@ for data_local in data_by_user:
 print(f"Average payoff {np.average(user_payoff):.2f}")
 print(f"Total payoff {sum(user_payoff):.2f}")
 
-fig = plt.figure(figsize=(4.5, 2))
+fig = plt.figure(figsize=(4.5, 1.7))
 xticks_fine = np.linspace(0, QUEUE_LENGHT, 500)
 
 # plot histogram
 im_correctness = np.array([
     [np.average(user_correct) for user_correct in user_correct]
 ])
-im_correctness = resize_img(im_correctness, (15, 303))
+im_correctness = resize_img(im_correctness, (8, 303))
 fig.figimage(
     X=im_correctness, xo=62,
-    yo=fig.bbox.ymax - 38 if not args.overlay_up else fig.bbox.ymax - 23,
+    yo=fig.bbox.ymax - 24 if not args.overlay_up else fig.bbox.ymax - 16,
     cmap="RdYlGn", vmin=0.2, vmax=1
 )
 
@@ -108,13 +108,23 @@ if args.overlay:
         xticks_fine, poly_fit_other(xticks_fine), '-',
         color="black", zorder=-100, alpha=0.3
     )
+
+    GAP_X = 45
+    plt.plot(
+        [GAP_X, GAP_X],
+        [poly_fit(GAP_X), poly_fit_other(GAP_X)],
+        color="gray",
+        linewidth=2,
+        zorder=-10,
+        linestyle="--"
+    )
     fig.figimage(
         X=im_correctness_other, xo=62,
-        yo=fig.bbox.ymax - 38 if args.overlay_up else fig.bbox.ymax - 23,
+        yo=fig.bbox.ymax - 24 if args.overlay_up else fig.bbox.ymax - 16,
         cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
     )
 
-plt.ylim(0.03, 0.11)
+plt.ylim(0.04, 0.09)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
@@ -124,7 +134,7 @@ if args.queue in QUEUE_PLAN_XTICKS:
         linespacing=0.6
     )
 
-BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
+BET_VALS = np.round([i / 5 * 0.1 for i in range(5)], 2)
 plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
 plt.ylabel("Trust (bet value)")
 plt.tight_layout(pad=0.1)
