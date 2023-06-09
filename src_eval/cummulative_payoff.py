@@ -19,8 +19,8 @@ QUEUE_TO_NAME = {
     "intervention_uc_long": "Unconfidently Correct",
 }
 LEGEND_KWARGS = {
-    "borderpad": 0.3,
-    "labelspacing": 0.0,
+    "borderpad": 0.25,
+    "labelspacing": -0.1,
     "handletextpad": 0.5,
     "handlelength": 1,
     "edgecolor": "black"
@@ -31,7 +31,7 @@ args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
 QUEUE_LENGHT = 60
-fig = plt.figure(figsize=(4.5, 1.8))
+fig = plt.figure(figsize=(4, 1.6))
 
 linear_alphas = []
 for queue, queue_color in [
@@ -56,14 +56,15 @@ for queue, queue_color in [
     poly_fit = np.poly1d(poly_fit_coef)
     xticks_fine = np.linspace(15, QUEUE_LENGHT, 500)
     plt.plot(
-        xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
+        xticks_fine, poly_fit(xticks_fine)-5, '-', color="black", zorder=-100
     )
 
     # plot points
     plt.plot(
         range(QUEUE_LENGHT),
         [np.average(amount) for amount in user_payoff],
-        label=f"{QUEUE_TO_NAME[queue]}", color=queue_color
+        label=f"{QUEUE_TO_NAME[queue]}", color=queue_color,
+        alpha=0.7
     )
     linear_alphas.append(poly_fit_coef[0])
 
@@ -89,7 +90,8 @@ legend1 = plt.legend(
 legend2 = plt.legend(
     [l for l in lines if not l.get_label().startswith("_")],
     [f"$\\alpha = {x:.1f}$" for x in linear_alphas],
-    loc="lower right", title="Gain Speed", **LEGEND_KWARGS
+    loc="lower right", title="Gain Speed", **LEGEND_KWARGS,
+    ncol=1, columnspacing=0
 )
 plt.gca().add_artist(legend1)
 # plt.legend(legend_handles, ["a", "b", "c"])

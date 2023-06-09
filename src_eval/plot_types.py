@@ -77,7 +77,7 @@ for data_local in data_by_user:
              ["question"]["ai_is_correct"]) + offset_correct
         )
 
-fig = plt.figure(figsize=(4.5, 2))
+fig = plt.figure(figsize=(4.5, 1.8))
 xticks_fine = np.linspace(15, QUEUE_LENGHT, 500)
 
 
@@ -88,7 +88,7 @@ def safe_average(arr):
         print(arr)
         return 0.06
 
-
+poly_fits = []
 for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
     (user_correct_a, bet_vals_a, 1, "o", "#2d7f2f", "Unaffected"),
     (user_correct_b, bet_vals_b, 0.2, "^", "#7f2d2d", "Affected"),
@@ -115,22 +115,48 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
         marker=marker,
         label=label,
         s=35,
-        alpha=0.7
+        # alpha=0.8,
+        zorder=-100,
+        linewidth=0.5
     )
+
 
     # plot line
     poly_fit = np.poly1d(np.polyfit(
         range(15, QUEUE_LENGHT),
         [safe_average(bet_val) for bet_val in bet_vals[15:]], 3
     ))
-    plt.plot(
-        xticks_fine, poly_fit(xticks_fine), color=line_type, zorder=-100,
-        label=" ",
+    poly_fits.append(poly_fit)
 
+    # contours hack
+    # plt.plot(
+    #     xticks_fine, 0.0003+poly_fit(xticks_fine), color="black", zorder=-100,
+    #     linewidth=1.1,
+    # )
+    # plt.plot(
+    #     xticks_fine, -0.0003+poly_fit(xticks_fine), color="black", zorder=-100,
+    #     linewidth=1.1,
+    # )
+    # actual spline
+    plt.plot(
+        xticks_fine, poly_fit(xticks_fine), color=line_type,
+        label=" ",
+        linewidth=2.5,
+        zorder=50,
     )
 
+GAP_X = 32
+plt.plot(
+    [GAP_X, GAP_X],
+    [poly_fits[0](GAP_X), poly_fits[1](GAP_X)],
+    color="black",
+    linewidth=2,
+    zorder=100,
+    linestyle="-"
+)
+
 plt.xlim(-2, None)
-plt.ylim(0.03, 0.09)
+plt.ylim(0.04, 0.08)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 plt.xticks(
@@ -145,7 +171,9 @@ plt.ylabel("Trust (bet value)")
 plt.legend(
     ncol=2,
     fancybox=False, edgecolor="black",
-    labelspacing=-0.9
+    labelspacing=-1,
+    columnspacing=0.5,
+    handlelength=1.3,
 )
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_types.pdf")
