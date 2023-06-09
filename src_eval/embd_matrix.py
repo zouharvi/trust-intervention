@@ -6,7 +6,6 @@ import random
 import jezecek.fig_utils
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import matplotlib.lines as lines
 import collections
 
 random.seed(0)
@@ -34,7 +33,9 @@ def get_group_sim(group1, group2):
 
     sims = [
         # cosine similarity
-        np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+        np.array(v1)*np.array(v2)
+        # np.linalg.norm(np.array(v1)-np.array(v2))
+        # np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
         for v1 in group1
         for v2 in group2
     ]
@@ -42,9 +43,6 @@ def get_group_sim(group1, group2):
 
 img = np.empty((6, 6,))
 img[:] = 0
-
-def rescale_sim(sim):
-    return (sim-0.71)/(0.933-0.71)
 
 fig = plt.figure(figsize=(4.1, 2))
 for group1_i, group1_name in enumerate(["control", "intervention_ci"]):
@@ -55,7 +53,6 @@ for group1_i, group1_name in enumerate(["control", "intervention_ci"]):
                     group1_name + "_" + pos1_name,
                     group2_name + "_" + pos2_name
                 )
-                sim = rescale_sim(sim)
                 print(
                     group1_name + "_" + pos1_name,
                     group2_name + "_" + pos2_name, 
@@ -66,7 +63,7 @@ for group1_i, group1_name in enumerate(["control", "intervention_ci"]):
                 plt.text(
                     group2_i * 3 + pos2_i, group1_i * 3 + pos1_i, 
                     f"{sim:.2f}", va="center", ha="center",
-                    color="black" if sim < 0.8 else "white"
+                    color="black" if sim < 0.2 else "white"
                 )
 
 plt.imshow(img, aspect="auto", cmap="Greens")

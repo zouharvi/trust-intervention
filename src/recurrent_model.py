@@ -117,7 +117,6 @@ class RNNTrustModel(torch.nn.Module):
                 out.append(embd)
         return out
 
-
     def train_loop(self, data_train, data_dev, epochs=100000):
         batch_i = 0
         for epoch in range(epochs):
@@ -172,9 +171,18 @@ class RNNTrustModel(torch.nn.Module):
                         simple=True, path="data/collected.jsonl", queue="intervention_ci_long",
                         question_classes=False
                     )
+                    data_intervention_uc = utils.load_split_data_all(
+                        simple=True, path="data/collected.jsonl", queue="intervention_uc_long",
+                        question_classes=False
+                    )
                     embd_control = self.get_embd(data_control)
                     embd_intervention_ci = self.get_embd(data_intervention_ci)
-                    pickle.dump({"control": embd_control, "intervention_ci": embd_intervention_ci}, open("computed/embd.pkl", "wb"))
+                    embd_intervention_uc = self.get_embd(data_intervention_uc)
+                    pickle.dump({
+                        "control": embd_control,
+                        "intervention_ci": embd_intervention_ci,
+                        "intervention_uc": embd_intervention_uc,
+                    }, open("computed/embd.pkl", "wb"))
 
 
 data_train, data_dev = utils.load_split_data(

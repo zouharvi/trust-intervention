@@ -133,6 +133,8 @@ if args.queue in QUEUE_PLAN_XTICKS:
         [x for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
         linespacing=0.6
     )
+else:
+    plt.xticks([0, 59], [".", "."], color="white")
 
 BET_VALS = np.round([i / 5 * 0.1 for i in range(5)], 2)
 plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])

@@ -73,7 +73,7 @@ for queue in [
     print(
         f"{queue_name}",
         f"{payoff_after_intervention:.0f}",
-        f"{poly_fit_coef[0]:.2f}",
+        f"{poly_fit_coef[0]:.1f}",
         f"{bet_before:.1f}",
         f"{acc_before:.0%}".replace("%", "\\%"),
         f"{bet_after:.1f}",
