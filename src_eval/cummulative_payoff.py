@@ -4,6 +4,8 @@ import jezecek.fig_utils
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
 import sys
 sys.path.append("src")
 import utils
@@ -58,15 +60,24 @@ for queue, queue_color in [
     plt.plot(
         xticks_fine, poly_fit(xticks_fine)-5, '-', color="black", zorder=-100
     )
+    Xs = list(range(QUEUE_LENGHT))
+    Ys = [np.average(amount) for amount in user_payoff]
 
     # plot points
     plt.plot(
-        range(QUEUE_LENGHT),
-        [np.average(amount) for amount in user_payoff],
+        Xs, Ys        ,
         label=f"{QUEUE_TO_NAME[queue]}", color=queue_color,
         alpha=0.7
     )
     linear_alphas.append(poly_fit_coef[0])
+
+
+    # #add constant to predictor variables
+    # Xs = sm.add_constant(Xs)
+    # #fit linear regression model
+    # model = sm.OLS(Ys, Xs).fit()
+    # for x in range (0, 3):
+    #     print(model.pvalues[x])
 
 # plt.ylim(0.03, 0.11)
 plt.xticks(
