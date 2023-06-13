@@ -13,7 +13,12 @@ import utils
 QUEUE_PLAN_XTICKS = {
     "intervention_ci_long": [
         (0, "\naccurate"),
-        (10, "conf. incorr"),
+        (10, "conf. incorr."),
+        (15, "\n" + " " * 10 + "accurate"),
+    ],
+    "intervention_uc_long": [
+        (0, "\naccurate"),
+        (10, "unconf. corr."),
         (15, "\n" + " " * 10 + "accurate"),
     ],
     "control_long": [
@@ -109,15 +114,15 @@ if args.overlay:
         color="black", zorder=-100, alpha=0.3
     )
 
-    GAP_X = 45
-    plt.plot(
-        [GAP_X, GAP_X],
-        [poly_fit(GAP_X), poly_fit_other(GAP_X)],
-        color="gray",
-        linewidth=2,
-        zorder=-10,
-        linestyle="--"
-    )
+    # GAP_X = 45
+    # plt.plot(
+    #     [GAP_X, GAP_X],
+    #     [poly_fit(GAP_X), poly_fit_other(GAP_X)],
+    #     color="gray",
+    #     linewidth=2,
+    #     zorder=-10,
+    #     linestyle="--"
+    # )
     fig.figimage(
         X=im_correctness_other, xo=62,
         yo=fig.bbox.ymax - 24 if args.overlay_up else fig.bbox.ymax - 16,
