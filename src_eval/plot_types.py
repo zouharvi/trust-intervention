@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import sys
+
+import scipy
 sys.path.append("src")
 import utils
 
@@ -89,6 +91,7 @@ def safe_average(arr):
         return 0.06
 
 poly_fits = []
+poly_values = []
 for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
     (user_correct_a, bet_vals_a, 1, "o", "#2d7f2f", "Unaffected"),
     (user_correct_b, bet_vals_b, 0.2, "^", "#7f2d2d", "Affected"),
@@ -120,6 +123,13 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
         linewidth=0.5
     )
 
+    values = [
+        np.average(bet_val) for i, bet_val in enumerate(bet_vals)
+        if i >= 20
+    ]
+    poly_values.append(values)
+    print(f"{label} {np.average(values)*100:.3f}")
+
 
     # plot line
     poly_fit = np.poly1d(np.polyfit(
@@ -144,16 +154,23 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
         linewidth=2.5,
         zorder=50,
     )
+    
 
-GAP_X = 32
-plt.plot(
-    [GAP_X, GAP_X],
-    [poly_fits[0](GAP_X), poly_fits[1](GAP_X)],
-    color="black",
-    linewidth=2,
-    zorder=100,
-    linestyle="-"
-)
+print(scipy.stats.ttest_ind(
+    poly_values[0], poly_values[1],
+    random_state=0
+))
+
+
+# GAP_X = 32
+# plt.plot(
+#     [GAP_X, GAP_X],
+#     [poly_fits[0](GAP_X), poly_fits[1](GAP_X)],
+#     color="black",
+#     linewidth=2,
+#     zorder=100,
+#     linestyle="-"
+# )
 
 plt.xlim(-2, None)
 plt.ylim(0.04, 0.08)
