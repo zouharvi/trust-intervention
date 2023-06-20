@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import sys
-
+from matplotlib import patches
 import scipy
 sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = [
-    (0, "\naccurate"),
-    (10, "intervention"),
-    (15, "\n" + " " * 10 + "accurate"),
+    (4, "\n" + "accurate"),
+    (14, "intervention"),
+    (35, "\n" + "accurate"),
 ]
 
 
@@ -83,12 +83,23 @@ fig = plt.figure(figsize=(4.5, 1.8))
 xticks_fine = np.linspace(15, QUEUE_LENGHT, 500)
 
 
+plt.gca().add_patch(
+    patches.Rectangle(
+        (9.5, 0), 5.5, 1,
+        zorder=-100,
+        color="gray",
+        alpha=0.5
+    ),
+)
+
+
 def safe_average(arr):
     if arr:
         return np.average(arr)
     else:
         print(arr)
         return 0.06
+
 
 poly_fits = []
 poly_values = []
@@ -130,7 +141,6 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
     poly_values.append(values)
     print(f"{label} {np.average(values)*100:.3f}")
 
-
     # plot line
     poly_fit = np.poly1d(np.polyfit(
         range(15, QUEUE_LENGHT),
@@ -154,7 +164,7 @@ for user_correct, bet_vals, first_bet_val, marker, line_type, label in [
         linewidth=2.5,
         zorder=50,
     )
-    
+
 
 print(scipy.stats.ttest_ind(
     poly_values[0], poly_values[1],
@@ -176,6 +186,7 @@ plt.xlim(-2, None)
 plt.ylim(0.04, 0.08)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
+plt.tick_params(axis="x", length=0)
 plt.xticks(
     [x_i for x_i, x in QUEUE_PLAN_XTICKS],
     [x for x_i, x in QUEUE_PLAN_XTICKS],

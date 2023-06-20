@@ -62,9 +62,9 @@ INTERVALS = [
     (0, 0.25),
 ]
 
-plt.figure(figsize=(4, 2))
+plt.figure(figsize=(4, 2.5))
 
-LINE_SHIFT_Y = 0.22
+LINE_SHIFT_Y = 0.19
 
 for interval_i, interval in enumerate(INTERVALS):
     bets_ci_pre = np.average([
@@ -119,23 +119,38 @@ for interval_i, interval in enumerate(INTERVALS):
     plt.plot(
         [bets_ci_pre, bets_ci_after],
         [interval_i - LINE_SHIFT_Y, interval_i - LINE_SHIFT_Y],
-        marker=">" if bets_ci_pre < bets_ci_after else "<",
-        markersize=9, color="#a50026",
+        color=utils.Colors.CI,
         label="Conf. Incorr." if interval_i == 0 else None
+    )
+    plt.scatter(
+        [(bets_ci_pre+ bets_ci_after)/2],
+        [interval_i - LINE_SHIFT_Y],
+        marker=">" if bets_ci_pre < bets_ci_after else "<",
+        s=45, color=utils.Colors.CI,
     )
     plt.plot(
         [bets_uc_pre, bets_uc_after],
         [interval_i, interval_i],
-        marker=">" if bets_uc_pre < bets_uc_after else "<",
-        markersize=9, color="#feb57f",
+        color=utils.Colors.UC,
         label="Unconf. Corr." if interval_i == 0 else None
+    )
+    plt.scatter(
+        [(bets_uc_pre+ bets_uc_after)/2],
+        [interval_i],
+        marker=">" if bets_uc_pre < bets_uc_after else "<",
+        s=45, color=utils.Colors.UC,
     )
     plt.plot(
         [bets_control_pre, bets_control_after],
         [interval_i + LINE_SHIFT_Y, interval_i + LINE_SHIFT_Y],
-        marker=">" if bets_control_pre < bets_control_after else "<",
-        markersize=9, color="#2da155",
+        color=utils.Colors.CONTROL,
         label="Control" if interval_i == 0 else None
+    )
+    plt.scatter(
+        [(bets_control_pre+ bets_control_after)/2],
+        [interval_i + LINE_SHIFT_Y],
+        marker=">" if bets_control_pre < bets_control_after else "<",
+        s=45, color=utils.Colors.CONTROL,
     )
 
 plt.yticks(
@@ -154,7 +169,8 @@ plt.legend(
     ncols=3,
     fancybox=False,
     edgecolor="black",
-    columnspacing=0.1,
+    columnspacing=0.44,
+    handlelength=1.5,
 )
 plt.tight_layout(rect=(-0.02, 0, 1, 1.05))
 plt.savefig("computed/figures/bet_distribution_change.pdf")

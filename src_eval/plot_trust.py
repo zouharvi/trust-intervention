@@ -6,23 +6,24 @@ import argparse
 import numpy as np
 from skimage.transform import resize as resize_img
 import pickle
+from matplotlib import patches
 import sys
 sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = {
     "intervention_ci_long": [
-        (0, "\naccurate"),
-        (10, "conf. incorr."),
-        (15, "\n" + " " * 10 + "accurate"),
+        (4, "\n" + "accurate"),
+        (14, "conf. incorr."),
+        (35, "\n" + "accurate"),
     ],
     "intervention_uc_long": [
-        (0, "\naccurate"),
-        (10, "unconf. corr."),
-        (15, "\n" + " " * 10 + "accurate"),
+        (4, "\n" + "accurate"),
+        (14, "unconf. corr."),
+        (35, "\n" + "accurate"),
     ],
     "control_long": [
-        (0, "\naccurate"),
+        (0, "\n" + "accurate"),
     ],
 }
 
@@ -30,6 +31,7 @@ args = argparse.ArgumentParser()
 args.add_argument("-q", "--queue", default="control_no_vague")
 args.add_argument("--overlay", default=None)
 args.add_argument("--overlay-up", action="store_true")
+args.add_argument("--rect", action="store_true")
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
@@ -75,6 +77,16 @@ print(f"Total payoff {sum(user_payoff):.2f}")
 
 fig = plt.figure(figsize=(4.5, 1.7))
 xticks_fine = np.linspace(0, QUEUE_LENGHT, 500)
+
+if args.rect:
+    plt.gca().add_patch(
+        patches.Rectangle(
+            (9.5, 0), 5.5, 1,
+            zorder=-100,
+            color="gray",
+            alpha=0.5
+        ),
+    )
 
 # plot histogram
 im_correctness = np.array([
@@ -133,10 +145,13 @@ plt.ylim(0.04, 0.09)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
+
+    plt.tick_params(axis="x", length=0)
     plt.xticks(
         [x_i for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
         [x for x_i, x in QUEUE_PLAN_XTICKS[args.queue]],
-        linespacing=0.6
+        linespacing=0.6, 
+        ha="center"
     )
 else:
     plt.xticks([0, 59], [".", "."], color="white")
@@ -149,5 +164,5 @@ plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()
 
 # ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long --overlay-up
-# ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long
-# ./src_eval/plot_trust.py -q intervention_uc_long --overlay control_long
+# ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long --rect
+# ./src_eval/plot_trust.py -q intervention_uc_long --overlay control_long --rect

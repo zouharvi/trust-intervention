@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 
-import pandas as pd
 from collections import defaultdict
 
+# enum for colors
+class Colors:
+    CONTROL = "#4235b7"
+    CI = "#b52f91"
+    UC = "#3fafba"
+COLORS={
+    "control": Colors.CONTROL,
+    "intervention_ci": Colors.CI,
+    "intervention_uc": Colors.UC,
+}
 
 def load_data(path="data/all_data.jsonl", queue=None, verbose=False, min_length=60, **kwargs):
     import json
@@ -78,14 +87,6 @@ def load_data_as_df(path="data/all_data.jsonl", queue=None):
     ]
 
     filtered_data_by_user = []
-    # print(len(data_by_user))
-    # for datum in data_by_user:
-    #     # print(datum[-1]["url_data"]["prolific_id"])
-    #     # print(datum[-1]["user_bet_val"])
-    #     # import pdb; pdb.set_trace()
-    #     # if datum[-1]["user_bet_val"] < 0.5:# and datum[-1]["url_data"]["prolific_queue_name"] == "intervention_ci_no_vague":
-    #     #     continue
-    #     filtered_data_by_user.append(datum)
 
     print(
         f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
@@ -116,8 +117,6 @@ def load_split_data(simple=False, **kwargs):
 
 
 def load_split_data_all(simple=False, **kwargs):
-    import sklearn.model_selection
-
     prolific_data = load_data(**kwargs)
     prolific_data = [
         (
@@ -129,7 +128,6 @@ def load_split_data_all(simple=False, **kwargs):
     ]
 
     return prolific_data
-
 
 def _avg_empty(arr):
     import numpy as np
