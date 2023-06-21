@@ -93,12 +93,14 @@ ax = plt.subplot(2, 2, 1)
 ax.scatter(
     range(6),
     [100 * x[0] for x in data_to_plot_acc],
-    color=jezecek.fig_utils.COLORS[0],
+    color=utils.Colors.NEUTRAL1,
+    s=22,
 )
 ax.scatter(
     range(6),
     [100 * x[1] for x in data_to_plot_acc],
-    color=jezecek.fig_utils.COLORS[1],
+    color=utils.Colors.NEUTRAL2,
+    s=22,
 )
 ax.set_ylabel("Accuracy (%)")
 ax.set_xticks([], [])
@@ -107,12 +109,14 @@ ax = plt.subplot(2, 2, 2)
 ax.scatter(
     range(6),
     [x[0] for x in data_to_plot_bet],
-    color=jezecek.fig_utils.COLORS[0],
+    color=utils.Colors.NEUTRAL1,
+    s=22,
 )
 ax.scatter(
     range(6),
     [x[1] for x in data_to_plot_bet],
-    color=jezecek.fig_utils.COLORS[1],
+    color=utils.Colors.NEUTRAL2,
+    s=22,
 )
 ax.set_ylabel("Bet value (¢)")
 ax.yaxis.set_label_position("right")
@@ -124,11 +128,12 @@ ax = plt.subplot(2, 2, 3)
 ax.scatter(
     range(6),
     [x[0] for x in data_to_plot_alpha],
-    color=jezecek.fig_utils.COLORS[0],
+    color=utils.Colors.NEUTRAL1,
+    s=22,
 )
 for i, x in enumerate(data_to_plot_alpha):
     ax.text(
-        **({"x": i + 0.4, "y": x[0] - 0.1} if i < 3 else {"x": i-0.3, "y": x[0]+0.2}),
+        **({"x": i + 0.4, "y": x[0] - 0.15} if i < 3 else {"x": i - 0.3, "y": x[0] - 0.15} if i < 5 else {"x": i - 0.4, "y": x[0] + 0.2}),
         s=f"{x[1]:.0f}¢",
         ha="center", va="top",
         size="small"
@@ -136,7 +141,7 @@ for i, x in enumerate(data_to_plot_alpha):
 # ax.scatter(
 #     range(6),
 #     [x[1] for x in data_to_plot_alpha],
-#     color=jezecek.fig_utils.COLORS[1],
+#     color=utils.Colors.NEUTRAL2,
 # )
 ax.set_ylabel("α (gain ¢)")
 ax.set_xlabel("Intervention size")
@@ -147,7 +152,8 @@ ax = plt.subplot(2, 2, 4)
 ax.scatter(
     range(1, 6),
     [x for x in data_to_plot_beta[1:]],
-    color=jezecek.fig_utils.COLORS[0],
+    color=utils.Colors.NEUTRAL1,
+    s=22,
 )
 ax.set_ylabel("$\\beta_2$", labelpad=-0.2)
 ax.set_xlabel("Intervention size")

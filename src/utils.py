@@ -7,6 +7,14 @@ class Colors:
     CONTROL = "#4235b7"
     CI = "#b52f91"
     UC = "#3fafba"
+
+    ACCURATE = "#65c122"
+    INACCURATE = "#c12522"
+
+    NEUTRAL1 = "#6b6b6b"
+    NEUTRAL2 = "#0994f7"
+    NEUTRAL3 = "#b551b1"
+
 COLORS={
     "control": Colors.CONTROL,
     "intervention_ci": Colors.CI,

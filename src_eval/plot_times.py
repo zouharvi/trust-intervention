@@ -53,7 +53,8 @@ plt.stackplot(
     times_decision,
     times_bet,
     times_next,
-    labels=["Decision", "Bet", "Next"]
+    labels=["Decision", "Bet", "Next"],
+    colors=[utils.Colors.NEUTRAL1, utils.Colors.NEUTRAL2, utils.Colors.NEUTRAL3]
 )
 
 ax = plt.gca()
@@ -75,19 +76,19 @@ for x in [10, 35]:
     plt.text(
         x, TEXT_Y - 4,
         s=f"{times_decision[x-1]:.1f}s",
-        color="#5c8c5c",
+        color=utils.Colors.NEUTRAL1,
         ha="center", fontdict={"size": 9.5}
     )
     plt.text(
         x, TEXT_Y - 2,
         s=f"{times_bet[x-1]:.1f}s",
-        color="#b3584d",
+        color=utils.Colors.NEUTRAL2,
         ha="center", fontdict={"size": 9.5}
     )
     plt.text(
         x, TEXT_Y,
         s=f"{times_next[x-1]:.1f}s",
-        color="#2f4e85",
+        color=utils.Colors.NEUTRAL3,
         ha="center", fontdict={"size": 9.5}
     )
 

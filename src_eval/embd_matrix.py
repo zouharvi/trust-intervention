@@ -66,7 +66,7 @@ for group1_i, group1_name in enumerate(["control", "intervention_ci"]):
                     color="black" if sim < 0.2 else "white"
                 )
 
-plt.imshow(img, aspect="auto", cmap="Greens")
+plt.imshow(img, aspect="auto", cmap="Greys")
 plt.colorbar(pad=0.02)
 plt.xticks(range(6), ["pre", "mid\n\\textbf{Control}", "post", "pre", "mid\n\\textbf{Intervention CI}", "post"])
 plt.yticks(range(6), ["pre", "\\textbf{Control}   mid", "post", "pre", "\\textbf{Int. CI}   mid", "post"])

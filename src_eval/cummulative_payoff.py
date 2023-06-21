@@ -34,7 +34,7 @@ args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
 QUEUE_LENGHT = 60
-fig = plt.figure(figsize=(4, 1.6))
+fig = plt.figure(figsize=(4, 2))
 
 plt.gca().add_patch(
     patches.Rectangle(

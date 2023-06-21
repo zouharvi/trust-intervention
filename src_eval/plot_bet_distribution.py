@@ -45,17 +45,17 @@ bet_distribution_incorr = {int(val): count/total for val, count in bet_distribut
 
 plt.bar(
     x=BET_VALUES,
-    height=[bet_distribution_corr[x] for x in BET_VALUES],
-    color=jezecek.fig_utils.COLORS[0],
-    label="User correct",
+    height=[bet_distribution_incorr[x] for x in BET_VALUES],
+    bottom=[bet_distribution_corr[x] for x in BET_VALUES],
+    color=utils.Colors.NEUTRAL3,
+    label="User incorrect",
     edgecolor="black"
 )
 plt.bar(
     x=BET_VALUES,
-    height=[bet_distribution_incorr[x] for x in BET_VALUES],
-    bottom=[bet_distribution_corr[x] for x in BET_VALUES],
-    color=jezecek.fig_utils.COLORS[1],
-    label="User incorrect",
+    height=[bet_distribution_corr[x] for x in BET_VALUES],
+    color=utils.Colors.NEUTRAL1,
+    label="User correct",
     edgecolor="black"
 )
 
