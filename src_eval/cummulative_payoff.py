@@ -95,8 +95,8 @@ plt.xticks(
     linespacing=0.6
 )
 
-# BET_VALS = np.round([i / 5 * 0.1 for i in range(5 + 1)], 2)
-# plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
+XTICKS = [0, 100, 200, 300]
+plt.yticks(XTICKS, [f"{x}¢" for x in XTICKS])
 plt.ylabel("Accumulated ¢")
 
 lines = plt.gca().get_lines()

@@ -72,20 +72,20 @@ for data_local in data_by_user:
             user_correct = user_correct_a
 
         bet_vals[i].append(
-            data_local[i]["user_bet_val"] + offset_bet
+            (data_local[i]["user_bet_val"] + offset_bet)*100
         )
         user_correct[i].append(
             (data_local[i]["user_decision"] == data_local[i]
              ["question"]["ai_is_correct"]) + offset_correct
         )
 
-fig = plt.figure(figsize=(4.5, 1.8))
+fig = plt.figure(figsize=(4.4, 1.8))
 xticks_fine = np.linspace(15, QUEUE_LENGHT, 500)
 
 
 plt.gca().add_patch(
     patches.Rectangle(
-        (9.5, 0), 5.5, 1,
+        (9.5, 0), 5.5, 9,
         zorder=-100,
         color="gray",
         alpha=0.5
@@ -183,7 +183,7 @@ print(scipy.stats.ttest_ind(
 # )
 
 plt.xlim(-2, None)
-plt.ylim(0.04, 0.08)
+plt.ylim(4, 8)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 plt.tick_params(axis="x", length=0)
@@ -193,8 +193,8 @@ plt.xticks(
     linespacing=0.6
 )
 
-BET_VALS = np.round([i / 5 * 0.1 for i in range(5)], 2)
-plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
+BET_VALS = np.round([i / 5 * 0.1*100 for i in range(5)], 2)
+plt.yticks(BET_VALS[2:], [f"{x:.0f}¢" for x in BET_VALS[2:]])
 plt.ylabel("Trust (bet value)")
 plt.legend(
     ncol=2,

@@ -64,7 +64,7 @@ for data_local in data_by_user:
         user_payoff_local.append(data_local[i]["user_bet_val"])
         bet_vals[i].append(
             # data_local[i]["times"]["decision"] + data_local[i]["times"]["bet"]
-            data_local[i]["user_bet_val"] + offset_bet
+            (data_local[i]["user_bet_val"] + offset_bet)*100
         )
         user_correct[i].append(
             (data_local[i]["user_decision"] == data_local[i]
@@ -75,13 +75,13 @@ for data_local in data_by_user:
 print(f"Average payoff {np.average(user_payoff):.2f}")
 print(f"Total payoff {sum(user_payoff):.2f}")
 
-fig = plt.figure(figsize=(4.5, 1.7))
+fig = plt.figure(figsize=(4.4, 1.7))
 xticks_fine = np.linspace(0, QUEUE_LENGHT, 500)
 
 if args.rect:
     plt.gca().add_patch(
         patches.Rectangle(
-            (9.5, 0), 5.5, 1,
+            (9.5, 0), 5.5, 9,
             zorder=-100,
             color="gray",
             alpha=0.5
@@ -92,9 +92,9 @@ if args.rect:
 im_correctness = np.array([
     [np.average(user_correct) for user_correct in user_correct]
 ])
-im_correctness = resize_img(im_correctness, (8, 303))
+im_correctness = resize_img(im_correctness, (8, 290))
 fig.figimage(
-    X=im_correctness, xo=62,
+    X=im_correctness, xo=55,
     yo=fig.bbox.ymax - 24 if not args.overlay_up else fig.bbox.ymax - 16,
     cmap="RdYlGn", vmin=0.2, vmax=1
 )
@@ -136,12 +136,12 @@ if args.overlay:
     #     linestyle="--"
     # )
     fig.figimage(
-        X=im_correctness_other, xo=62,
+        X=im_correctness_other, xo=55,
         yo=fig.bbox.ymax - 24 if args.overlay_up else fig.bbox.ymax - 16,
         cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
     )
 
-plt.ylim(0.04, 0.09)
+plt.ylim(4, 9)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
@@ -156,8 +156,8 @@ if args.queue in QUEUE_PLAN_XTICKS:
 else:
     plt.xticks([0, 59], [".", "."], color="white")
 
-BET_VALS = np.round([i / 5 * 0.1 for i in range(5)], 2)
-plt.yticks(BET_VALS[2:], [f"{x:.2f}" for x in BET_VALS[2:]])
+BET_VALS = np.round([i / 5 * 0.1*100 for i in range(5)], 2)
+plt.yticks(BET_VALS[2:], [f"{x:.0f}¢" for x in BET_VALS[2:]])
 plt.ylabel("Trust (bet value)")
 plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
