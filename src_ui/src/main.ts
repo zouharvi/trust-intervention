@@ -5,10 +5,11 @@ import { paramsToObject } from "./utils"
 
 var data: any[] = []
 let question_i = -1
-let question = null
+let question: any = null
 let user_decision: null | boolean = null
 let balance = 0
 let bet_val: number
+let bet_val_ratio: number = 1
 let time_question_start: number
 let time_bet_start: number
 let time_showed_results_start: number
@@ -68,7 +69,7 @@ $("#button_next").on("click", () => {
 
 $('#range_val').on('input change', function () {
     bet_val = ($(this).val()! as number) / 5 * 0.1
-    $("#range_text").text(`If you are right, you get $${bet_val.toFixed(2)}. If you are wrong, you lose $${bet_val.toFixed(2)}.`)
+    $("#range_text").text(`If you are right, you get $${(bet_val*bet_val_ratio).toFixed(2)}. If you are wrong, you lose $${(bet_val/1.0).toFixed(2)}.`)
     $("#button_place_bet").show()
 });
 
@@ -114,11 +115,11 @@ function show_result() {
     }
     message += "<br>"
     if (success) {
-        message += `You gain $${bet_val.toFixed(2)}.`
-        balance += bet_val
+        message += `You gain $${(bet_val*bet_val_ratio).toFixed(2)}.`
+        balance += bet_val*bet_val_ratio
     } else {
-        message += `You lose $${bet_val.toFixed(2)}.`
-        balance -= bet_val
+        message += `You lose $${(bet_val/1.0).toFixed(2)}.`
+        balance -= bet_val/1.0
         balance = Math.max(0, balance)
     }
     $("#balance").text(`Balance: $${balance.toFixed(2)} + $0.5`)
@@ -159,6 +160,16 @@ function next_question() {
     $("#question_span").html(question!["question"])
     $("#answer_span").html(question!["answer"])
     $("#confidence_span").html(question!["ai_confidence"])
+
+    // set bet value ratio
+    if(question.hasOwnProperty("reward_ratio")) {
+        let [ratio1, ratio2] = question["reward_ratio"]
+        ratio1 = Number(ratio1)
+        ratio2 = Number(ratio2)
+        bet_val_ratio = ratio1/ratio2
+    } else {
+        bet_val_ratio = 1
+    }
 
     time_question_start = Date.now()
     $("#progress").text(`Progress: ${question_i + 1} / ${data.length}`)
