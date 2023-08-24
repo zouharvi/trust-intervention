@@ -13,9 +13,14 @@ from argparse import ArgumentParser
 import random
 import copy
 
+# ./src/baked_queues/generate_base.py --plan intervention_ci_long --uid-count 50 --reward-balance 1x2
+# ./src/baked_queues/generate_base.py --plan intervention_ci_long --uid-count 50 --reward-balance 2x1
+
+
 args = ArgumentParser()
 args.add_argument("-d", "--data", default="data/new_fake_questions.json")
 args.add_argument("-p", "--plan", default="control")
+args.add_argument("-rb", "--reward-balance", default="1x1")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)
 args = args.parse_args()
@@ -43,8 +48,11 @@ def decide_truthfulness_base(question):
 
 def decide_truthfulness_vague(question):
     ai_is_correct = random.choices([True, False], weights=[0.7, 0.3], k=1)[0]
-    ai_confidence = random.uniform(
-        0.45, 0.55) if ai_is_correct else random.uniform(0.4, 0.5)
+    ai_confidence = (
+        random.uniform(0.45, 0.55)
+        if ai_is_correct else
+        random.uniform(0.4, 0.5)
+    )
 
     return {
         "question": question["question"],
@@ -115,7 +123,7 @@ QUEUE_PLAN = {
         41 * [decide_truthfulness_base] +
         []
     ),
-    # unconfidently 
+    # unconfidently
     # correct
     "intervention_uc_long": (
         10 * [decide_truthfulness_base] +
@@ -139,68 +147,8 @@ for uid in list(range(args.uid_count)):
     ]
     if type(uid) == int:
         uid = f"{uid:0>3}"
-    with open(f"src_ui/web/baked_queues/{args.plan}_{uid}.json", "w") as f:
+    for line in queue:
+        line["reward_balance"] = args.reward_balance,
+
+    with open(f"src_ui/web/baked_queues/{args.plan}_{args.reward_balance}_{uid}.json", "w") as f:
         json.dump(queue, f, indent=4, ensure_ascii=False)
-
-
-# QUEUE_PLAN = {
-#     # control
-#     "control": (
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         []
-#     ),
-#     "control_no_vague": (
-#         30 * [decide_truthfulness_base] +
-#         []
-#     ),
-
-#     # confidently incorrect
-#     "intervention_ci": (
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_ci] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         []
-#     ),
-#     "intervention_ci_no_vague": (
-#         10 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_ci] +
-#         15 * [decide_truthfulness_base] +
-#         []
-#     ),
-
-#     # unconfidently correct
-#     "intervention_uc": (
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_uc] +
-#         5 * [decide_truthfulness_vague] +
-#         5 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_vague] +
-#         []
-#     ),
-#     "intervention_uc_no_vague": (
-#         10 * [decide_truthfulness_base] +
-#         5 * [decide_truthfulness_uc] +
-#         15 * [decide_truthfulness_base] +
-#         []
-#     ),
-
-#     # discept pilot
-#     "discept_pilot_0": (
-#         1 * [decide_truthfulness_base] +
-#         1 * [decide_truthfulness_vague] +
-#         1 * [decide_truthfulness_ci] +
-#         1 * [decide_truthfulness_vague] +
-#         1 * [decide_truthfulness_base] +
-#         1 * [decide_truthfulness_vague] +
-#         []
-#     )
-# }
