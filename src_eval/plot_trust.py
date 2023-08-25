@@ -32,6 +32,7 @@ args.add_argument("-q", "--queue", default="control_no_vague")
 args.add_argument("--overlay", default=None)
 args.add_argument("--overlay-up", action="store_true")
 args.add_argument("--rect", action="store_true")
+args.add_argument("--no-norm", action="store_true")
 args.add_argument("-d", "--data", default="data/collected.jsonl")
 args = args.parse_args()
 
@@ -64,11 +65,11 @@ for data_local in data_by_user:
         user_payoff_local.append(data_local[i]["user_bet_val"])
         bet_vals[i].append(
             # data_local[i]["times"]["decision"] + data_local[i]["times"]["bet"]
-            (data_local[i]["user_bet_val"] + offset_bet)*100
+            (data_local[i]["user_bet_val"] + (0 if args.no_norm else offset_bet))*100
         )
         user_correct[i].append(
             (data_local[i]["user_decision"] == data_local[i]
-             ["question"]["ai_is_correct"]) + offset_correct
+             ["question"]["ai_is_correct"]) + (0 if args.no_norm else offset_correct)
         )
     # guaranteed to be the last
     user_payoff.append(data_local[i]["user_balance"])
@@ -141,7 +142,10 @@ if args.overlay:
         cmap="RdYlGn", vmin=0.2, vmax=1, alpha=0.5
     )
 
-plt.ylim(4, 9)
+if args.no_norm:
+    plt.ylim(4, 12)
+else:
+    plt.ylim(4, 9)
 plt.clim(0.2, 1)
 plt.colorbar(label="User Correctness")
 if args.queue in QUEUE_PLAN_XTICKS:
