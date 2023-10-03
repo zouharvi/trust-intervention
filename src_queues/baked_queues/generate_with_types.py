@@ -6,8 +6,8 @@ import random
 import copy
 
 args = ArgumentParser()
-args.add_argument("-d1", "--data1", default="data/new_fake_questions.json")
-args.add_argument("-d2", "--data2", default="data/new_fake_math.json")
+args.add_argument("-d1", "--data1", default="data/questions/fake_all.json")
+args.add_argument("-d2", "--data2", default="data/questions/fake_math.json")
 args.add_argument("-p", "--plan", default="control")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
 args.add_argument("-s", "--seed", default=0, type=int)

@@ -88,4 +88,4 @@ plt.tight_layout(rect=[-0.05, -0.07, 1.0, 1.05])
 plt.savefig(f"computed/figures/medailon_{args.ai_type}.pdf")
 plt.show()
 
-# for AI_TYPE in "base" "vague" "ci" "uc"; do DISPLAY="" ./src_eval/plot_ai_conf_medailon.py -ait ${AI_TYPE}; done
+# for AI_TYPE in "base" "vague" "ci" "uc"; do DISPLAY="" ./src_analysis/plot_ai_conf_medailon.py -ait ${AI_TYPE}; done

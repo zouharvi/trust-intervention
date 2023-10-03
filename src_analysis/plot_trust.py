@@ -167,6 +167,6 @@ plt.tight_layout(pad=0.1)
 plt.savefig(f"computed/figures/trust_{args.queue}.pdf")
 plt.show()
 
-# ./src_eval/plot_trust.py -q control_long --overlay intervention_ci_long --overlay-up
-# ./src_eval/plot_trust.py -q intervention_ci_long --overlay control_long --rect
-# ./src_eval/plot_trust.py -q intervention_uc_long --overlay control_long --rect
+# ./src_analysis/plot_trust.py -q control_long --overlay intervention_ci_long --overlay-up
+# ./src_analysis/plot_trust.py -q intervention_ci_long --overlay control_long --rect
+# ./src_analysis/plot_trust.py -q intervention_uc_long --overlay control_long --rect

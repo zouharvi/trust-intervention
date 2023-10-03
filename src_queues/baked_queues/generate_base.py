@@ -16,9 +16,8 @@ import copy
 # ./src/baked_queues/generate_base.py --plan intervention_ci_long --uid-count 50 --reward-ratio 1x2
 # ./src/baked_queues/generate_base.py --plan intervention_ci_long --uid-count 50 --reward-ratio 2x1
 
-
 args = ArgumentParser()
-args.add_argument("-d", "--data", default="data/new_fake_questions.json")
+args.add_argument("-d", "--data", default="data/questions/fake_all.json")
 args.add_argument("-p", "--plan", default="control")
 args.add_argument("-rr", "--reward-ratio", default="1x1")
 args.add_argument("-uc", "--uid-count", default=0, type=int)
