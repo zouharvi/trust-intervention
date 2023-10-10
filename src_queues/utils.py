@@ -21,7 +21,7 @@ COLORS={
     "intervention_uc": Colors.UC,
 }
 
-def load_data(path="data/all_data.jsonl", queue=None, verbose=False, min_length=60, **kwargs):
+def load_data(path="data/collected_users.jsonl", queue=None, verbose=False, min_length=60, **kwargs):
     import json
     MULTI_USER_FIRST_QUEUE = {
         "604f684950227bd07a37376d": "control_no_vague",
@@ -60,47 +60,6 @@ def load_data(path="data/all_data.jsonl", queue=None, verbose=False, min_length=
         )
 
     return filtered_data_by_user
-
-
-def load_data_as_df(path="data/all_data.jsonl", queue=None):
-    raise Exception("Not Implemented")
-    import json
-    MULTI_USER_FIRST_QUEUE = {
-        "604f684950227bd07a37376d": "control_no_vague",
-        "63ea52b8342eff8b95ef0f95": "control_no_vague",
-        "5dcf2c967beb290802f26b45": "control_no_vague",
-    }
-    print("loading data from path", path)
-    data = [json.loads(x) for x in open(path, "r")]
-    # filter desired queue
-    data = [
-        line for line in data
-        if queue is None or line["url_data"]["prolific_queue_name"] in queue
-    ]
-
-    prolific_ids = list({x["url_data"]["prolific_id"] for x in data})
-    # this weird why this isn't stable
-    prolific_ids.sort()
-
-    user_data = defaultdict(list)
-    study_data = defaultdict(list)
-    for datum in control_data:
-        user_data[datum['url_data']['prolific_id']].append(datum)
-        study_data[datum['url_data']['study_id']].append(datum)
-
-    data_by_user = [
-        [x for x in data if x["url_data"]["prolific_id"] == prolific_id]
-        for prolific_id in prolific_ids
-        if prolific_id not in MULTI_USER_FIRST_QUEUE or MULTI_USER_FIRST_QUEUE[prolific_id] in queue
-    ]
-
-    filtered_data_by_user = []
-
-    print(
-        f"Choosing {len(filtered_data_by_user)} users out of {len(data_by_user)}")
-
-    return filtered_data_by_user
-
 
 def load_split_data(simple=False, **kwargs):
     import sklearn.model_selection

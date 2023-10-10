@@ -7,8 +7,6 @@ import numpy as np
 from skimage.transform import resize as resize_img
 import pickle
 from matplotlib import patches
-import sys
-sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = {
@@ -33,7 +31,7 @@ args.add_argument("--overlay", default=None)
 args.add_argument("--overlay-up", action="store_true")
 args.add_argument("--rect", action="store_true")
 args.add_argument("--no-norm", action="store_true")
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 data_by_user = utils.load_data(args.data, args.queue)

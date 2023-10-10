@@ -3,8 +3,6 @@
 import argparse
 import numpy as np
 import collections
-import sys
-sys.path.append("src")
 import utils
 
 QUEUE_TO_NAME = {
@@ -14,7 +12,7 @@ QUEUE_TO_NAME = {
 }
 
 args = argparse.ArgumentParser()
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 

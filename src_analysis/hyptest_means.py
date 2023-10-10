@@ -4,12 +4,10 @@ import json
 import argparse
 import numpy as np
 import scipy.stats
-import sys
-sys.path.append("src")
 import utils
 
 args = argparse.ArgumentParser()
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args.add_argument("-v", "--variable", default="user_bet_val")
 args = args.parse_args()
 

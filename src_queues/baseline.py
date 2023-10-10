@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error
 import numpy as np
 
 data_train, data_test = utils.load_split_data(
-    path="data/collected.jsonl",
+    path="data/collected_users.jsonl",
     queue=["control_long", "intervention_ci_long", "intervention_uc_long"],
     # set to False for random forest
     question_classes=True

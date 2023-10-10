@@ -4,8 +4,6 @@ import argparse
 import numpy as np
 import jezecek.fig_utils
 import matplotlib.pyplot as plt
-import sys
-sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = [
@@ -22,7 +20,7 @@ QUEUE_TO_NAME = {
 BET_VALUES = [0, 2, 4, 6, 8, 10]
 
 args = argparse.ArgumentParser()
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 QUEUE_LENGHT = 60

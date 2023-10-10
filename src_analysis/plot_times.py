@@ -5,12 +5,10 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 import matplotlib.patches as patches
-import sys
-sys.path.append("src")
 import utils
 
 args = argparse.ArgumentParser()
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 data_by_user = utils.load_data(args.data, queue=None)

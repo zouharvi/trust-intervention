@@ -3,10 +3,8 @@ import jezecek.fig_utils
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
-import sys
 from matplotlib import patches
 import scipy
-sys.path.append("src")
 import utils
 
 QUEUE_PLAN_XTICKS = [
@@ -18,7 +16,7 @@ QUEUE_PLAN_XTICKS = [
 
 args = argparse.ArgumentParser()
 args.add_argument("--overlay", default=None)
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 data_by_user_math_ci = utils.load_data(

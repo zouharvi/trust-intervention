@@ -164,15 +164,15 @@ class RNNTrustModel(torch.nn.Module):
                 if args.epoch_save_embd == epoch:
                     print("Computing & saving embeddings")
                     data_control = utils.load_split_data_all(
-                        simple=True, path="data/collected.jsonl", queue="control_long",
+                        simple=True, path="data/collected_users.jsonl", queue="control_long",
                         question_classes=False
                     )
                     data_intervention_ci = utils.load_split_data_all(
-                        simple=True, path="data/collected.jsonl", queue="intervention_ci_long",
+                        simple=True, path="data/collected_users.jsonl", queue="intervention_ci_long",
                         question_classes=False
                     )
                     data_intervention_uc = utils.load_split_data_all(
-                        simple=True, path="data/collected.jsonl", queue="intervention_uc_long",
+                        simple=True, path="data/collected_users.jsonl", queue="intervention_uc_long",
                         question_classes=False
                     )
                     embd_control = self.get_embd(data_control)
@@ -186,7 +186,7 @@ class RNNTrustModel(torch.nn.Module):
 
 
 data_train, data_dev = utils.load_split_data(
-    simple=True, path="data/collected.jsonl",
+    simple=True, path="data/collected_users.jsonl",
     queue=["control_long", "intervention_ci_long", "intervention_uc_long"],
     question_classes=False
 )

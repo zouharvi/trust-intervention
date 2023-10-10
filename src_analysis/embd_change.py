@@ -8,8 +8,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import collections
 from matplotlib import patches
-import sys
-sys.path.append("src")
 import utils
 
 random.seed(0)

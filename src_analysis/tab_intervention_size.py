@@ -2,13 +2,10 @@
 
 import argparse
 import numpy as np
-from skimage.transform import resize as resize_img
-import sys
-sys.path.append("src")
 import utils
 
 args = argparse.ArgumentParser()
-args.add_argument("-d", "--data", default="data/collected.jsonl")
+args.add_argument("-d", "--data", default="data/collected_users.jsonl")
 args = args.parse_args()
 
 QUEUE_LENGHT = 60
@@ -27,25 +24,14 @@ for queue in [
     user_payoff = [[] for _ in range(QUEUE_LENGHT)]
 
     for data_local in data_by_user:
-        # take first 10 as normalization to 0.06
-        offset_bet = (
-            0.06 - np.average([x["user_bet_val"] for x in data_local[:10]])
-        )
-        # take first 10 as normalization to 80%
-        offset_correct = (
-            0.8 - np.average([
-                x["user_decision"] == x["question"]["ai_is_correct"]
-                for x in data_local[:10]
-            ])
-        )
         for i in range(min(QUEUE_LENGHT, len(data_local))):
             bet_vals[i].append(
                 # data_local[i]["times"]["decision"] + data_local[i]["times"]["bet"]
-                (data_local[i]["user_bet_val"] + offset_bet)*100
+                (data_local[i]["user_bet_val"])*100
             )
             user_correct[i].append(
                 (data_local[i]["user_decision"] == data_local[i]
-                 ["question"]["ai_is_correct"]) + offset_correct
+                 ["question"]["ai_is_correct"])
             )
             user_payoff[i].append(data_local[i]["user_balance"]*100)
 

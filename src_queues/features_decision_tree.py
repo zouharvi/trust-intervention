@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 data_train, data_test = utils.load_split_data(
-    path="data/collected.jsonl",
+    path="data/collected_users.jsonl",
     queue=["control_long", "intervention_ci_long"],
     question_classes=False
 )
