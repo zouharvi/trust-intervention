@@ -40,7 +40,7 @@ def normalize_data(data_by_user):
 
 
 def in_interval(interval, val):
-    return val >= interval[0] and val <= interval[1]
+    return val >= interval[0] and (val < interval[1] or (interval[1] == 1))
 
 
 data_ci = normalize_data(utils.load_data(
