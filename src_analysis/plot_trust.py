@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import jezecek.fig_utils
+# import jezecek.fig_utils
 import matplotlib.pyplot as plt
 import argparse
 import numpy as np
@@ -109,13 +109,24 @@ plt.scatter(
     edgecolor="black"
 )
 
+# compute r2 with leave-one-out strategy
+scatter_y_pred = []
+for i in range(len(scatter_x)):
+    scatter_x_local = scatter_x[:i]+scatter_x[i+1:]
+    scatter_y_local = scatter_y[:i]+scatter_y[i+1:]
+    poly_fit = np.poly1d(np.polyfit(
+        scatter_x_local, scatter_y_local, 3
+    ))
+    scatter_y_pred.append(poly_fit([scatter_x[i]])[0])
+
+poly_fit_r2 = r2_score(scatter_y, scatter_y_pred)
+print(f"{args.queue:>20} | R^2: {poly_fit_r2:.3f}")
+
 # plot line
 poly_fit = np.poly1d(np.polyfit(
-    range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 3
+    scatter_x, scatter_y, 3
 ))
 
-poly_fit_r2 = r2_score(scatter_y, poly_fit(scatter_x))
-print(f"{args.queue:>20} | R^2: {poly_fit_r2:.3f}")
 
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
