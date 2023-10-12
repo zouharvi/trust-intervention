@@ -38,7 +38,8 @@ Unpack as:
 
 ```bash
 tar -xvzf data/collected_users.jsonl.tar.gz
-wc -l data/collected_users.jsonl # 18664
+# 18664
+wc -l data/collected_users.jsonl
 ```
 
 and load in Python as:

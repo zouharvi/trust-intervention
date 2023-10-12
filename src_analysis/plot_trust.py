@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import argparse
 import numpy as np
 from skimage.transform import resize as resize_img
+from sklearn.metrics import r2_score
 import pickle
 from matplotlib import patches
 import utils
@@ -26,7 +27,7 @@ QUEUE_PLAN_XTICKS = {
 }
 
 args = argparse.ArgumentParser()
-args.add_argument("-q", "--queue", default="control_no_vague")
+args.add_argument("-q", "--queue", default="control_long")
 args.add_argument("--overlay", default=None)
 args.add_argument("--overlay-up", action="store_true")
 args.add_argument("--rect", action="store_true")
@@ -99,9 +100,10 @@ fig.figimage(
 )
 
 # plot points
+scatter_x = list(range(QUEUE_LENGHT))
+scatter_y = [np.average(bet_val) for bet_val in bet_vals]
 plt.scatter(
-    range(QUEUE_LENGHT),
-    [np.average(bet_val) for bet_val in bet_vals],
+    scatter_x, scatter_y,
     c=[np.average(user_correct) for user_correct in user_correct],
     cmap="RdYlGn",
     edgecolor="black"
@@ -111,6 +113,10 @@ plt.scatter(
 poly_fit = np.poly1d(np.polyfit(
     range(QUEUE_LENGHT), [np.average(bet_val) for bet_val in bet_vals], 3
 ))
+
+poly_fit_r2 = r2_score(scatter_y, poly_fit(scatter_x))
+print(f"{args.queue:>20} | R^2: {poly_fit_r2:.3f}")
+
 plt.plot(
     xticks_fine, poly_fit(xticks_fine), '-', color="black", zorder=-100
 )
