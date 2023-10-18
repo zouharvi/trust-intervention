@@ -1,5 +1,6 @@
 import { DEVMODE } from "./globals"
 export var UID: string
+export var MOCKMODE: boolean = false
 import { load_data, log_data } from './connector'
 import { paramsToObject } from "./utils"
 
@@ -152,7 +153,11 @@ function next_question() {
     question_i += 1
     if (question_i >= data.length) {
         $("#main_box_experiment").hide()
-        $("#main_box_end").show()
+        if (MOCKMODE) {
+            $("#main_box_end_mock").show()
+        } else {
+            $("#main_box_end").show()
+        }
         return
     }
     question = data[question_i]
@@ -196,6 +201,13 @@ if (UIDFromURL != null) {
         UID_maybe = prompt("Enter your user id. Please get in touch if you were not assigned an id but wish to participate in this experiment.")
     }
     globalThis.uid = UID_maybe!
+}
+
+// version for paper
+if (globalThis.uid.startsWith("demo_paper")) {
+    MOCKMODE = true
+} else {
+
 }
 
 load_data().catch((_error) => {

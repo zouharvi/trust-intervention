@@ -16,7 +16,7 @@ body {
     min-height: 450px;
 }
 
-#main_box_end {
+#main_box_end, #main_box_end_mock {
     padding: 20px;
     box-sizing: border-box;
     font-size: 1.1em;
