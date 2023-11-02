@@ -9,6 +9,18 @@
 > and that different types of miscalibration---unconfidently correct and confidently incorrect---have different (negative) effects on user trust.
 > Our findings highlight the importance of calibration in user-facing AI application, and shed light onto what aspects help users decide whether to trust the system. 
 
+This work is accepted at EMNLP 2023, read it [here](https://arxiv.org/abs/2310.13544).
+```
+@misc{dhuliawala-zouhar-2023-diachronic,
+  title={A Diachronic Perspective on User Trust in AI under Uncertainty}, 
+  author={Shehzaad Dhuliawala and Vilém Zouhar and Mennatallah El-Assady and Mrinmaya Sachan},
+  year={2023},
+  eprint={2310.13544},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL}
+}
+```
+
 <img width="400em" src="meta/figure_1.png">
 
 <small>
