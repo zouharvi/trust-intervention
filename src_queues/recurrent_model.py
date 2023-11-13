@@ -55,6 +55,9 @@ class RNNTrustModel(torch.nn.Module):
 
     @staticmethod
     def prepare_xy_to_x(x, y):
+        """
+        At timestep t we have access to AI confidence and correctness from timestep t and user decision from timestep t-1.
+        """
         # shift targets to the right so we're not cheating
         x_extra = [[0.0] * len(y[0])] + y[:-1]
         # x_extra = y
