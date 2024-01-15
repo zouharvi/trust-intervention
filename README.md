@@ -9,16 +9,23 @@
 > and that different types of miscalibration---unconfidently correct and confidently incorrect---have different (negative) effects on user trust.
 > Our findings highlight the importance of calibration in user-facing AI application, and shed light onto what aspects help users decide whether to trust the system. 
 
-This work is accepted at EMNLP 2023, read it [here](https://arxiv.org/abs/2310.13544).
+This work is accepted at EMNLP 2023, read it [**here**](https://aclanthology.org/2023.emnlp-main.339/).
 Written by Shehzaad Dhuliawala, Vilém Zouhar, Mennatallah El-Assady, and Mrinmaya Sachan from ETH Zurich, Department of Computer Science.
 ```
-@misc{dhuliawala-zouhar-2023-diachronic,
-  title={A Diachronic Perspective on User Trust in AI under Uncertainty}, 
-  author={Shehzaad Dhuliawala and Vilém Zouhar and Mennatallah El-Assady and Mrinmaya Sachan},
-  year={2023},
-  eprint={2310.13544},
-  archivePrefix={arXiv},
-  primaryClass={cs.CL}
+@inproceedings{dhuliawala-etal-2023-diachronic,
+    title = "A Diachronic Perspective on User Trust in {AI} under Uncertainty",
+    author = "Dhuliawala, Shehzaad  and
+      Zouhar, Vil{\'e}m  and
+      El-Assady, Mennatallah  and
+      Sachan, Mrinmaya"
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.339",
+    doi = "10.18653/v1/2023.emnlp-main.339",
+    pages = "5567--5580"
 }
 ```
 
