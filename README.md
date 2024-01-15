@@ -17,7 +17,7 @@ Written by Shehzaad Dhuliawala, Vilém Zouhar, Mennatallah El-Assady, and Mrinma
     author = "Dhuliawala, Shehzaad  and
       Zouhar, Vil{\'e}m  and
       El-Assady, Mennatallah  and
-      Sachan, Mrinmaya"
+      Sachan, Mrinmaya",
     booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
     month = dec,
     year = "2023",
