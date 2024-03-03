@@ -50,7 +50,13 @@ npm run build # to generate JS that can be uploaded
 
 ## Collected Data and Analysis
 
-The collected data is stored in `data/collected_users.jsonl.tar.gz`.
+You can access the collected data on [huggingface `zouharvi/trust-intervention`](https://huggingface.co/datasets/zouharvi/trust-intervention):
+```python3
+from datasets import load_dataset
+data = load_dataset("zouharvi/trust-intervention")
+```
+
+The collected data is also stored in `data/collected_users.jsonl.tar.gz`.
 Unpack as:
 
 <!-- maximum compression: -->
